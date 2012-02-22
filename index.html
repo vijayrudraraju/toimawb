@@ -2,51 +2,59 @@
 <html lang="en">
     <head>
         <meta name="apple-mobile-web-app-capable" content="yes"/>
-        <meta name="viewport" content="width=device-width,initial-scale=1"/>
+        <meta name="viewport" content="width=320"/>
 
         <meta charset="utf-8">
         <!-- Le styles -->
         <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
         <style type="text/css">
-            /*
             html {
-                background: black;
+                width: 320px;
             }
-            */
+            .inline {
+                display: inline;
+            }
             .container {
                 margin-left: 10px;
                 padding: 0px;
             }
             .canvas {
                 position: relative;
-                background: black;
-                width: 320px;
-                height: 160px;
+                background: white;
+                width: 240px;
+                height: 120px;
             }
             .modes {
                 position: relative;
                 background: gray;
-                width: 320px;
+                width: 240px;
                 height: 60px;
             }
             #red {
                 position: absolute;
-                background: rgb(127,0,0);
+                background: rgb(255,0,0);
                 width: 60px;
                 height: 60px;
-                left: 10px;
+                left: 0px;
             }
             #green {
                 position: absolute;
-                background: rgb(0,255,0);
+                background: rgb(0,80,0);
                 width: 60px;
                 height: 60px;
-                left: 110px;
+                left: 70px;
             }
             #blue {
                 position: absolute;
-                background: rgb(0,0,255);
+                background: rgb(0,0,80);
                 width: 60px;
+                height: 60px;
+                left: 140px;
+            }
+            #blackwhite {
+                position: absolute;
+                background: rgb(255,255,255);
+                width: 30px;
                 height: 60px;
                 left: 210px;
             }
@@ -59,95 +67,37 @@
     </head>
     <script type="text/javascript" src="modules.js"></script>
     <script type="text/javascript" src="/_utils/script/json2.js"></script>
-    <!--<script type="text/javascript" src="/_utils/script/jquery.js"></script>-->
     <script type="text/javascript" src="vendor/jquery-1.6.js"></script>
     <script type="text/javascript" src="/_utils/script/jquery.couch.js"></script>
-    <!--<script type="text/javascript" src="vendor/jquery.mobile-1.0.1.js"></script>-->
     <script type="text/javascript" src="vendor/underscore.js"></script>
     <script type="text/javascript" src="vendor/backbone.js"></script>
-    <script type="text/javascript" src="vendor/backbone.localStorage.js"></script>
-    <script type="text/javascript" src="vendor/backbone-couchdb.js"></script>
-    <script type="text/javascript" src="lib/werd.js"></script>
     <script type="text/javascript">
         $(function() {
-            Backbone.couch_connector.config.db_name = "blawks";
-            Backbone.couch_connector.config.ddoc_name = "blawkone";
-
             window.AppView = Backbone.View.extend({
                 color: 'red',
+                tintLight: true,
                 tintActive: false,
                 el: $('#blawk-app'),
                 events: {
-                    //'touchenter .one': 'test',
-                    'click #resize-button': 'resize',
-                    '#resize-button': 'resize',
                     'click #red': 'red',
                     'click #green': 'green',
                     'click #blue': 'blue',
-                    'click .one': 'tint'
-                    //'mouseenter .one': 'tint',
-                    //'mousedown .one': 'tintOn',
-                    //'mouseup .one': 'tintOff'
+                    'click #blackwhite': 'blackwhite',
+                    'click .one': 'tint',
+                    'mouseenter .one': 'tint',
+                    'mousedown .one': 'tintOn',
+                    'mouseup .one': 'tintOff'
                 },  
                 initialize: function() {
                     this.render();
                 },
-                resize: function() {
-                    this.render();  
-                },
-                test: function(e) {
-                    console.log('test');
-                },
                 touch: function($el) {
-                    console.log($el.attr('id'));
-
-                    if ($($el).hasClass('one')) {
-                        var oldColor = $($el).css('background-color');
-                        oldColor = oldColor.substring(4,oldColor.length-1).split(',');
-                        for (var i=0;i<oldColor.length;i++) {
-                            oldColor[i] = parseInt(oldColor[i]);
-                        }
-
-                        var newColor = 'rgb('+oldColor[0]+','+oldColor[1]+','+oldColor[2]+')';
-                        var diff = 40;
-
-                        if (this.color === 'red' && oldColor[0] < 255) {
-                            newColor = 'rgb('+(oldColor[0]+diff)+','+oldColor[1]+','+oldColor[2]+')';
-                        } else if (this.color === 'green' && oldColor[1] < 255) { 
-                            newColor = 'rgb('+oldColor[0]+','+(oldColor[1]+diff)+','+oldColor[2]+')';
-                        } else if (this.color === 'blue' && oldColor[2] < 255) {
-                            newColor = 'rgb('+oldColor[0]+','+oldColor[1]+','+(oldColor[2]+diff)+')';
-                        }
-
-                        $($el).css('background',newColor);
-                    }
                 },
                 onReset: function(coll,resp) {
                 },
                 saveToServer: function(e) {
                 },
                 render: function() {
-                    $('.canvas').html('');
-
-                    //$('.modes').width($(window).width()-$('.canvas').offset().left);
-                    //$('.modes').height(60);
-
-                    //$('.canvas').width($(window).width()-$('.canvas').offset().left);
-                    //$('.canvas').height($(window).height()-$('.canvas').offset().top);
-
-                    //var blawkWidthNum = Math.floor($('.canvas').width() / 20);
-                    var blawkWidthNum = 16;
-                    console.log('blawkWidthNum: ' + blawkWidthNum);
-                    var blawkHeightNum = 8;
-                    console.log('blawkHeightNum: ' + blawkHeightNum);
-
-                    for (var j=0;j<blawkHeightNum;j++) {
-                        for (var i=0;i<blawkWidthNum;i++) {
-                            $('.canvas').append('<div class="one"></div>');
-                            $('.canvas > div:last-child').css('position','absolute').css('left',i*20);
-                            $('.canvas > div:last-child').css('top',j*20).attr('id','index'+i+'x'+j);
-                        }
-                    }
                 },
                 tintOn: function(e) {
                     this.tintActive = true;
@@ -156,42 +106,36 @@
                     this.tintActive = false;
                 },
                 tint: function(e) {
-                    var oldColor = $('#'+e.target.id).css('background-color');
-                    oldColor = oldColor.substring(4,oldColor.length-1).split(',');
-                    for (var i=0;i<oldColor.length;i++) {
-                        oldColor[i] = parseInt(oldColor[i]);
+                },
+                darken: function(oldColor) {
+                },
+                lighten: function(oldColor) {
+                },
+                blackwhite: function() {
+                    this.tintLight = !this.tintLight;
+                    if (this.tintLight) {
+                        $('#blackwhite').css('background','rgb(255,255,255)');
+                    } else {
+                        $('#blackwhite').css('background','rgb(0,0,0)');
                     }
-
-                    var newColor = 'rgb('+oldColor[0]+','+oldColor[1]+','+oldColor[2]+')';
-                    var diff = 40;
-
-                    if (this.color === 'red' && oldColor[0] < 255) {
-                        newColor = 'rgb('+(oldColor[0]+diff)+','+oldColor[1]+','+oldColor[2]+')';
-                    } else if (this.color === 'green' && oldColor[1] < 255) { 
-                        newColor = 'rgb('+oldColor[0]+','+(oldColor[1]+diff)+','+oldColor[2]+')';
-                    } else if (this.color === 'blue' && oldColor[2] < 255) {
-                        newColor = 'rgb('+oldColor[0]+','+oldColor[1]+','+(oldColor[2]+diff)+')';
-                    }
-
-                    $('#'+e.target.id).css('background',newColor);
                 },
                 red: function() {
                     this.color = 'red';
-                    $('#red').css('background','rgb(127,0,0)');
-                    $('#green').css('background','rgb(0,255,0)');
-                    $('#blue').css('background','rgb(0,0,255)');
+                    $('#red').css('background','rgb(255,0,0)');
+                    $('#green').css('background','rgb(0,80,0)');
+                    $('#blue').css('background','rgb(0,0,80)');
                 },
                 green: function() {
                     this.color = 'green';
-                    $('#red').css('background','rgb(255,0,0)');
-                    $('#green').css('background','rgb(0,127,0)');
-                    $('#blue').css('background','rgb(0,0,255)');
+                    $('#red').css('background','rgb(80,0,0)');
+                    $('#green').css('background','rgb(0,255,0)');
+                    $('#blue').css('background','rgb(0,0,80)');
                 },
                 blue: function() {
                     this.color = 'blue';
-                    $('#red').css('background','rgb(255,0,0)');
-                    $('#green').css('background','rgb(0,255,0)');
-                    $('#blue').css('background','rgb(0,0,127)');
+                    $('#red').css('background','rgb(100,0,0)');
+                    $('#green').css('background','rgb(0,100,0)');
+                    $('#blue').css('background','rgb(0,0,255)');
                 }
             });
 
@@ -207,8 +151,10 @@
             document.body.addEventListener('touchend', function(e){ 
                 //e.preventDefault();
             },false);
-            document.body.addEventListener('touchmove', function(e){ 
+            //document.body.addEventListener('touchmove', function(e){ 
+            $('.canvas').delegate('.one', 'touchmove', function(event) {
                 //console.log('touchmove');
+                var e = event.originalEvent;
                 e.preventDefault(); 
                 window.App.touch($(document.elementFromPoint(e.targetTouches[0].clientX,e.targetTouches[0].clientY)));
                 /*
@@ -223,23 +169,13 @@
         });
     </script>
     <body id="body">
-        <div id="navbar navbar-fixed-top">
-        </div>
         <div id="blawk-app" class="container">
-            <!--<div class="content">-->
-                <div class="page-header">
-                    <h3>
-                        blawks / blawkone / 
-                    </h3>
-                </div>
-                <div class="modes">
-                    <div id="red"></div>
-                    <div id="green"></div>
-                    <div id="blue"></div>
-                </div>
-                <div class="canvas">
-                </div>
-                <!--</div>-->
+            <div class="page-header inline">
+                <a class="inline" href="index.html"><h3 class="inline">blawks</h3></a>
+            </div>
+            <div class="canvas">
+                <a href="blawkone_a.html"><div id="red"></div></a>
+            </div>
         </div>
     </body>
 </html>
