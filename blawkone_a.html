@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="apple-mobile-web-app-capable" content="yes"/>
+        <meta name="viewport" content="width=640"/>
+        <meta charset="utf-8">
+        <!-- Le styles -->
+        <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
+        <style type="text/css">
+            html {
+                width: 640px;
+            }
+            .inline {
+                display: inline;
+            }
+            .container {
+                width: 600px;
+                margin-left: 20px;
+                margin-right: 20px;
+                padding: 0px;
+            }
+            .canvas {
+                position: relative;
+                background: black;
+                width: 600px;
+                height: 600px;
+            }
+            .modes {
+                position: relative;
+                background: rgb(180,190,255);
+                width: 500px;
+                height: 80px;
+            }
+            #red {
+                position: absolute;
+                background: rgb(255,0,0);
+                width: 80px;
+                height: 80px;
+                left: 0px;
+            }
+            #green {
+                position: absolute;
+                background: rgb(0,60,0);
+                width: 80px;
+                height: 80px;
+                left: 100px;
+            }
+            #blue {
+                position: absolute;
+                background: rgb(0,0,60);
+                width: 80px;
+                height: 80px;
+                left: 200px;
+            }
+            #black {
+                position: absolute;
+                background: rgb(90,90,90);
+                width: 80px;
+                height: 80px;
+                left: 300px;
+            }
+            #white {
+                position: absolute;
+                background: rgb(165,165,165);
+                width: 80px;
+                height: 80px;
+                left: 400px;
+            }
+            .one {
+                width: 40px;
+                height: 40px;
+            }
+        </style>
+    </head>
+    <script type="text/javascript" src="modules.js"></script>
+    <script type="text/javascript" src="/_utils/script/json2.js"></script>
+    <script type="text/javascript" src="vendor/jquery-1.6.js"></script>
+    <script type="text/javascript" src="/_utils/script/jquery.couch.js"></script>
+    <script type="text/javascript" src="vendor/underscore.js"></script>
+    <script type="text/javascript" src="vendor/backbone.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            //Backbone.couch_connector.config.db_name = "blawks";
+            //Backbone.couch_connector.config.ddoc_name = "blawkone";
+
+            window.AppView = Backbone.View.extend({
+                color: 'red',
+                colorDiff: 40,
+                tintLight: true,
+                tintActive: false,
+                lastEl: '',
+                el: $('#blawk-app'),
+                events: {
+                    'click #red': 'red',
+                    'click #green': 'green',
+                    'click #blue': 'blue',
+                    'click #black': 'black',
+                    'click #white': 'white',
+                    'click .one': 'tint',
+                    'mouseenter .one': 'tint',
+                    'mousedown .one': 'tintOn',
+                    'mouseup .one': 'tintOff'
+                },  
+                initialize: function() {
+                    this.render();
+                },
+                touch: function($el) {
+                    if ($($el).hasClass('one') && $($el).attr('id') !== this.lastEl) {
+                        //console.log('this');
+                        //console.log($($el).attr('id'));
+                        //console.log('that');
+                        //console.log(this.lastEl);
+      
+                        var oldColor = $($el).css('background-color');
+                        oldColor = oldColor.substring(4,oldColor.length-1).split(',');
+                        for (var i=0;i<oldColor.length;i++) {
+                            oldColor[i] = parseInt(oldColor[i]);
+                        }
+
+                        var newColor = [oldColor[0], oldColor[1], oldColor[2]];
+                        var diff = this.colorDiff;
+
+                        if (this.color === 'red' && oldColor[0] < 255) {
+                            newColor[0] = oldColor[0] + diff;
+                        } else if (this.color === 'green' && oldColor[1] < 255) { 
+                            newColor[1] = oldColor[1] + diff;
+                        } else if (this.color === 'blue' && oldColor[2] < 255) {
+                            newColor[2] = oldColor[2] + diff;
+                        } else if (this.color === 'white') {
+                            if (oldColor[0] < 255) {
+                                newColor[0] = oldColor[0] + diff; 
+                            } 
+                            if (oldColor[1] < 255) {
+                                newColor[1] = oldColor[1] + diff; 
+                            } 
+                            if (oldColor[2] < 255) {
+                                newColor[2] = oldColor[2] + diff; 
+                            }
+                        } else if (this.color === 'black') {
+                            if (oldColor[0] > 0) {
+                                newColor[0] = oldColor[0] - diff; 
+                            } 
+                            if (oldColor[1] > 0) {
+                                newColor[1] = oldColor[1] - diff; 
+                            } 
+                            if (oldColor[2] > 0) {
+                                newColor[2] = oldColor[2] - diff; 
+                            }
+                        }
+
+                        if (oldColor[0] < 0) {
+                            newColor[0] = 0;
+                        } 
+                        if (oldColor[1] < 0) {
+                            newColor[1] = 0;
+                        } 
+                        if (oldColor[2] < 0) {
+                            newColor[2] = 0;
+                        }
+                        if (oldColor[0] > 255) {
+                            newColor[0] = 255;
+                        } 
+                        if (oldColor[1] > 255) {
+                            newColor[1] = 255;
+                        } 
+                        if (oldColor[2] > 255) {
+                            newColor[2] = 255;
+                        }
+
+                        $($el).css('background','rgb('+newColor[0]+','+newColor[1]+','+newColor[2]+')');
+                        this.lastEl = $($el).attr('id');
+                    }
+                },
+                onReset: function(coll,resp) {
+                },
+                saveToServer: function(e) {
+                },
+                render: function() {
+                    var blawkWidthNum = $('.canvas').width() / $('.one').width();
+                    console.log('blawkWidthNum: ' + blawkWidthNum);
+                    var blawkHeightNum = $('.canvas').height() / $('.one').height();
+                    console.log('blawkHeightNum: ' + blawkHeightNum);
+
+                    $('.canvas').html('');
+
+                    for (var j=0;j<blawkHeightNum;j++) {
+                        for (var i=0;i<blawkWidthNum;i++) {
+                            $('.canvas').append('<div class="one"></div>');
+                            $('.canvas > div:last-child').css('position','absolute').css('left',i*$('.one').width());
+                            $('.canvas > div:last-child').css('top',j*$('.one').width()).attr('id','index'+i+'x'+j);
+                            $('.canvas > div:last-child').css('background','rgb(0,0,0)');
+                        }
+                    }
+                },
+                tintOn: function(e) {
+                    this.tintActive = true;
+                    //console.log('tintOn');
+                },
+                tintOff: function(e) {
+                    this.tintActive = false;
+                    //console.log('tintOff');
+                },
+                tint: function(e) {
+                    //console.log('tint');
+
+                    var oldColor = $('#'+e.target.id).css('background-color');
+                    console.log(oldColor);
+                    oldColor = oldColor.substring(4,oldColor.length-1).split(',');
+                    for (var i=0;i<oldColor.length;i++) {
+                        oldColor[i] = parseInt(oldColor[i]);
+                    }
+
+                    var newColor = [oldColor[0], oldColor[1], oldColor[2]];
+                    var diff = this.colorDiff;
+
+                    if (this.color === 'red' && oldColor[0] < 255) {
+                        newColor[0] = oldColor[0] + diff;
+                    } else if (this.color === 'green' && oldColor[1] < 255) { 
+                        newColor[1] = oldColor[1] + diff;
+                    } else if (this.color === 'blue' && oldColor[2] < 255) {
+                        newColor[2] = oldColor[2] + diff;
+                    } else if (this.color === 'white') {
+                        if (oldColor[0] < 255) {
+                            newColor[0] = oldColor[0] + diff; 
+                        } 
+                        if (oldColor[1] < 255) {
+                            newColor[1] = oldColor[1] + diff; 
+                        } 
+                        if (oldColor[2] < 255) {
+                            newColor[2] = oldColor[2] + diff; 
+                        }
+                    } else if (this.color === 'black') {
+                        if (oldColor[0] > 0) {
+                            newColor[0] = oldColor[0] - diff; 
+                        } 
+                        if (oldColor[1] > 0) {
+                            newColor[1] = oldColor[1] - diff; 
+                        } 
+                        if (oldColor[2] > 0) {
+                            newColor[2] = oldColor[2] - diff; 
+                        }
+                    }
+
+                    if (oldColor[0] < 0) {
+                        newColor[0] = 0;
+                    } 
+                    if (oldColor[1] < 0) {
+                        newColor[1] = 0;
+                    } 
+                    if (oldColor[2] < 0) {
+                        newColor[2] = 0;
+                    }
+                    if (oldColor[0] > 255) {
+                        newColor[0] = 255;
+                    } 
+                    if (oldColor[1] > 255) {
+                        newColor[1] = 255;
+                    } 
+                    if (oldColor[2] > 255) {
+                        newColor[2] = 255;
+                    }
+
+                    if (this.tintActive) {
+                        $('#'+e.target.id).css('background','rgb('+newColor[0]+','+newColor[1]+','+newColor[2]+')');
+                    }
+                },
+                blackwhite: function() {
+                    this.tintLight = !this.tintLight;
+                    if (this.tintLight) {
+                        $('#blackwhite').css('background','rgb(255,255,255)');
+                    } else {
+                        $('#blackwhite').css('background','rgb(0,0,0)');
+                    }
+                },
+                red: function() {
+                    this.color = 'red';
+                    $('#red').css('background','rgb(255,0,0)');
+                    $('#green').css('background','rgb(0,60,0)');
+                    $('#blue').css('background','rgb(0,0,60)');
+                    $('#black').css('background','rgb(90,90,90)');
+                    $('#white').css('background','rgb(165,165,165)');
+                },
+                green: function() {
+                    this.color = 'green';
+                    $('#red').css('background','rgb(60,0,0)');
+                    $('#green').css('background','rgb(0,255,0)');
+                    $('#blue').css('background','rgb(0,0,60)');
+                    $('#black').css('background','rgb(90,90,90)');
+                    $('#white').css('background','rgb(165,165,165)');
+                },
+                blue: function() {
+                    this.color = 'blue';
+                    $('#red').css('background','rgb(60,0,0)');
+                    $('#green').css('background','rgb(0,60,0)');
+                    $('#blue').css('background','rgb(0,0,255)');
+                    $('#black').css('background','rgb(90,90,90)');
+                    $('#white').css('background','rgb(165,165,165)');
+                },
+                black: function() {
+                    this.color = 'black';
+                    $('#red').css('background','rgb(60,0,0)');
+                    $('#green').css('background','rgb(0,60,0)');
+                    $('#blue').css('background','rgb(0,0,60)');
+                    $('#black').css('background','rgb(0,0,0)');
+                    $('#white').css('background','rgb(165,165,165)');
+                },
+                white: function() {
+                    this.color = 'white';
+                    $('#red').css('background','rgb(60,0,0)');
+                    $('#green').css('background','rgb(0,60,0)');
+                    $('#blue').css('background','rgb(0,0,60)');
+                    $('#black').css('background','rgb(90,90,90)');
+                    $('#white').css('background','rgb(255,255,255)');
+                }
+            });
+
+            window.App = new AppView;
+            document.body.addEventListener('touchstart', function(e){ 
+            },false);
+            document.body.addEventListener('touchend', function(e){ 
+            },false);
+            $('.canvas').delegate('.one', 'touchmove', function(event) {
+                var e = event.originalEvent;
+                e.preventDefault(); 
+                window.App.touch($(document.elementFromPoint(e.targetTouches[0].clientX,e.targetTouches[0].clientY)));
+            },false);
+        });
+    </script>
+    <body id="body">
+        <div id="blawk-app" class="container">
+            <div class="page-header inline">
+                <a class="inline" href="index.html"><h3 class="inline">blawks</h3></a><h3 class="inline"> / blawkone /</h3>
+            </div>
+            <div class="modes">
+                <div id="red"></div>
+                <div id="green"></div>
+                <div id="blue"></div>
+                <div id="black"></div>
+                <div id="white"></div>
+            </div>
+            <div class="canvas">
+                <div class="one"></div>
+            </div>
+        </div>
+    </body>
+</html>
