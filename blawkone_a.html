@@ -28,44 +28,77 @@
             .modes {
                 position: relative;
                 background: rgb(180,190,255);
-                width: 500px;
+                width: 600px;
                 height: 80px;
             }
             #red {
                 position: absolute;
                 background: rgb(255,0,0);
-                width: 80px;
+                width: 120px;
                 height: 80px;
                 left: 0px;
             }
             #green {
                 position: absolute;
-                background: rgb(0,60,0);
-                width: 80px;
+                background: rgb(0,255,0);
+                width: 120px;
                 height: 80px;
-                left: 100px;
+                left: 120px;
             }
             #blue {
                 position: absolute;
-                background: rgb(0,0,60);
-                width: 80px;
+                background: rgb(0,0,255);
+                width: 120px;
                 height: 80px;
-                left: 200px;
+                left: 240px;
             }
             #black {
                 position: absolute;
-                background: rgb(90,90,90);
-                width: 80px;
+                background: rgb(0,0,0);
+                width: 120px;
                 height: 80px;
-                left: 300px;
+                left: 360px;
             }
             #white {
                 position: absolute;
-                background: rgb(165,165,165);
-                width: 80px;
+                background: rgb(255,255,255);
+                width: 118px;
                 height: 80px;
-                left: 400px;
+                left: 480px;
+		border-style: solid;
+		border-color: #000000;
+		border-width: 1px;
             }
+            #red-select {
+                position: absolute;
+                left: 40px;
+                top: 20px;
+            }
+            #green-select {
+                position: absolute;
+                left: 160px;
+                top: 20px;
+            }
+            #blue-select {
+                position: absolute;
+                left: 280px;
+		top: 20px;
+            }
+            #black-select {
+                position: absolute;
+                left: 400px;
+		top: 20px;
+            }
+            #white-select {
+                position: absolute;
+                left: 520px;
+		top: 20px;
+            }
+            .select {
+		width: 40px;
+		height: 40px;
+		background: rgb(127,127,127);
+	    }
             .one {
                 width: 40px;
                 height: 40px;
@@ -103,6 +136,7 @@
                 },  
                 initialize: function() {
                     this.render();
+		    this.red();
                 },
                 touch: function($el) {
                     if ($($el).hasClass('one') && $($el).attr('id') !== this.lastEl) {
@@ -274,43 +308,43 @@
                 },
                 red: function() {
                     this.color = 'red';
-                    $('#red').css('background','rgb(255,0,0)');
-                    $('#green').css('background','rgb(0,60,0)');
-                    $('#blue').css('background','rgb(0,0,60)');
-                    $('#black').css('background','rgb(90,90,90)');
-                    $('#white').css('background','rgb(165,165,165)');
+		    $('#red-select').toggle(true);
+		    $('#green-select').toggle(false);
+		    $('#blue-select').toggle(false);
+		    $('#black-select').toggle(false);
+		    $('#white-select').toggle(false);
                 },
                 green: function() {
                     this.color = 'green';
-                    $('#red').css('background','rgb(60,0,0)');
-                    $('#green').css('background','rgb(0,255,0)');
-                    $('#blue').css('background','rgb(0,0,60)');
-                    $('#black').css('background','rgb(90,90,90)');
-                    $('#white').css('background','rgb(165,165,165)');
+		    $('#red-select').toggle(false);
+		    $('#green-select').toggle(true);
+		    $('#blue-select').toggle(false);
+		    $('#black-select').toggle(false);
+		    $('#white-select').toggle(false);
                 },
                 blue: function() {
                     this.color = 'blue';
-                    $('#red').css('background','rgb(60,0,0)');
-                    $('#green').css('background','rgb(0,60,0)');
-                    $('#blue').css('background','rgb(0,0,255)');
-                    $('#black').css('background','rgb(90,90,90)');
-                    $('#white').css('background','rgb(165,165,165)');
+		    $('#red-select').toggle(false);
+		    $('#green-select').toggle(false);
+		    $('#blue-select').toggle(true);
+		    $('#black-select').toggle(false);
+		    $('#white-select').toggle(false);
                 },
                 black: function() {
                     this.color = 'black';
-                    $('#red').css('background','rgb(60,0,0)');
-                    $('#green').css('background','rgb(0,60,0)');
-                    $('#blue').css('background','rgb(0,0,60)');
-                    $('#black').css('background','rgb(0,0,0)');
-                    $('#white').css('background','rgb(165,165,165)');
+		    $('#red-select').toggle(false);
+		    $('#green-select').toggle(false);
+		    $('#blue-select').toggle(false);
+		    $('#black-select').toggle(true);
+		    $('#white-select').toggle(false);
                 },
                 white: function() {
                     this.color = 'white';
-                    $('#red').css('background','rgb(60,0,0)');
-                    $('#green').css('background','rgb(0,60,0)');
-                    $('#blue').css('background','rgb(0,0,60)');
-                    $('#black').css('background','rgb(90,90,90)');
-                    $('#white').css('background','rgb(255,255,255)');
+		    $('#red-select').toggle(false);
+		    $('#green-select').toggle(false);
+		    $('#blue-select').toggle(false);
+		    $('#black-select').toggle(false);
+		    $('#white-select').toggle(true);
                 }
             });
 
@@ -337,6 +371,11 @@
                 <div id="blue"></div>
                 <div id="black"></div>
                 <div id="white"></div>
+                <div id="red-select" class="select"></div>
+                <div id="green-select" class="select"></div>
+                <div id="blue-select" class="select"></div>
+                <div id="black-select" class="select"></div>
+                <div id="white-select" class="select"></div>
             </div>
             <div class="canvas">
                 <div class="one"></div>

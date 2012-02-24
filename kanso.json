@@ -1,6 +1,6 @@
 {
     "name": "blawkone",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "one",
     "attachments": ["index.html","blawkone_a.html","vendor","static","lib"],
     "modules": "lib",
