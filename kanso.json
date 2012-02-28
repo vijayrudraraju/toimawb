@@ -1,8 +1,8 @@
 {
-    "name": "blawkone",
-    "version": "0.0.2",
+    "name": "one",
+    "version": "0.0.3",
     "description": "one",
-    "attachments": ["index.html","blawkone_a.html","vendor","static","lib"],
+    "attachments": ["index.html","one_a.html","one_aa.html","vendor","static","lib"],
     "modules": "lib",
     "load": "lib/app",
     "dependencies": {

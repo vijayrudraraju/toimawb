@@ -29,7 +29,7 @@ _.extend(Store.prototype, {
 
   // Save the current state of the **Store** to *localStorage*.
   save: function() {
-    localStorage.setItem(this.name, this.records.join(","));
+      localStorage.setItem(this.name, this.records.join(","));
   },
 
   // Add a model, giving it a (hopefully)-unique GUID, if it doesn't already
@@ -44,7 +44,8 @@ _.extend(Store.prototype, {
 
   // Update a model by replacing its copy in `this.data`.
   update: function(model) {
-    localStorage.setItem(this.name+"-"+model.id, JSON.stringify(model));
+      localStorage.setItem(this.name+"-"+model.id, JSON.stringify(model));
+
     if (!_.include(this.records, model.id.toString())) this.records.push(model.id.toString()); this.save();
     return model;
   },
