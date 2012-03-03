@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="apple-mobile-web-app-capable" content="yes"/>
+        <meta name="viewport" content="width=640"/>
+        <meta charset="utf-8">
+        <!-- Le styles -->
+        <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
+        <style type="text/css">
+            html {
+                width: 640px;
+            }
+            h1 {
+                font-size: 40px;
+            }
+            .page-header {
+                position: relative;
+            }
+            #save-button {
+                position: absolute;
+                width: 120px;
+                height: 40px;
+                left: 480px;
+                font-size: 28px;
+            }
+            .inline {
+                display: inline;
+            }
+            .container {
+                width: 600px;
+                height: 0px;
+                margin-top: 12px;
+                margin-left: 20px;
+                margin-right: 20px;
+                padding: 0px;
+            }
+            .frames {
+                position: relative;
+                background: white;
+                width: 80px;
+                height: 500px;
+                left: 520px;
+                top: -460px;
+            }
+            .frame {
+                display: block;
+                background: blue;
+                margin-bottom: 4px;
+            }
+            .canvas {
+                position: relative;
+                width: 500px;
+                height: 500px;
+                top: 40px;
+            }
+            .modes {
+                position: relative;
+                background: white;
+                width: 600px;
+                height: 100px;
+                top: 20px;
+            }
+            #red {
+                position: absolute;
+                background: rgb(255,0,0);
+                left: 0px;
+            }
+            #green {
+                position: absolute;
+                background: rgb(0,255,0);
+                left: 120px;
+            }
+            #blue {
+                position: absolute;
+                background: rgb(0,0,255);
+                left: 240px;
+            }
+            #black {
+                position: absolute;
+                background: rgb(0,0,0);
+                left: 360px;
+            }
+            #white {
+                position: absolute;
+                background: rgb(255,255,255);
+                left: 480px;
+            }
+            #red-select {
+                position: absolute;
+                left: 26px;
+            }
+            #green-select {
+                position: absolute;
+                left: 146px;
+            }
+            #blue-select {
+                position: absolute;
+                left: 266px;
+            }
+            #black-select {
+                position: absolute;
+                left: 386px;
+            }
+            #white-select {
+                position: absolute;
+                left: 506px;
+            }
+            .choice {
+                border-style: solid;
+                border-color: #000000;
+                border-width: 1px;
+                width: 110px;
+                height: 98px;
+            }
+            .select {
+                top: 20px;
+                width: 60px;
+                height: 60px;
+                background: rgb(127,127,127);
+            }
+            .one {
+                width: 50px;
+                height: 50px;
+            }
+        </style>
+    </head>
+    <script type="text/javascript" src="modules.js"></script>
+    <script type="text/javascript" src="/_utils/script/json2.js"></script>
+    <script type="text/javascript" src="/_utils/script/jquery.js"></script>
+    <script type="text/javascript" src="/_utils/script/jquery.couch.js"></script>
+    <script type="text/javascript" src="vendor/underscore.js"></script>
+    <script type="text/javascript" src="vendor/backbone.js"></script>
+    <script type="text/javascript" src="vendor/backbone.js"></script>
+    <script type="text/javascript" src="vendor/backbone.localStorage.js"></script>
+    <script type="text/javascript" src="vendor/backbone-couchdb.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            Backbone.couch_connector.config.db_name = "blawks";
+            Backbone.couch_connector.config.ddoc_name = "one";
+
+            window.BlawkModel= Backbone.Model.extend({
+                url: '/one_aaa'
+            }); 
+
+            window.BlawkCollection = Backbone.Collection.extend({ 
+                model: BlawkModel,
+                localStorage: new Store('one_aaa'),
+                url: "/one_aaa"
+            });
+
+            window.Blawks = new BlawkCollection;
+
+            window.AppView = Backbone.View.extend({
+                blawkWidthNum: 0,
+                blawkHeightNum: 0,
+                timer: '',
+                color: 'red',
+                colorDiff: 40,
+                tintLight: true,
+                tintActive: false,
+                lastEl: '',
+                trailQueue: ['','','',''],
+                colorQueue: ['','','',''],
+                el: $('#blawk-app'),
+                events: {
+                    'click #red': 'red',
+                    'click #green': 'green',
+                    'click #blue': 'blue',
+                    'click #black': 'black',
+                    'click #white': 'white',
+                    'click #save-button': 'saveToServer',
+                    'mouseenter .one': 'mouseEnter',
+                    'mousedown .one': 'tintOn',
+                    'mouseup .one': 'tintOff'
+                },  
+                onReset: function(coll,resp) {
+                    console.log('onReset');
+                    console.log('coll', coll);
+                    console.log('resp', resp);
+
+                    if (coll !== undefined) {
+                        if (coll.length === 0 && coll.localStorage.records.length === 0) {
+                            console.log('local and remote mawbs empty');
+                            var frames = [];
+                            frames.push([]);
+                            var frame = frames[0];
+                            for (var j=0;j<this.blawkHeightNum;j++) {
+                                for (var i=0;i<this.blawkWidthNum;i++) {
+                                    frame.push($('#index'+i+'x'+j).data('color'));
+                                }
+                            }
+                            Blawks.create({frames:frames});
+                        } else if (coll.length === 0) {
+                            console.log('remote mawbs empty, loading local mawbs');
+                            var localModel = coll.localStorage.findAll()[0];
+                            Blawks.create({frames:localModel.frames});
+                        } else if (coll.localStorage.records.length === 0) {
+                            console.log('local mawbs empty, loading remote mawbs');
+                            Blawks.at(0).sync = Backbone.localSync;
+                            try {
+                                Blawks.at(0).save();
+                            } catch(e) {
+                                //alert('Private browsing mode!');
+                            }
+                            delete Blawks.at(0).sync;
+                        }
+                    }
+
+                    var frames = Blawks.at(0).get('frames');
+                    var frame = frames[frames.length-1];
+                    var index = 0;
+
+                    console.log(frames);
+
+                    for (var j=0;j<this.blawkHeightNum;j++) {
+                        for (var i=0;i<this.blawkWidthNum;i++) {
+                            $('#index'+i+'x'+j).css('background',frame[index]);
+                            $('#index'+i+'x'+j).data('color',frame[index]);
+                            index++;
+                        }
+                    }
+
+                    var context = $('#canvas-1')[0].getContext('2d');    
+                    var width = $('.frame').width()/10;
+                    var height = $('.frame').height()/10;
+                    for (var k=0;k<frames.length;k++) {
+                        if (k > 5) {
+                            break;
+                        }
+                        index = 0;
+                        context = $('.frame')[k].getContext('2d');    
+                        for (var j=0;j<this.blawkHeightNum;j++) {
+                            for (var i=0;i<this.blawkWidthNum;i++) {
+                                context.fillStyle = frames[k][index];
+                                context.fillRect(i*width,j*height,width,height);
+                                index++;
+                            }
+                        }
+                    }
+                },
+                saveToServer: function(e) {
+                    var frames = Blawks.at(0).get('frames');
+                    frames.push([]);
+                    var frame = frames[frames.length-1];
+                    for (var j=0;j<this.blawkHeightNum;j++) {
+                        for (var i=0;i<this.blawkWidthNum;i++) {
+                            frame.push($('#index'+i+'x'+j).data('color'));
+                        }
+                    }
+
+                    Blawks.at(0).set('frames',frames);
+
+                    Blawks.at(0).save({},{success: function(){
+                        console.log('save success!');
+                        Blawks.trigger('reset')}
+                    });
+                },
+                canvasStuff: function() {
+                },
+                initialize: function() {
+                    this.canvasStuff();
+                    this.red();
+
+                    this.blawkWidthNum = $('.canvas').width() / $('.one').width();
+                    this.blawkHeightNum = $('.canvas').height() / $('.one').height();
+
+                    $('.canvas').html('');
+
+                    for (var j=0;j<this.blawkHeightNum;j++) {
+                        for (var i=0;i<this.blawkWidthNum;i++) {
+                            $('.canvas').append('<div class="one"></div>');
+                            $('.canvas > div:last-child').css('position','absolute').css('left',i*$('.one').width());
+                            $('.canvas > div:last-child').css('top',j*$('.one').width()).attr('id','index'+i+'x'+j);
+                            $('.canvas > div:last-child').css('background','rgb(0,0,0)');
+                            $('.canvas > div:last-child').data('color','rgb(0,0,0)');
+                        }
+                    }
+
+                    Blawks.on('reset', this.onReset, this);
+                    Blawks.fetch({success: function() { console.log('fetch success'); }});
+                },
+                tintOn: function(e) {
+                    this.tintActive = true;
+                },
+                tintOff: function(e) {
+                    this.tintActive = false;
+                },
+                mouseEnter: function(e) {
+                    var newColor = this.tint($('#'+e.target.id).data('color'));
+
+                    if (this.tintActive) {
+                        this.trailQueue.push($('#'+e.target.id));
+                        var newColor = 'rgb('+newColor[0]+','+newColor[1]+','+newColor[2]+')';
+                        this.colorQueue.push(newColor);
+                        this.trail();
+                    }
+                },
+                trail: function() {
+                    if (this.timer !== '') {
+                        clearTimeout(this.timer); 
+                    }
+
+                    var value = 200;
+                    var _els = this.trailQueue;
+                    var _colors = this.colorQueue;
+
+                    var trailColor;
+                    for (var i=_els.length-1;i>0;i--) {
+                        if (_els[i] === '') {
+                            continue;
+                        }
+                        if (this.color === 'red') {
+                            trailColor = 'rgb('+value+',0,0)';
+                        } else if (this.color === 'green') {
+                            trailColor = 'rgb(0,'+value+',0)';
+                        } else if (this.color === 'blue') {
+                            trailColor = 'rgb(0,0,'+value+')';
+                        } else if (this.color === 'white') {
+                            trailColor = 'rgb('+value+','+value+','+value+')';
+                        } else {
+                            trailColor = 'rgb('+(255-value-40)+','+(255-value-40)+','+(255-value-40)+')';
+                        }
+                        _els[i].css('background', trailColor);
+                        value = value-30;
+                    }
+
+                    if (_els[0] !== '') {
+                        _els[0].css('background', _colors[0]);
+                        _els[0].data('color',_colors[0]);
+                    }
+
+                    if (this.trailQueue.length > 4) {
+                        this.trailQueue.shift();
+                        this.colorQueue.shift();
+                    }
+
+                    this.timer = setTimeout(this.fadeTrail, 400);
+                },
+                fadeTrail: function() {
+                    var _els = App.trailQueue;
+                    var _colors = App.colorQueue;
+
+                    var length = _els.length;
+                    for (var i=0;i<length;i++) {
+                        _els[0].css('background', _colors[0]);
+                        _els[0].data('color',_colors[0]);
+                        App.trailQueue.shift();
+                        App.colorQueue.shift();
+                    }
+                },
+                tint: function(oldColor) {
+                    oldColor = oldColor.substring(4,oldColor.length-1).split(',');
+                    for (var i=0;i<oldColor.length;i++) {
+                        oldColor[i] = parseInt(oldColor[i]);
+                    }
+
+                    var newColor = [oldColor[0], oldColor[1], oldColor[2]];
+                    var diff = this.colorDiff;
+
+                    if (this.color === 'red' && oldColor[0] < 255) {
+                        newColor[0] = oldColor[0] + diff;
+                    } else if (this.color === 'green' && oldColor[1] < 255) { 
+                        newColor[1] = oldColor[1] + diff;
+                    } else if (this.color === 'blue' && oldColor[2] < 255) {
+                        newColor[2] = oldColor[2] + diff;
+                    } else if (this.color === 'white') {
+                        if (oldColor[0] < 255) {
+                            newColor[0] = oldColor[0] + diff; 
+                        } 
+                        if (oldColor[1] < 255) {
+                            newColor[1] = oldColor[1] + diff; 
+                        } 
+                        if (oldColor[2] < 255) {
+                            newColor[2] = oldColor[2] + diff; 
+                        }
+                    } else if (this.color === 'black') {
+                        if (oldColor[0] > 0) {
+                            newColor[0] = oldColor[0] - diff; 
+                        } 
+                        if (oldColor[1] > 0) {
+                            newColor[1] = oldColor[1] - diff; 
+                        } 
+                        if (oldColor[2] > 0) {
+                            newColor[2] = oldColor[2] - diff; 
+                        }
+                    }
+
+                    if (oldColor[0] < 0) {
+                        newColor[0] = 0;
+                    } 
+                    if (oldColor[1] < 0) {
+                        newColor[1] = 0;
+                    } 
+                    if (oldColor[2] < 0) {
+                        newColor[2] = 0;
+                    }
+                    if (oldColor[0] > 255) {
+                        newColor[0] = 255;
+                    } 
+                    if (oldColor[1] > 255) {
+                        newColor[1] = 255;
+                    } 
+                    if (oldColor[2] > 255) {
+                        newColor[2] = 255;
+                    }
+
+                    return newColor;
+                },
+                blackwhite: function() {
+                    this.tintLight = !this.tintLight;
+                    if (this.tintLight) {
+                        $('#blackwhite').css('background','rgb(255,255,255)');
+                    } else {
+                        $('#blackwhite').css('background','rgb(0,0,0)');
+                    }
+                },
+                red: function() {
+                    this.color = 'red';
+                    $('#red-select').toggle(true);
+                    $('#green-select').toggle(false);
+                    $('#blue-select').toggle(false);
+                    $('#black-select').toggle(false);
+                    $('#white-select').toggle(false);
+                },
+                green: function() {
+                    this.color = 'green';
+                    $('#red-select').toggle(false);
+                    $('#green-select').toggle(true);
+                    $('#blue-select').toggle(false);
+                    $('#black-select').toggle(false);
+                    $('#white-select').toggle(false);
+                },
+                blue: function() {
+                    this.color = 'blue';
+                    $('#red-select').toggle(false);
+                    $('#green-select').toggle(false);
+                    $('#blue-select').toggle(true);
+                    $('#black-select').toggle(false);
+                    $('#white-select').toggle(false);
+                },
+                black: function() {
+                    this.color = 'black';
+                    $('#red-select').toggle(false);
+                    $('#green-select').toggle(false);
+                    $('#blue-select').toggle(false);
+                    $('#black-select').toggle(true);
+                    $('#white-select').toggle(false);
+                },
+                white: function() {
+                    this.color = 'white';
+                    $('#red-select').toggle(false);
+                    $('#green-select').toggle(false);
+                    $('#blue-select').toggle(false);
+                    $('#black-select').toggle(false);
+                    $('#white-select').toggle(true);
+                }
+            });
+
+            window.App = new AppView;
+
+            document.body.addEventListener('touchstart', function(e){ 
+            },false);
+            document.body.addEventListener('touchend', function(e){ 
+            },false);
+            $('.canvas').delegate('.one', 'touchmove', function(event) {
+                var e = event.originalEvent;
+                e.preventDefault(); 
+
+                var $el = $(document.elementFromPoint(e.targetTouches[0].clientX,e.targetTouches[0].clientY));
+                if ($el.hasClass('one') && $el.attr('id') !== App.lastEl) {
+                    var newColor = App.tint($el.data('color'));
+
+                    App.trailQueue.push($el);
+                    var newColor = 'rgb('+newColor[0]+','+newColor[1]+','+newColor[2]+')';
+                    App.colorQueue.push(newColor);
+                    App.trail();
+
+                    App.lastEl = $el.attr('id');
+                }
+            },false);
+        });
+    </script>
+    <body id="body">
+        <div id="blawk-app" class="container">
+
+            <a class="inline" href="index.html"><h1 class="inline">blawks</h1></a><h1 class="inline"> / aaa /</h1><button id="save-button" class="btn inline">save it!</button>
+
+            <div class="modes">
+                <div id="red" class="choice"></div>
+                <div id="green" class="choice"></div>
+                <div id="blue" class="choice"></div>
+                <div id="black" class="choice"></div>
+                <div id="white" class="choice"></div>
+                <div id="red-select" class="select"></div>
+                <div id="green-select" class="select"></div>
+                <div id="blue-select" class="select"></div>
+                <div id="black-select" class="select"></div>
+                <div id="white-select" class="select"></div>
+            </div>
+
+            <div class="canvas">
+                <div class="one"></div>
+            </div>
+
+            <div class="frames">
+                <canvas id="canvas-1" width="80" height="80" class="frame"></canvas>
+                <canvas id="canvas-2" width="80" height="80" class="frame"></canvas>
+                <canvas id="canvas-3" width="80" height="80" class="frame"></canvas>
+                <canvas id="canvas-4" width="80" height="80" class="frame"></canvas>
+                <canvas id="canvas-5" width="80" height="80" class="frame"></canvas>
+                <canvas id="canvas-6" width="80" height="80" class="frame"></canvas>
+            </div>
+
+        </div>
+    </body>
+</html>
