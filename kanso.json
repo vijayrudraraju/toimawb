@@ -2,7 +2,7 @@
     "name": "one",
     "version": "0.0.3",
     "description": "one",
-    "attachments": ["index.html","one_a.html","one_aa.html","one_aaa.html","vendor","static","lib"],
+    "attachments": ["index.html","one_a.html","one_aa.html","one_aaa.html","one_aaaa.html","vendor","static","lib"],
     "modules": "lib",
     "load": "lib/app",
     "dependencies": {

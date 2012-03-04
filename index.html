@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta name="apple-mobile-web-app-capable" content="yes"/>
-        <meta name="viewport" content="width=640"/>
+        <meta name="viewport" content="width=640,user-scalable=no"/>
 
         <meta charset="utf-8">
         <!-- Le styles -->
@@ -36,20 +36,26 @@
             }
             #a {
                 position: absolute;
-                background: rgb(155,0,0);
+                background: rgb(105,0,0);
                 left: 0px;
                 padding: 10px;
             }
             #aa {
                 position: absolute;
-                background: rgb(205,0,0);
+                background: rgb(155,0,0);
                 left: 140px;
                 padding: 10px;
             }
             #aaa {
                 position: absolute;
-                background: rgb(255,0,0);
+                background: rgb(205,0,0);
                 left: 280px;
+                padding: 10px;
+            }
+            #aaaa {
+                position: absolute;
+                background: rgb(255,0,0);
+                left: 420px;
                 padding: 10px;
             }
             .one {
@@ -66,6 +72,8 @@
     <script type="text/javascript" src="vendor/backbone.js"></script>
     <script type="text/javascript">
         $(function() {
+            window.scrollTo(0,0.9);
+
             document.body.addEventListener('touchstart', function(e){ 
             },false);
             document.body.addEventListener('touchend', function(e){ 
@@ -97,6 +105,7 @@
                 <a href="one_a.html"><div id="a" class="one"><h1 class="white">a</h1></div></a>
                 <a href="one_aa.html"><div id="aa" class="one"><h1 class="white">aa</h1></div></a>
                 <a href="one_aaa.html"><div id="aaa" class="one"><h1 class="white">aaa</h1></div></a>
+                <a href="one_aaaa.html"><div id="aaaa" class="one"><h1 class="white">aaaa</h1></div></a>
             </div>
         </div>
     </body>
