@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="apple-mobile-web-app-capable" content="yes"/>
+        <meta name="viewport" content="width=640,user-scalable=no"/>
+        <meta charset="utf-8">
+        <!-- Le styles -->
+        <link href="../vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
+        <style type="text/css">
+            html {
+                -webkit-tap-highlight-color: rgba(0,0,0,0);
+                width: 640px;
+            }
+            h1 {
+                font-size: 40px;
+            }
+            .header {
+                position: relative;
+                top: 2px;
+            }
+            #new-button {
+                position: absolute;
+                width: 60px;
+                height: 44px;
+                left: 400px;
+                font-size: 20px;
+            }
+            #dup-button {
+                position: absolute;
+                width: 60px;
+                height: 44px;
+                left: 470px;
+                font-size: 20px;
+            }
+            #save-button {
+                position: absolute;
+                width: 60px;
+                height: 44px;
+                left: 540px;
+                font-size: 20px;
+            }
+            .inline {
+                display: inline;
+            }
+            .page-num{
+                position: relative;
+                color: white;
+                top: 16px;
+                left: 32px;
+            }
+            .container {
+                width: 600px;
+                height: 0px;
+                margin-top: 12px;
+                margin-left: 20px;
+                margin-right: 20px;
+                padding: 0px;
+            }
+            .frame-nav {
+                position: relative;
+                width: 98px;
+                height: 660px;
+                left: 502px;
+                top: -470px;
+            }
+            .page-nav {
+                position: relative;
+                width: 90px;
+                height: 70px;
+                background: purple;
+                border-style: solid;
+                border-color: purple;
+                border-width: 4px;
+            }
+            .frames {
+                position: relative;
+                background: white;
+                width: 98px;
+                height: 490px;
+            }
+            .canvas {
+                position: relative;
+                width: 500px;
+                height: 500px;
+                top: 30px;
+            }
+            .levels {
+                position: relative;
+                background: purple;
+                width: 500px;
+                height: 136px;
+                top: -620px;
+            }
+            .color-choices {
+                position: relative;
+                background: white;
+                width: 600px;
+                height: 100px;
+                top: 20px;
+            }
+            #red {
+                position: absolute;
+                background: rgb(255,0,0);
+                left: 0px;
+            }
+            #green {
+                position: absolute;
+                background: rgb(0,255,0);
+                left: 122px;
+            }
+            #blue {
+                position: absolute;
+                background: rgb(0,0,255);
+                left: 244px;
+            }
+            #black {
+                position: absolute;
+                background: rgb(0,0,0);
+                left: 366px;
+            }
+            #white {
+                position: absolute;
+                background: rgb(255,255,255);
+                left: 488px;
+            }
+            #red-select {
+                position: absolute;
+                left: 26px;
+            }
+            #green-select {
+                position: absolute;
+                left: 148px;
+            }
+            #blue-select {
+                position: absolute;
+                left: 270px;
+            }
+            #black-select {
+                position: absolute;
+                left: 392px;
+            }
+            #white-select {
+                position: absolute;
+                left: 514px;
+            }
+            .frame {
+                display: block;
+                background: black;
+                margin-bottom: 0px;
+                border-style: solid;
+                border-color: #ffffff;
+                border-width: 4px;
+            }
+            .choice {
+                border-style: solid;
+                border-color: #000000;
+                border-width: 1px;
+                width: 110px;
+                height: 98px;
+            }
+            .select {
+                top: 20px;
+                width: 60px;
+                height: 60px;
+                background: rgb(127,127,127);
+            }
+            .one {
+                width: 50px;
+                height: 50px;
+            }
+        </style>
+    </head>
+    <!--<script type="text/javascript" src="modules.js"></script>-->
+    <script type="text/javascript" src="/_utils/script/json2.js"></script>
+    <script type="text/javascript" src="/_utils/script/jquery.js"></script>
+    <script type="text/javascript" src="/_utils/script/jquery.couch.js"></script>
+    <script type="text/javascript" src="../vendor/underscore.js"></script>
+    <script type="text/javascript" src="../vendor/backbone.js"></script>
+    <script type="text/javascript" src="../vendor/backbone.localStorage.js"></script>
+    <script type="text/javascript" src="../vendor/backbone-couchdb.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            window.scrollTo(0,0.9);
+
+            Backbone.couch_connector.config.db_name = "blawks";
+            Backbone.couch_connector.config.ddoc_name = "one";
+
+            window.BlawkModel= Backbone.Model.extend({
+                url: '/one_aaaa'
+            }); 
+
+            window.BlawkCollection = Backbone.Collection.extend({ 
+                model: BlawkModel,
+                localStorage: new Store('one_aaaa'),
+                url: "/one_aaaa"
+            });
+
+            window.Blawks = new BlawkCollection;
+
+            window.AppView = Backbone.View.extend({
+                framePages: [],
+                currentPage: 0,
+                selectedPage: 0,
+                selectedFrame: 0,
+                dispNumFrames: 0,
+                blawkWidthNum: 0,
+                blawkHeightNum: 0,
+                timer: '',
+                color: 'red',
+                colorDiff: 40,
+                tintLight: true,
+                tintActive: false,
+                lastEl: '',
+                trailQueue: ['','','',''],
+                colorQueue: ['','','',''],
+                el: $('#blawk-app'),
+                events: {
+                    'click .frame': 'changeFrame',
+                    'click #prev': 'prevPage',
+                    'click #next': 'nextPage',
+                    'mousedown .choice': 'colorDown',
+                    'mouseup .choice': 'colorUp',
+                    'click #red': 'red',
+                    'click #green': 'green',
+                    'click #blue': 'blue',
+                    'click #black': 'black',
+                    'click #white': 'white',
+                    'click #red-select': 'red',
+                    'click #green-select': 'green',
+                    'click #blue-select': 'blue',
+                    'click #black-select': 'black',
+                    'click #white-select': 'white',
+                    'mouseup #red': 'red',
+                    'mouseup #green': 'green',
+                    'mouseup #blue': 'blue',
+                    'mouseup #black': 'black',
+                    'mouseup #white': 'white',
+                    'mouseup #red-select': 'red',
+                    'mouseup #green-select': 'green',
+                    'mouseup #blue-select': 'blue',
+                    'mouseup #black-select': 'black',
+                    'mouseup #white-select': 'white',
+                    'click #new-button': 'createNewFrame',
+                    'click #dup-button': 'dupFrame',
+                    'click #save-button': 'saveToServer',
+                    'mouseenter .one': 'mouseEnter',
+                    'mousedown .one': 'tintOn',
+                    'mouseup .one': 'tintOff'
+                },  
+                onReset: function(coll,resp) {
+                    console.log('onReset');
+                    console.log('coll', coll);
+                    console.log('resp', resp);
+
+                    if (coll !== undefined) {
+                        if (coll.length === 0 && coll.localStorage.records.length === 0) {
+                            console.log('local and remote mawbs empty');
+                            var frames = [];
+                            frames.push([]);
+                            var frame = frames[0];
+                            for (var j=0;j<this.blawkHeightNum;j++) {
+                                for (var i=0;i<this.blawkWidthNum;i++) {
+                                    frame.push($('#index'+i+'x'+j).data('color'));
+                                }
+                            }
+                            Blawks.create({frames:frames});
+                        } else if (coll.length === 0) {
+                            console.log('remote mawbs empty, loading local mawbs');
+                            var localModel = coll.localStorage.findAll()[0];
+                            Blawks.create({frames:localModel.frames});
+                        } else if (coll.localStorage.records.length === 0) {
+                            console.log('local mawbs empty, loading remote mawbs');
+                            Blawks.at(0).sync = Backbone.localSync;
+                            try {
+                                Blawks.at(0).save();
+                            } catch(e) {
+                                console.log('Private browsing mode!');
+                            }
+                            delete Blawks.at(0).sync;
+                        }
+                    }
+
+                    this.resetCanvas();
+                    this.resetFrames();
+                },
+                resetCanvas: function() {
+                    var frames = Blawks.at(0).get('frames');
+                    var frame = frames[this.selectedPage*this.dispNumFrames+this.selectedFrame];
+                    var index = 0;
+
+                    for (var j=0;j<this.blawkHeightNum;j++) {
+                        for (var i=0;i<this.blawkWidthNum;i++) {
+                            $('#index'+i+'x'+j).css('background',frame[index]);
+                            $('#index'+i+'x'+j).data('color',frame[index]);
+                            index++;
+                        }
+                    }
+                },
+                resetFrames: function() {
+                    var frames = Blawks.at(0).get('frames');
+                    var totalNumFrames = frames.length;
+                    this.dispNumFrames = $('.frame').length;
+                    var numPages = Math.ceil(totalNumFrames/this.dispNumFrames);
+
+                    if (this.currentPage == 0) {
+                        $('#prev > h1').html('');
+                    } else {
+                        $('#prev > h1').html(this.currentPage);
+                    }
+
+                    for (var k=0;k<$('.frame').length;k++) {
+                        $($('.frame')[k]).css('border-color','#ffffff');
+                    }
+                    if (this.currentPage == this.selectedPage) {
+                        $($('.frame')[this.selectedFrame]).css('border-color','#ffff00');
+                    }
+
+                    for (var i=0;i<numPages;i++) {
+                        this.framePages[i] = [];    
+                        for (var j=0;j<this.dispNumFrames;j++) {
+                            if (i*this.dispNumFrames+j >= totalNumFrames) {
+                                break;
+                            }
+                            this.framePages[i][j] = frames[i*this.dispNumFrames+j];      
+                        }
+                    }
+
+                    var context = $('#canvas-1')[0].getContext('2d');    
+                    var width = $('.frame').width()/10;
+                    var height = $('.frame').height()/10;
+                    for (var k=0;k<this.dispNumFrames;k++) {
+                        index = 0;
+                        if (this.currentPage*this.dispNumFrames+k < frames.length) {
+                            $($('.frame')[k]).data('index',[this.currentPage,k]);
+                            context = $('.frame')[k].getContext('2d');    
+                            for (var j=0;j<this.blawkHeightNum;j++) {
+                                for (var i=0;i<this.blawkWidthNum;i++) {
+                                    context.fillStyle = this.framePages[this.currentPage][k][index];
+                                    context.fillRect(i*width,j*height,width,height);
+                                    index++;
+                                }
+                            }
+                        } else {
+                            context = $('.frame')[k].getContext('2d');    
+                            $($('.frame')[k]).data('index',null);
+                            for (var j=0;j<this.blawkHeightNum;j++) {
+                                for (var i=0;i<this.blawkWidthNum;i++) {
+                                    context.fillStyle = '#ffffff';
+                                    context.fillRect(i*width,j*height,width,height);
+                                    index++;
+                                }
+                            }
+                        }
+                    }
+
+                    if (this.currentPage+1 < numPages) {
+                        $('#next > h1').html(this.currentPage+2);
+                    } else {
+                        $('#next > h1').html('');
+                    }
+                },
+                prevPage: function() {
+                    if (this.currentPage != 0) {
+                        this.currentPage--;
+                        this.resetFrames();
+                    }
+                },
+                nextPage: function() {
+                    if (this.currentPage+1 < this.framePages.length) {
+                        this.currentPage++;
+                        this.resetFrames();
+                    }
+                },
+                changeFrame: function(e) {
+                    var data = $('#'+e.target.id).data('index');
+                    if (data == null) {
+                        return;
+                    }
+                    var frames = Blawks.at(0).get('frames');
+                    var frame = frames[data[0]*$('.frame').length+data[1]];
+
+                    for (var k=0;k<$('.frame').length;k++) {
+                        $($('.frame')[k]).css('border-color','#ffffff');
+                    }
+                    $('#'+e.target.id).css('border-color','#ffff00');
+
+                    var index = 0;
+                    if (data[1] < frames.length) {
+                        for (var j=0;j<this.blawkHeightNum;j++) {
+                            for (var i=0;i<this.blawkWidthNum;i++) {
+                                $('#index'+i+'x'+j).css('background',frame[index]);
+                                $('#index'+i+'x'+j).data('color',frame[index]);
+                                index++;
+                            }
+                        }
+                    } else {
+                        for (var j=0;j<this.blawkHeightNum;j++) {
+                            for (var i=0;i<this.blawkWidthNum;i++) {
+                                $('#index'+i+'x'+j).css('background','rgb(0,0,0)');
+                                $('#index'+i+'x'+j).data('color','rgb(0,0,0)');
+                                index++;
+                            }
+                        }
+                    }
+
+                    this.selectedPage = data[0];
+                    this.selectedFrame = data[1];
+                },
+                createNewFrame: function(e) {
+                    var frames = Blawks.at(0).get('frames');
+                    frames.push([]);
+                    var frame = frames[frames.length-1];
+                    for (var j=0;j<this.blawkHeightNum;j++) {
+                        for (var i=0;i<this.blawkWidthNum;i++) {
+                            frame.push('rgb(0,0,0)');
+                        }
+                    }
+
+                    Blawks.at(0).set('frames',frames);
+
+                    Blawks.at(0).save({},{success: function(){
+                        console.log('save success!');
+                        Blawks.trigger('reset')}
+                    });
+                },
+                dupFrame: function(e) {
+                    var frames = Blawks.at(0).get('frames');
+                    frames.push([]);
+                    var frame = frames[frames.length-1];
+                    for (var j=0;j<this.blawkHeightNum;j++) {
+                        for (var i=0;i<this.blawkWidthNum;i++) {
+                            frame.push($('#index'+i+'x'+j).data('color'));
+                        }
+                    }
+
+                    Blawks.at(0).set('frames',frames);
+
+                    Blawks.at(0).save({},{success: function(){
+                        console.log('save success!');
+                        Blawks.trigger('reset')}
+                    });
+                },
+                saveToServer: function(e) {
+                    var frames = Blawks.at(0).get('frames');
+                    console.log('save',this.currentPage,this.selectedFrame);
+                    frames[this.currentPage*this.dispNumFrames+this.selectedFrame] = [];
+                    var frame = frames[this.currentPage*this.dispNumFrames+this.selectedFrame];
+                    for (var j=0;j<this.blawkHeightNum;j++) {
+                        for (var i=0;i<this.blawkWidthNum;i++) {
+                            frame.push($('#index'+i+'x'+j).data('color'));
+                        }
+                    }
+
+                    Blawks.at(0).set('frames',frames);
+
+                    Blawks.at(0).save({},{success: function(){
+                        console.log('save success!');
+                        Blawks.trigger('reset')}
+                    });
+                },
+                initialize: function() {
+                    this.red();
+                    $('#canvas-1').css('border-color','#ffff00');
+
+                    this.initializeCanvas();
+
+                    Blawks.on('reset', this.onReset, this);
+                    Blawks.fetch({success: function() { console.log('fetch success'); }});
+                },
+                initializeCanvas: function() {
+                    this.blawkWidthNum = $('.canvas').width() / $('.one').width();
+                    this.blawkHeightNum = $('.canvas').height() / $('.one').height();
+
+                    $('.canvas').html('');
+
+                    for (var j=0;j<this.blawkHeightNum;j++) {
+                        for (var i=0;i<this.blawkWidthNum;i++) {
+                            $('.canvas').append('<div class="one"></div>');
+                            $('.canvas > div:last-child').css('position','absolute').css('left',i*$('.one').width());
+                            $('.canvas > div:last-child').css('top',j*$('.one').width()).attr('id','index'+i+'x'+j);
+                            $('.canvas > div:last-child').css('background','rgb(0,0,0)');
+                            $('.canvas > div:last-child').data('color','rgb(0,0,0)');
+                        }
+                    }
+                },
+                tintOn: function(e) {
+                    this.tintActive = true;
+                },
+                tintOff: function(e) {
+                    this.tintActive = false;
+                },
+                mouseEnter: function(e) {
+                    var newColor = this.tint($('#'+e.target.id).data('color'));
+
+                    if (this.tintActive) {
+                        this.trailQueue.push($('#'+e.target.id));
+                        var newColor = 'rgb('+newColor[0]+','+newColor[1]+','+newColor[2]+')';
+                        this.colorQueue.push(newColor);
+                        this.trail();
+                    }
+                },
+                trail: function() {
+                    if (this.timer !== '') {
+                        clearTimeout(this.timer); 
+                    }
+
+                    var value = 200;
+                    var _els = this.trailQueue;
+                    var _colors = this.colorQueue;
+
+                    var trailColor;
+                    for (var i=_els.length-1;i>0;i--) {
+                        if (_els[i] === '') {
+                            continue;
+                        }
+                        if (this.color === 'red') {
+                            trailColor = 'rgb('+value+',0,0)';
+                        } else if (this.color === 'green') {
+                            trailColor = 'rgb(0,'+value+',0)';
+                        } else if (this.color === 'blue') {
+                            trailColor = 'rgb(0,0,'+value+')';
+                        } else if (this.color === 'white') {
+                            trailColor = 'rgb('+value+','+value+','+value+')';
+                        } else {
+                            trailColor = 'rgb('+(255-value-40)+','+(255-value-40)+','+(255-value-40)+')';
+                        }
+                        _els[i].css('background', trailColor);
+                        value = value-30;
+                    }
+
+                    if (_els[0] !== '') {
+                        _els[0].css('background', _colors[0]);
+                        _els[0].data('color',_colors[0]);
+                    }
+
+                    if (this.trailQueue.length > 4) {
+                        this.trailQueue.shift();
+                        this.colorQueue.shift();
+                    }
+
+                    this.timer = setTimeout(this.fadeTrail, 400);
+                },
+                fadeTrail: function() {
+                    var _els = App.trailQueue;
+                    var _colors = App.colorQueue;
+
+                    var length = _els.length;
+                    for (var i=0;i<length;i++) {
+                        _els[0].css('background', _colors[0]);
+                        _els[0].data('color',_colors[0]);
+                        App.trailQueue.shift();
+                        App.colorQueue.shift();
+                    }
+                },
+                tint: function(oldColor) {
+                    oldColor = oldColor.substring(4,oldColor.length-1).split(',');
+                    for (var i=0;i<oldColor.length;i++) {
+                        oldColor[i] = parseInt(oldColor[i]);
+                    }
+
+                    var newColor = [oldColor[0], oldColor[1], oldColor[2]];
+                    var diff = this.colorDiff;
+
+                    if (this.color === 'red' && oldColor[0] < 255) {
+                        newColor[0] = oldColor[0] + diff;
+                    } else if (this.color === 'green' && oldColor[1] < 255) { 
+                        newColor[1] = oldColor[1] + diff;
+                    } else if (this.color === 'blue' && oldColor[2] < 255) {
+                        newColor[2] = oldColor[2] + diff;
+                    } else if (this.color === 'white') {
+                        if (oldColor[0] < 255) {
+                            newColor[0] = oldColor[0] + diff; 
+                        } 
+                        if (oldColor[1] < 255) {
+                            newColor[1] = oldColor[1] + diff; 
+                        } 
+                        if (oldColor[2] < 255) {
+                            newColor[2] = oldColor[2] + diff; 
+                        }
+                    } else if (this.color === 'black') {
+                        if (oldColor[0] > 0) {
+                            newColor[0] = oldColor[0] - diff; 
+                        } 
+                        if (oldColor[1] > 0) {
+                            newColor[1] = oldColor[1] - diff; 
+                        } 
+                        if (oldColor[2] > 0) {
+                            newColor[2] = oldColor[2] - diff; 
+                        }
+                    }
+
+                    if (oldColor[0] < 0) {
+                        newColor[0] = 0;
+                    } 
+                    if (oldColor[1] < 0) {
+                        newColor[1] = 0;
+                    } 
+                    if (oldColor[2] < 0) {
+                        newColor[2] = 0;
+                    }
+                    if (oldColor[0] > 255) {
+                        newColor[0] = 255;
+                    } 
+                    if (oldColor[1] > 255) {
+                        newColor[1] = 255;
+                    } 
+                    if (oldColor[2] > 255) {
+                        newColor[2] = 255;
+                    }
+
+                    return newColor;
+                },
+                blackwhite: function() {
+                    this.tintLight = !this.tintLight;
+                    if (this.tintLight) {
+                        $('#blackwhite').css('background','rgb(255,255,255)');
+                    } else {
+                        $('#blackwhite').css('background','rgb(0,0,0)');
+                    }
+                },
+                colorDown: function(e) {
+                    $('#'+e.target.id+'-select').toggle(true);
+                    $('#'+e.target.id+'-select').css('background','rgb(127,127,0)');
+                },
+                colorUp: function(e) {
+                },
+                red: function() {
+                    this.color = 'red';
+                    $('#red-select').css('background','rgb(127,127,127)');
+                    $('#red-select').toggle(true);
+                    $('#green-select').toggle(false);
+                    $('#blue-select').toggle(false);
+                    $('#black-select').toggle(false);
+                    $('#white-select').toggle(false);
+                },
+                green: function() {
+                    this.color = 'green';
+                    $('#red-select').toggle(false);
+                    $('#green-select').css('background','rgb(127,127,127)');
+                    $('#green-select').toggle(true);
+                    $('#blue-select').toggle(false);
+                    $('#black-select').toggle(false);
+                    $('#white-select').toggle(false);
+                },
+                blue: function() {
+                    this.color = 'blue';
+                    $('#red-select').toggle(false);
+                    $('#green-select').toggle(false);
+                    $('#blue-select').css('background','rgb(127,127,127)');
+                    $('#blue-select').toggle(true);
+                    $('#black-select').toggle(false);
+                    $('#white-select').toggle(false);
+                },
+                black: function() {
+                    this.color = 'black';
+                    $('#red-select').toggle(false);
+                    $('#green-select').toggle(false);
+                    $('#blue-select').toggle(false);
+                    $('#black-select').css('background','rgb(127,127,127)');
+                    $('#black-select').toggle(true);
+                    $('#white-select').toggle(false);
+                },
+                white: function() {
+                    this.color = 'white';
+                    $('#red-select').toggle(false);
+                    $('#green-select').toggle(false);
+                    $('#blue-select').toggle(false);
+                    $('#black-select').toggle(false);
+                    $('#white-select').css('background','rgb(127,127,127)');
+                    $('#white-select').toggle(true);
+                }
+            });
+
+            window.App = new AppView;
+
+            document.body.addEventListener('touchstart', function(e){ 
+            },false);
+            document.body.addEventListener('touchend', function(e){ 
+            },false);
+            $('.canvas').delegate('.one', 'touchmove', function(event) {
+                var e = event.originalEvent;
+                e.preventDefault(); 
+
+                var $el = $(document.elementFromPoint(e.targetTouches[0].clientX,e.targetTouches[0].clientY));
+                if ($el.hasClass('one') && $el.attr('id') !== App.lastEl) {
+                    var newColor = App.tint($el.data('color'));
+
+                    App.trailQueue.push($el);
+                    var newColor = 'rgb('+newColor[0]+','+newColor[1]+','+newColor[2]+')';
+                    App.colorQueue.push(newColor);
+                    App.trail();
+
+                    App.lastEl = $el.attr('id');
+                }
+            },false);
+        });
+    </script>
+    <body id="body">
+        <div id="blawk-app" class="container">
+
+            <div class="header">
+                <a class="inline" href="../index.html"><h1 class="inline">toimawb/</h1></a>
+                <a class="inline" href="blawks.html"><h1 class="inline">blawks/</h1></a>
+                <h1 class="inline">aaaa/</h1>
+                <button id="new-button" class="btn inline">new</button>
+                <button id="dup-button" class="btn inline">dup</button>
+                <button id="save-button" class="btn inline">save</button>
+            </div>
+
+            <div class="color-choices">
+                <div id="red" class="choice"></div>
+                <div id="green" class="choice"></div>
+                <div id="blue" class="choice"></div>
+                <div id="black" class="choice"></div>
+                <div id="white" class="choice"></div>
+                <div id="red-select" class="select"></div>
+                <div id="green-select" class="select"></div>
+                <div id="blue-select" class="select"></div>
+                <div id="black-select" class="select"></div>
+                <div id="white-select" class="select"></div>
+            </div>
+
+            <div class="canvas">
+                <div class="one"></div>
+            </div>
+
+            <div class="frame-nav">
+                <div id="prev" class="page-nav"><h1 class="page-num">1</h1></div>
+                <div class="frames">
+                    <canvas id="canvas-1" width="90" height="90" class="frame"></canvas>
+                    <canvas id="canvas-2" width="90" height="90" class="frame"></canvas>
+                    <canvas id="canvas-3" width="90" height="90" class="frame"></canvas>
+                    <canvas id="canvas-4" width="90" height="90" class="frame"></canvas>
+                    <canvas id="canvas-5" width="90" height="90" class="frame"></canvas>
+                </div>
+                <div id="next" class="page-nav"><h1 class="page-num">3</h1></div>
+            </div>
+
+            <div class="levels">
+            </div>
+
+        </div>
+    </body>
+</html>
