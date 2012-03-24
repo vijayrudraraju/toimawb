@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>toimawb - blawks</title>
+        <title>toimawb-about-what</title>
         <meta name="apple-mobile-web-app-capable" content="yes"/>
         <meta name="viewport" content="width=640,user-scalable=no"/>
 
@@ -14,6 +14,9 @@
             }
             h1 {
                 font-size: 40px;
+            }
+            h2 {
+                font-size: 24px;
             }
             .inline {
                 display: inline;
@@ -35,32 +38,12 @@
                 height: 600px;
                 margin-top: 12px;
             }
-            .one {
-                width: 100px;
-                height: 100px;
-            }
-            #who {
+            #what {
+                width: 500px;
+                height: 600px;
                 position: absolute;
                 background: rgb(105,0,0);
                 left: 0px;
-                padding: 10px;
-            }
-            #what {
-                position: absolute;
-                background: rgb(155,0,0);
-                left: 140px;
-                padding: 10px;
-            }
-            #why {
-                position: absolute;
-                background: rgb(205,0,0);
-                left: 280px;
-                padding: 10px;
-            }
-            #how {
-                position: absolute;
-                background: rgb(255,0,0);
-                left: 420px;
                 padding: 10px;
             }
         </style>
@@ -101,13 +84,11 @@
         <div id="blawk-app" class="container">
             <div class="page-header inline">
                 <a class="inline" href="../index.html"><h1 class="inline">toimawb/</h1></a>
-                <h1 class="inline">about/</h1>
+                <a class="inline" href="about.html"><h1 class="inline">about/</h1></a>
+                <h1 class="inline">what/</h1>
             </div>
             <div class="canvas">
-                <a href="who.html"><div id="who" class="one"><h1 class="white">who</h1></div></a>
-                <a href="what.html"><div id="what" class="one"><h1 class="white">what</h1></div></a>
-                <a href="why.html"><div id="why" class="one"><h1 class="white">why</h1></div></a>
-                <a href="how.html"><div id="how" class="one"><h1 class="white">how</h1></div></a>
+                <div id="what"><h2 class="white">this is a space for me to play with some ideas. seeing as a greater and greater percentage of computers are interacted with through touchscreens about 100mm x 50mm in size, im interested in finding out what the maximum amount of creative functionality that can be accessed through such a device is. constraints include being able to fit the whole system on a mobile device and every interface being clearly visible and usable purely through human fingers on a small touchscreen without using hacks like scrolling, tabs, modes, etc.</h2></div>
             </div>
         </div>
     </body>
