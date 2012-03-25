@@ -232,6 +232,8 @@
             window.Blawks = new BlawkCollection;
 
             window.AppView = Backbone.View.extend({
+                filmstripPointer: 0,
+                filmstripTimer: 0,
                 framePages: [],
                 cellStrip: [],
                 currentPage: 0,
@@ -411,9 +413,64 @@
                         this.resetFrames();
                     }
                 },
+                nextFrame: function() {
+                    var pointer = window.App.filmstripPointer;
+                    var strip = window.App.filmstrip;
+
+                    console.log(pointer);
+                    console.log(strip);
+
+                    var index = 0;
+                    for (var j=0;j<window.App.blawkHeightNum;j++) {
+                        for (var i=0;i<window.App.blawkWidthNum;i++) {
+                            $('#index'+i+'x'+j).css('background',strip[pointer][index]);
+                            $('#index'+i+'x'+j).data('color',strip[pointer][index]);
+                            index++;
+                        }
+                    }
+                    window.App.filmstripPointer++; 
+                    if (window.App.filmstripPointer >= $('.cell').length) {
+                        window.App.filmstripPointer = 0; 
+                    }
+
+                },
                 playFilmstrip: function() {
+                    this.filmstripTimer = setInterval(this.nextFrame, 500);
+
+                    var el = $('#cell-play');
+                    var context = el[0].getContext('2d');    
+                    context.fillStyle = '#ff0000';
+                    context.beginPath();
+                    context.moveTo(20,20);
+                    context.lineTo(20,el.height()-20);
+                    context.lineTo(el.width()-20,el.height()/2);
+                    context.lineTo(20,20);
+                    context.fill();
+                    context.closePath();
+
+                    el = $('#cell-stop');
+                    context = el[0].getContext('2d');    
+                    context.fillStyle = '#ffffff';
+                    context.fillRect(20,20,el.width()-40,el.height()-40);
                 },
                 stopFilmstrip: function() {
+                    clearInterval(this.filmstripTimer);
+
+                    var el = $('#cell-play');
+                    var context = el[0].getContext('2d');    
+                    context.fillStyle = '#ffffff';
+                    context.beginPath();
+                    context.moveTo(20,20);
+                    context.lineTo(20,el.height()-20);
+                    context.lineTo(el.width()-20,el.height()/2);
+                    context.lineTo(20,20);
+                    context.fill();
+                    context.closePath();
+
+                    el = $('#cell-stop');
+                    context = el[0].getContext('2d');    
+                    context.fillStyle = '#ff0000';
+                    context.fillRect(20,20,el.width()-40,el.height()-40);
                 },
                 setCell: function() {
                     var context = $('.cell')[this.selectedCell].getContext('2d');    
