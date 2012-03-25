@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>toimawb-blawks-b</title>
+        <title>toimawb-blawks-c</title>
         <meta name="apple-mobile-web-app-capable" content="yes"/>
         <meta name="viewport" content="width=640,user-scalable=no"/>
         <meta charset="utf-8">
@@ -89,9 +89,17 @@
                 position: relative;
                 background: purple;
                 width: 480px;
-                height: 136px;
+                height: 60px;
                 top: -535px;
             }
+            .film-actions {
+                position: relative;
+                background: white;
+                width: 480px;
+                height: 74px;
+                top: -520px;
+            }
+            /*
             .filmcell {
                 position: relative;
                 background: purple;
@@ -99,6 +107,7 @@
                 height: 136px;
                 top: -535px;
             }
+            */
             .color-choices {
                 position: relative;
                 background: white;
@@ -167,6 +176,15 @@
                 border-width: 2px;
                 float: left;
             }
+            .cell-action {
+                display: block;
+                background: black;
+                border-style: solid;
+                border-color: #ffffff;
+                border-width: 2px;
+                float: left;
+                margin-left: 37px;
+            }
             .choice {
                 border-style: solid;
                 border-color: #000000;
@@ -181,11 +199,12 @@
                 background: rgb(127,127,127);
             }
             .one {
-                width: 60px;
-                height: 60px;
+                width: 120px;
+                height: 120px;
             }
         </style>
     </head>
+    <!--<script type="text/javascript" src="modules.js"></script>-->
     <script type="text/javascript" src="/_utils/script/json2.js"></script>
     <script type="text/javascript" src="/_utils/script/jquery.js"></script>
     <script type="text/javascript" src="/_utils/script/jquery.couch.js"></script>
@@ -201,23 +220,26 @@
             Backbone.couch_connector.config.ddoc_name = "one";
 
             window.BlawkModel= Backbone.Model.extend({
-                url: '/one_b'
+                url: '/one_c'
             }); 
 
             window.BlawkCollection = Backbone.Collection.extend({ 
                 model: BlawkModel,
-                localStorage: new Store('one_b'),
-                url: "/one_b"
+                localStorage: new Store('one_c'),
+                url: "/one_c"
             });
 
             window.Blawks = new BlawkCollection;
 
             window.AppView = Backbone.View.extend({
                 framePages: [],
+                cellStrip: [],
                 currentPage: 0,
                 selectedPage: 0,
                 selectedFrame: 0,
+                selectedCell: 0,
                 dispNumFrames: 0,
+                dispNumCells: 0,
                 blawkWidthNum: 0,
                 blawkHeightNum: 0,
                 timer: '',
@@ -230,11 +252,15 @@
                 colorQueue: ['','','',''],
                 el: $('#blawk-app'),
                 events: {
+                    'click .cell': 'changeCell',
                     'click .frame': 'changeFrame',
                     'click #prev': 'prevPage',
                     'click #next': 'nextPage',
                     'mousedown .choice': 'colorDown',
                     'mouseup .choice': 'colorUp',
+                    'click #cell-add': 'setCell',
+                    'click #cell-play': 'playFilmstrip',
+                    'click #cell-stop': 'stopFilmstrip',
                     'click #red': 'red',
                     'click #green': 'green',
                     'click #blue': 'blue',
@@ -343,6 +369,7 @@
                     var context = $('#canvas-1')[0].getContext('2d');    
                     var width = $('.frame').width()/this.blawkWidthNum;
                     var height = $('.frame').height()/this.blawkHeightNum;
+                    var index = 0;
                     for (var k=0;k<this.dispNumFrames;k++) {
                         index = 0;
                         if (this.currentPage*this.dispNumFrames+k < frames.length) {
@@ -383,6 +410,32 @@
                         this.currentPage++;
                         this.resetFrames();
                     }
+                },
+                playFilmstrip: function() {
+                },
+                stopFilmstrip: function() {
+                },
+                setCell: function() {
+                    var context = $('.cell')[this.selectedCell].getContext('2d');    
+                    var width = $('.cell').width()/this.blawkWidthNum;
+                    var height = $('.cell').height()/this.blawkHeightNum;
+                    var index = 0;
+                    for (var j=0;j<this.blawkHeightNum;j++) {
+                        for (var i=0;i<this.blawkWidthNum;i++) {
+                            this.filmstrip[this.selectedCell][index] = $('#index'+i+'x'+j).data('color');
+                            context.fillStyle = $('#index'+i+'x'+j).data('color');
+                            context.fillRect(i*width,j*height,width,height);
+                            index++;
+                        }
+                    }
+                },
+                changeCell: function(e) {
+                    this.selectedCell = $('#'+e.target.id).data('index');
+
+                    for (var k=0;k<$('.cell').length;k++) {
+                        $($('.cell')[k]).css('border-color','#ffffff');
+                    }
+                    $('#'+e.target.id).css('border-color','#ffff00');
                 },
                 changeFrame: function(e) {
                     var data = $('#'+e.target.id).data('index');
@@ -471,11 +524,42 @@
                         Blawks.trigger('reset')}
                     });
                 },
+                resetFilmstrip: function() {
+                    this.dispNumCells = $('.cell').length;
+                    this.filmstrip = [];
+
+                    for (var k=0;k<$('.cell').length;k++) {
+                        $($('.cell')[k]).css('border-color','#ffffff');
+                    }
+                    if (this.currentPage == this.selectedPage) {
+                        $($('.cell')[this.selectedCell]).css('border-color','#ffff00');
+                    }
+
+                    var context = 0;    
+                    var width = $('.cell').width()/this.blawkWidthNum;
+                    var height = $('.cell').height()/this.blawkHeightNum;
+                    for (var k=0;k<this.dispNumCells;k++) {
+                        $($('.cell')[k]).data('index',k);
+                        this.filmstrip[k] = [];
+
+                        context = $('.cell')[k].getContext('2d');    
+                        context.fillStyle = 'rgb(0,0,0)';
+                        context.fillRect(0,0,$('.cell').width(),$('.cell').height());
+
+                        for (var j=0;j<this.blawkHeightNum;j++) {
+                            for (var i=0;i<this.blawkWidthNum;i++) {
+                                this.filmstrip[k].push('rgb(0,0,0)');
+                            }
+                        }
+                    }
+                },
                 initialize: function() {
                     this.red();
                     $('#canvas-1').css('border-color','#ffff00');
 
                     this.initializeCanvas();
+                    this.initializeButtons();
+                    this.resetFilmstrip();
 
                     Blawks.on('reset', this.onReset, this);
                     Blawks.fetch({success: function() { console.log('fetch success'); }});
@@ -495,6 +579,29 @@
                             $('.canvas > div:last-child').data('color','rgb(0,0,0)');
                         }
                     }
+                },
+                initializeButtons: function() {
+                    var el = $('#cell-add');
+                    var context = el[0].getContext('2d');    
+                    context.fillStyle = '#ffffff';
+                    context.fillRect(el.width()/2-10,10,20,el.height()-20);
+                    context.fillRect(10,el.height()/2-10,el.height()-20,20);
+
+                    el = $('#cell-play');
+                    context = el[0].getContext('2d');    
+                    context.fillStyle = '#ffffff';
+                    context.beginPath();
+                    context.moveTo(20,20);
+                    context.lineTo(20,el.height()-20);
+                    context.lineTo(el.width()-20,el.height()/2);
+                    context.lineTo(20,20);
+                    context.fill();
+                    context.closePath();
+
+                    el = $('#cell-stop');
+                    context = el[0].getContext('2d');    
+                    context.fillStyle = '#ffffff';
+                    context.fillRect(20,20,el.width()-40,el.height()-40);
                 },
                 tintOn: function(e) {
                     this.tintActive = true;
@@ -714,7 +821,7 @@
             <div class="header">
                 <a class="inline" href="../"><h1 class="inline">toimawb/</h1></a>
                 <a class="inline" href="blawks.html"><h1 class="inline">blawks/</h1></a>
-                <h1 class="inline">b/</h1>
+                <h1 class="inline">c/</h1>
                 <button id="new-button" class="btn inline">new</button>
                 <button id="dup-button" class="btn inline">dup</button>
                 <button id="save-button" class="btn inline">save</button>
@@ -757,6 +864,13 @@
                 <canvas id="cell-6" width="56" height="56" class="cell"></canvas>
                 <canvas id="cell-7" width="56" height="56" class="cell"></canvas>
                 <canvas id="cell-8" width="56" height="56" class="cell"></canvas>
+            </div>
+
+            <div class="film-actions">
+                <canvas id="cell-add" width="70" height="70" class="cell-action"></canvas>
+                <canvas id="cell-remove" width="70" height="70" class="cell-action"></canvas>
+                <canvas id="cell-play" width="70" height="70" class="cell-action"></canvas>
+                <canvas id="cell-stop" width="70" height="70" class="cell-action"></canvas>
             </div>
 
         </div>
