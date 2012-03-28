@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>toimawb-blawks-aaa</title>
+        <title>toimawb-blawks-bb</title>
         <meta name="apple-mobile-web-app-capable" content="yes"/>
         <meta name="viewport" content="width=640,user-scalable=no"/>
         <meta charset="utf-8">
@@ -19,18 +19,25 @@
                 position: relative;
                 top: 2px;
             }
-            #save-button {
-                position: absolute;
-                width: 80px;
-                height: 44px;
-                left: 520px;
-                font-size: 20px;
-            }
             #new-button {
                 position: absolute;
-                width: 80px;
+                width: 60px;
                 height: 44px;
-                left: 430px;
+                left: 400px;
+                font-size: 20px;
+            }
+            #dup-button {
+                position: absolute;
+                width: 60px;
+                height: 44px;
+                left: 470px;
+                font-size: 20px;
+            }
+            #save-button {
+                position: absolute;
+                width: 60px;
+                height: 44px;
+                left: 540px;
                 font-size: 20px;
             }
             .inline {
@@ -180,13 +187,13 @@
             Backbone.couch_connector.config.ddoc_name = "one";
 
             window.BlawkModel= Backbone.Model.extend({
-                url: '/one_aaa'
+                url: '/one_bb'
             }); 
 
             window.BlawkCollection = Backbone.Collection.extend({ 
                 model: BlawkModel,
-                localStorage: new Store('one_aaa'),
-                url: "/one_aaa"
+                localStorage: new Store('one_bb'),
+                url: "/one_bb"
             });
 
             window.Blawks = new BlawkCollection;
@@ -212,13 +219,31 @@
                     'click .frame': 'changeFrame',
                     'click #prev': 'prevPage',
                     'click #next': 'nextPage',
+                    'mousedown .choice': 'colorDown',
+                    'mouseup .choice': 'colorUp',
                     'click #red': 'red',
                     'click #green': 'green',
                     'click #blue': 'blue',
                     'click #black': 'black',
                     'click #white': 'white',
-                    'click #save-button': 'saveToServer',
+                    'click #red-select': 'red',
+                    'click #green-select': 'green',
+                    'click #blue-select': 'blue',
+                    'click #black-select': 'black',
+                    'click #white-select': 'white',
+                    'mouseup #red': 'red',
+                    'mouseup #green': 'green',
+                    'mouseup #blue': 'blue',
+                    'mouseup #black': 'black',
+                    'mouseup #white': 'white',
+                    'mouseup #red-select': 'red',
+                    'mouseup #green-select': 'green',
+                    'mouseup #blue-select': 'blue',
+                    'mouseup #black-select': 'black',
+                    'mouseup #white-select': 'white',
                     'click #new-button': 'createNewFrame',
+                    'click #dup-button': 'dupFrame',
+                    'click #save-button': 'saveToServer',
                     'mouseenter .one': 'mouseEnter',
                     'mousedown .one': 'tintOn',
                     'mouseup .one': 'tintOff'
@@ -261,7 +286,7 @@
                 },
                 resetCanvas: function() {
                     var frames = Blawks.at(0).get('frames');
-                    var frame = frames[0];
+                    var frame = frames[this.selectedPage*this.dispNumFrames+this.selectedFrame];
                     var index = 0;
 
                     for (var j=0;j<this.blawkHeightNum;j++) {
@@ -389,6 +414,23 @@
                     for (var j=0;j<this.blawkHeightNum;j++) {
                         for (var i=0;i<this.blawkWidthNum;i++) {
                             frame.push('rgb(0,0,0)');
+                        }
+                    }
+
+                    Blawks.at(0).set('frames',frames);
+
+                    Blawks.at(0).save({},{success: function(){
+                        console.log('save success!');
+                        Blawks.trigger('reset')}
+                    });
+                },
+                dupFrame: function(e) {
+                    var frames = Blawks.at(0).get('frames');
+                    frames.push([]);
+                    var frame = frames[frames.length-1];
+                    for (var j=0;j<this.blawkHeightNum;j++) {
+                        for (var i=0;i<this.blawkWidthNum;i++) {
+                            frame.push($('#index'+i+'x'+j).data('color'));
                         }
                     }
 
@@ -577,8 +619,15 @@
                         $('#blackwhite').css('background','rgb(0,0,0)');
                     }
                 },
+                colorDown: function(e) {
+                    $('#'+e.target.id+'-select').toggle(true);
+                    $('#'+e.target.id+'-select').css('background','rgb(127,127,0)');
+                },
+                colorUp: function(e) {
+                },
                 red: function() {
                     this.color = 'red';
+                    $('#red-select').css('background','rgb(127,127,127)');
                     $('#red-select').toggle(true);
                     $('#green-select').toggle(false);
                     $('#blue-select').toggle(false);
@@ -588,6 +637,7 @@
                 green: function() {
                     this.color = 'green';
                     $('#red-select').toggle(false);
+                    $('#green-select').css('background','rgb(127,127,127)');
                     $('#green-select').toggle(true);
                     $('#blue-select').toggle(false);
                     $('#black-select').toggle(false);
@@ -597,6 +647,7 @@
                     this.color = 'blue';
                     $('#red-select').toggle(false);
                     $('#green-select').toggle(false);
+                    $('#blue-select').css('background','rgb(127,127,127)');
                     $('#blue-select').toggle(true);
                     $('#black-select').toggle(false);
                     $('#white-select').toggle(false);
@@ -606,6 +657,7 @@
                     $('#red-select').toggle(false);
                     $('#green-select').toggle(false);
                     $('#blue-select').toggle(false);
+                    $('#black-select').css('background','rgb(127,127,127)');
                     $('#black-select').toggle(true);
                     $('#white-select').toggle(false);
                 },
@@ -615,6 +667,7 @@
                     $('#green-select').toggle(false);
                     $('#blue-select').toggle(false);
                     $('#black-select').toggle(false);
+                    $('#white-select').css('background','rgb(127,127,127)');
                     $('#white-select').toggle(true);
                 }
             });
@@ -649,9 +702,10 @@
             <div class="header">
                 <a class="inline" href="../"><h1 class="inline">toimawb/</h1></a>
                 <a class="inline" href="blawks.html"><h1 class="inline">blawks/</h1></a>
-                <h1 class="inline">aaa/</h1>
+                <h1 class="inline">bb/</h1>
                 <button id="new-button" class="btn inline">new</button>
-                <button id="save-button" class="btn inline">snap it!</button>
+                <button id="dup-button" class="btn inline">dup</button>
+                <button id="save-button" class="btn inline">save</button>
             </div>
 
             <div class="color-choices">

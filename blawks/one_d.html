@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>toimawb-blawks-aaaa</title>
+        <title>toimawb-blawks-d</title>
         <meta name="apple-mobile-web-app-capable" content="yes"/>
         <meta name="viewport" content="width=640,user-scalable=no"/>
         <meta charset="utf-8">
@@ -57,41 +57,55 @@
                 margin-right: 20px;
                 padding: 0px;
             }
+
             .frame-nav {
+                display: none;
                 position: relative;
-                width: 98px;
-                height: 660px;
-                left: 502px;
-                top: -470px;
+                width: 110px;
+                height: 580px;
+                left: 490px;
+                top: -450px;
             }
+
             .page-nav {
                 position: relative;
-                width: 90px;
+                width: 100px;
                 height: 70px;
                 background: purple;
                 border-style: solid;
                 border-color: purple;
-                border-width: 4px;
+                border-width: 5px;
             }
             .frames {
                 position: relative;
                 background: white;
-                width: 98px;
-                height: 490px;
+                width: 110px;
+                height: 440px;
             }
             .canvas {
                 position: relative;
-                width: 500px;
-                height: 500px;
+                width: 600px;
+                height: 600px;
                 top: 30px;
             }
-            .levels {
+
+            .filmstrip {
+                display: none;
                 position: relative;
                 background: purple;
-                width: 500px;
-                height: 136px;
-                top: -620px;
+                width: 480px;
+                height: 60px;
+                top: -535px;
             }
+            .film-actions {
+                display: none;
+                position: relative;
+                background: white;
+                width: 480px;
+                height: 74px;
+                top: -520px;
+            }
+            
             .color-choices {
                 position: relative;
                 background: white;
@@ -152,6 +166,23 @@
                 border-color: #ffffff;
                 border-width: 4px;
             }
+            .cell {
+                display: block;
+                background: black;
+                border-style: solid;
+                border-color: #ffffff;
+                border-width: 2px;
+                float: left;
+            }
+            .cell-action {
+                display: block;
+                background: black;
+                border-style: solid;
+                border-color: #ffffff;
+                border-width: 2px;
+                float: left;
+                margin-left: 37px;
+            }
             .choice {
                 border-style: solid;
                 border-color: #000000;
@@ -166,12 +197,11 @@
                 background: rgb(127,127,127);
             }
             .one {
-                width: 50px;
-                height: 50px;
+                width: 150px;
+                height: 150px;
             }
         </style>
     </head>
-    <!--<script type="text/javascript" src="modules.js"></script>-->
     <script type="text/javascript" src="/_utils/script/json2.js"></script>
     <script type="text/javascript" src="/_utils/script/jquery.js"></script>
     <script type="text/javascript" src="/_utils/script/jquery.couch.js"></script>
@@ -187,23 +217,30 @@
             Backbone.couch_connector.config.ddoc_name = "one";
 
             window.BlawkModel= Backbone.Model.extend({
-                url: '/one_aaaa'
+                url: '/one_d'
             }); 
 
             window.BlawkCollection = Backbone.Collection.extend({ 
                 model: BlawkModel,
-                localStorage: new Store('one_aaaa'),
-                url: "/one_aaaa"
+                localStorage: new Store('one_d'),
+                url: "/one_d"
             });
 
             window.Blawks = new BlawkCollection;
 
             window.AppView = Backbone.View.extend({
+                filmstripPointer: 0,
+                filmstripTimer: 0,
                 framePages: [],
+                cellStrip: [],
                 currentPage: 0,
                 selectedPage: 0,
                 selectedFrame: 0,
+                selectedCell: 0,
                 dispNumFrames: 0,
+                dispNumCells: 0,
+                blawkWidth: 150,
+                blawkHeight: 150,
                 blawkWidthNum: 0,
                 blawkHeightNum: 0,
                 timer: '',
@@ -216,11 +253,15 @@
                 colorQueue: ['','','',''],
                 el: $('#blawk-app'),
                 events: {
+                    'click .cell': 'changeCell',
                     'click .frame': 'changeFrame',
                     'click #prev': 'prevPage',
                     'click #next': 'nextPage',
                     'mousedown .choice': 'colorDown',
                     'mouseup .choice': 'colorUp',
+                    'click #cell-add': 'setCell',
+                    'click #cell-play': 'playFilmstrip',
+                    'click #cell-stop': 'stopFilmstrip',
                     'click #red': 'red',
                     'click #green': 'green',
                     'click #blue': 'blue',
@@ -327,13 +368,16 @@
                     }
 
                     var context = $('#canvas-1')[0].getContext('2d');    
-                    var width = $('.frame').width()/10;
-                    var height = $('.frame').height()/10;
+                    var width = $('.frame').width()/this.blawkWidthNum;
+                    var height = $('.frame').height()/this.blawkHeightNum;
+                    var index = 0;
                     for (var k=0;k<this.dispNumFrames;k++) {
                         index = 0;
                         if (this.currentPage*this.dispNumFrames+k < frames.length) {
                             $($('.frame')[k]).data('index',[this.currentPage,k]);
                             context = $('.frame')[k].getContext('2d');    
+                            context.fillStyle = '#000000';
+                            context.fillRect(0,0,$('.frame').width(),$('.frame').height());
                             for (var j=0;j<this.blawkHeightNum;j++) {
                                 for (var i=0;i<this.blawkWidthNum;i++) {
                                     context.fillStyle = this.framePages[this.currentPage][k][index];
@@ -344,13 +388,9 @@
                         } else {
                             context = $('.frame')[k].getContext('2d');    
                             $($('.frame')[k]).data('index',null);
-                            for (var j=0;j<this.blawkHeightNum;j++) {
-                                for (var i=0;i<this.blawkWidthNum;i++) {
-                                    context.fillStyle = '#ffffff';
-                                    context.fillRect(i*width,j*height,width,height);
-                                    index++;
-                                }
-                            }
+
+                            context.fillStyle = '#ffffff';
+                            context.fillRect(0,0,$('.frame').width(),$('.frame').height());
                         }
                     }
 
@@ -371,6 +411,87 @@
                         this.currentPage++;
                         this.resetFrames();
                     }
+                },
+                nextFrame: function() {
+                    var pointer = window.App.filmstripPointer;
+                    var strip = window.App.filmstrip;
+
+                    console.log(pointer);
+                    console.log(strip);
+
+                    var index = 0;
+                    for (var j=0;j<window.App.blawkHeightNum;j++) {
+                        for (var i=0;i<window.App.blawkWidthNum;i++) {
+                            $('#index'+i+'x'+j).css('background',strip[pointer][index]);
+                            $('#index'+i+'x'+j).data('color',strip[pointer][index]);
+                            index++;
+                        }
+                    }
+                    window.App.filmstripPointer++; 
+                    if (window.App.filmstripPointer >= $('.cell').length) {
+                        window.App.filmstripPointer = 0; 
+                    }
+
+                },
+                playFilmstrip: function() {
+                    this.filmstripTimer = setInterval(this.nextFrame, 300);
+
+                    var el = $('#cell-play');
+                    var context = el[0].getContext('2d');    
+                    context.fillStyle = '#ff0000';
+                    context.beginPath();
+                    context.moveTo(20,20);
+                    context.lineTo(20,el.height()-20);
+                    context.lineTo(el.width()-20,el.height()/2);
+                    context.lineTo(20,20);
+                    context.fill();
+                    context.closePath();
+
+                    el = $('#cell-stop');
+                    context = el[0].getContext('2d');    
+                    context.fillStyle = '#ffffff';
+                    context.fillRect(20,20,el.width()-40,el.height()-40);
+                },
+                stopFilmstrip: function() {
+                    clearInterval(this.filmstripTimer);
+
+                    var el = $('#cell-play');
+                    var context = el[0].getContext('2d');    
+                    context.fillStyle = '#ffffff';
+                    context.beginPath();
+                    context.moveTo(20,20);
+                    context.lineTo(20,el.height()-20);
+                    context.lineTo(el.width()-20,el.height()/2);
+                    context.lineTo(20,20);
+                    context.fill();
+                    context.closePath();
+
+                    el = $('#cell-stop');
+                    context = el[0].getContext('2d');    
+                    context.fillStyle = '#ff0000';
+                    context.fillRect(20,20,el.width()-40,el.height()-40);
+                },
+                setCell: function() {
+                    var context = $('.cell')[this.selectedCell].getContext('2d');    
+                    var width = $('.cell').width()/this.blawkWidthNum;
+                    var height = $('.cell').height()/this.blawkHeightNum;
+                    var index = 0;
+                    for (var j=0;j<this.blawkHeightNum;j++) {
+                        for (var i=0;i<this.blawkWidthNum;i++) {
+                            this.filmstrip[this.selectedCell][index] = $('#index'+i+'x'+j).data('color');
+                            context.fillStyle = $('#index'+i+'x'+j).data('color');
+                            context.fillRect(i*width,j*height,width,height);
+                            index++;
+                        }
+                    }
+                },
+                changeCell: function(e) {
+                    this.selectedCell = $('#'+e.target.id).data('index');
+
+                    for (var k=0;k<$('.cell').length;k++) {
+                        $($('.cell')[k]).css('border-color','#ffffff');
+                    }
+                    $('#'+e.target.id).css('border-color','#ffff00');
                 },
                 changeFrame: function(e) {
                     var data = $('#'+e.target.id).data('index');
@@ -459,11 +580,42 @@
                         Blawks.trigger('reset')}
                     });
                 },
+                resetFilmstrip: function() {
+                    this.dispNumCells = $('.cell').length;
+                    this.filmstrip = [];
+
+                    for (var k=0;k<$('.cell').length;k++) {
+                        $($('.cell')[k]).css('border-color','#ffffff');
+                    }
+                    if (this.currentPage == this.selectedPage) {
+                        $($('.cell')[this.selectedCell]).css('border-color','#ffff00');
+                    }
+
+                    var context = 0;    
+                    var width = $('.cell').width()/this.blawkWidthNum;
+                    var height = $('.cell').height()/this.blawkHeightNum;
+                    for (var k=0;k<this.dispNumCells;k++) {
+                        $($('.cell')[k]).data('index',k);
+                        this.filmstrip[k] = [];
+
+                        context = $('.cell')[k].getContext('2d');    
+                        context.fillStyle = 'rgb(0,0,0)';
+                        context.fillRect(0,0,$('.cell').width(),$('.cell').height());
+
+                        for (var j=0;j<this.blawkHeightNum;j++) {
+                            for (var i=0;i<this.blawkWidthNum;i++) {
+                                this.filmstrip[k].push('rgb(0,0,0)');
+                            }
+                        }
+                    }
+                },
                 initialize: function() {
                     this.red();
                     $('#canvas-1').css('border-color','#ffff00');
 
                     this.initializeCanvas();
+                    this.initializeButtons();
+                    this.resetFilmstrip();
 
                     Blawks.on('reset', this.onReset, this);
                     Blawks.fetch({success: function() { console.log('fetch success'); }});
@@ -476,13 +628,37 @@
 
                     for (var j=0;j<this.blawkHeightNum;j++) {
                         for (var i=0;i<this.blawkWidthNum;i++) {
-                            $('.canvas').append('<div class="one"></div>');
-                            $('.canvas > div:last-child').css('position','absolute').css('left',i*$('.one').width());
-                            $('.canvas > div:last-child').css('top',j*$('.one').width()).attr('id','index'+i+'x'+j);
-                            $('.canvas > div:last-child').css('background','rgb(0,0,0)');
-                            $('.canvas > div:last-child').data('color','rgb(0,0,0)');
+                            //$('.canvas').append('<div class="one"></div>');
+                            $('.canvas').append('<canvas class="one" width="'+this.blawkWidth+'" height="'+this.blawkHeight+'"></canvas>');
+                            $('.canvas > canvas:last-child').css('position','absolute').css('left',i*$('.one').width());
+                            $('.canvas > canvas:last-child').css('top',j*$('.one').width()).attr('id','index'+i+'x'+j);
+                            $('.canvas > canvas:last-child').css('background','rgb(0,0,0)');
+                            $('.canvas > canvas:last-child').data('color','rgb(0,0,0)');
                         }
                     }
+                },
+                initializeButtons: function() {
+                    var el = $('#cell-add');
+                    var context = el[0].getContext('2d');    
+                    context.fillStyle = '#ffffff';
+                    context.fillRect(el.width()/2-10,10,20,el.height()-20);
+                    context.fillRect(10,el.height()/2-10,el.height()-20,20);
+
+                    el = $('#cell-play');
+                    context = el[0].getContext('2d');    
+                    context.fillStyle = '#ffffff';
+                    context.beginPath();
+                    context.moveTo(20,20);
+                    context.lineTo(20,el.height()-20);
+                    context.lineTo(el.width()-20,el.height()/2);
+                    context.lineTo(20,20);
+                    context.fill();
+                    context.closePath();
+
+                    el = $('#cell-stop');
+                    context = el[0].getContext('2d');    
+                    context.fillStyle = '#ffffff';
+                    context.fillRect(20,20,el.width()-40,el.height()-40);
                 },
                 tintOn: function(e) {
                     this.tintActive = true;
@@ -492,7 +668,6 @@
                 },
                 mouseEnter: function(e) {
                     var newColor = this.tint($('#'+e.target.id).data('color'));
-
                     if (this.tintActive) {
                         this.trailQueue.push($('#'+e.target.id));
                         var newColor = 'rgb('+newColor[0]+','+newColor[1]+','+newColor[2]+')';
@@ -505,10 +680,11 @@
                         clearTimeout(this.timer); 
                     }
 
-                    var value = 200;
+                    //var value = 200;
                     var _els = this.trailQueue;
                     var _colors = this.colorQueue;
 
+                    /*
                     var trailColor;
                     for (var i=_els.length-1;i>0;i--) {
                         if (_els[i] === '') {
@@ -528,6 +704,7 @@
                         _els[i].css('background', trailColor);
                         value = value-30;
                     }
+                    */
 
                     if (_els[0] !== '') {
                         _els[0].css('background', _colors[0]);
@@ -702,7 +879,7 @@
             <div class="header">
                 <a class="inline" href="../"><h1 class="inline">toimawb/</h1></a>
                 <a class="inline" href="blawks.html"><h1 class="inline">blawks/</h1></a>
-                <h1 class="inline">aaaa/</h1>
+                <h1 class="inline">d/</h1>
                 <button id="new-button" class="btn inline">new</button>
                 <button id="dup-button" class="btn inline">dup</button>
                 <button id="save-button" class="btn inline">save</button>
@@ -722,22 +899,36 @@
             </div>
 
             <div class="canvas">
-                <div class="one"></div>
+                <canvas class="one"></canvas>
             </div>
 
             <div class="frame-nav">
                 <div id="prev" class="page-nav"><h1 class="page-num">1</h1></div>
                 <div class="frames">
-                    <canvas id="canvas-1" width="90" height="90" class="frame"></canvas>
-                    <canvas id="canvas-2" width="90" height="90" class="frame"></canvas>
-                    <canvas id="canvas-3" width="90" height="90" class="frame"></canvas>
-                    <canvas id="canvas-4" width="90" height="90" class="frame"></canvas>
-                    <canvas id="canvas-5" width="90" height="90" class="frame"></canvas>
+                    <canvas id="canvas-1" width="102" height="102" class="frame"></canvas>
+                    <canvas id="canvas-2" width="102" height="102" class="frame"></canvas>
+                    <canvas id="canvas-3" width="102" height="102" class="frame"></canvas>
+                    <canvas id="canvas-4" width="102" height="102" class="frame"></canvas>
                 </div>
                 <div id="next" class="page-nav"><h1 class="page-num">3</h1></div>
             </div>
 
-            <div class="levels">
+            <div class="filmstrip">
+                <canvas id="cell-1" width="56" height="56" class="cell"></canvas>
+                <canvas id="cell-2" width="56" height="56" class="cell"></canvas>
+                <canvas id="cell-3" width="56" height="56" class="cell"></canvas>
+                <canvas id="cell-4" width="56" height="56" class="cell"></canvas>
+                <canvas id="cell-5" width="56" height="56" class="cell"></canvas>
+                <canvas id="cell-6" width="56" height="56" class="cell"></canvas>
+                <canvas id="cell-7" width="56" height="56" class="cell"></canvas>
+                <canvas id="cell-8" width="56" height="56" class="cell"></canvas>
+            </div>
+
+            <div class="film-actions">
+                <canvas id="cell-add" width="70" height="70" class="cell-action"></canvas>
+                <canvas id="cell-remove" width="70" height="70" class="cell-action"></canvas>
+                <canvas id="cell-play" width="70" height="70" class="cell-action"></canvas>
+                <canvas id="cell-stop" width="70" height="70" class="cell-action"></canvas>
             </div>
 
         </div>

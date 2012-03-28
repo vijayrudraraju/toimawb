@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>toimawb-blawks-aaab</title>
+        <title>toimawb-blawks-bd</title>
         <meta name="apple-mobile-web-app-capable" content="yes"/>
         <meta name="viewport" content="width=640,user-scalable=no"/>
         <meta charset="utf-8">
@@ -85,7 +85,14 @@
                 height: 480px;
                 top: 30px;
             }
-            .levels {
+            .filmstrip {
+                position: relative;
+                background: purple;
+                width: 480px;
+                height: 136px;
+                top: -535px;
+            }
+            .filmcell {
                 position: relative;
                 background: purple;
                 width: 480px;
@@ -152,6 +159,14 @@
                 border-color: #ffffff;
                 border-width: 4px;
             }
+            .cell {
+                display: block;
+                background: black;
+                border-style: solid;
+                border-color: #ffffff;
+                border-width: 2px;
+                float: left;
+            }
             .choice {
                 border-style: solid;
                 border-color: #000000;
@@ -171,7 +186,6 @@
             }
         </style>
     </head>
-    <!--<script type="text/javascript" src="modules.js"></script>-->
     <script type="text/javascript" src="/_utils/script/json2.js"></script>
     <script type="text/javascript" src="/_utils/script/jquery.js"></script>
     <script type="text/javascript" src="/_utils/script/jquery.couch.js"></script>
@@ -187,13 +201,13 @@
             Backbone.couch_connector.config.ddoc_name = "one";
 
             window.BlawkModel= Backbone.Model.extend({
-                url: '/one_aaab'
+                url: '/one_bd'
             }); 
 
             window.BlawkCollection = Backbone.Collection.extend({ 
                 model: BlawkModel,
-                localStorage: new Store('one_aaab'),
-                url: "/one_aaab"
+                localStorage: new Store('one_bd'),
+                url: "/one_bd"
             });
 
             window.Blawks = new BlawkCollection;
@@ -346,15 +360,7 @@
                         } else {
                             context = $('.frame')[k].getContext('2d');    
                             $($('.frame')[k]).data('index',null);
-                            /*
-                            for (var j=0;j<this.blawkHeightNum;j++) {
-                                for (var i=0;i<this.blawkWidthNum;i++) {
-                                    context.fillStyle = '#ffffff';
-                                    context.fillRect(i*width,j*height,width,height);
-                                    index++;
-                                }
-                            }
-                            */
+
                             context.fillStyle = '#ffffff';
                             context.fillRect(0,0,$('.frame').width(),$('.frame').height());
                         }
@@ -708,7 +714,7 @@
             <div class="header">
                 <a class="inline" href="../"><h1 class="inline">toimawb/</h1></a>
                 <a class="inline" href="blawks.html"><h1 class="inline">blawks/</h1></a>
-                <h1 class="inline">aaab/</h1>
+                <h1 class="inline">bd/</h1>
                 <button id="new-button" class="btn inline">new</button>
                 <button id="dup-button" class="btn inline">dup</button>
                 <button id="save-button" class="btn inline">save</button>
@@ -742,7 +748,15 @@
                 <div id="next" class="page-nav"><h1 class="page-num">3</h1></div>
             </div>
 
-            <div class="levels">
+            <div class="filmstrip">
+                <canvas id="cell-1" width="56" height="56" class="cell"></canvas>
+                <canvas id="cell-2" width="56" height="56" class="cell"></canvas>
+                <canvas id="cell-3" width="56" height="56" class="cell"></canvas>
+                <canvas id="cell-4" width="56" height="56" class="cell"></canvas>
+                <canvas id="cell-5" width="56" height="56" class="cell"></canvas>
+                <canvas id="cell-6" width="56" height="56" class="cell"></canvas>
+                <canvas id="cell-7" width="56" height="56" class="cell"></canvas>
+                <canvas id="cell-8" width="56" height="56" class="cell"></canvas>
             </div>
 
         </div>

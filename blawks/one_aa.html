@@ -11,14 +11,6 @@
             html {
                 width: 640px;
             }
-            .page-header {
-                position: relative;
-            }
-            #save-button {
-                position: absolute;
-                width: 80px;
-                left: 500px;
-            }
             .inline {
                 display: inline;
             }
@@ -110,32 +102,12 @@
     </head>
     <!--<script type="text/javascript" src="modules.js"></script>-->
     <script type="text/javascript" src="/_utils/script/json2.js"></script>
-    <script type="text/javascript" src="/_utils/script/jquery.js"></script>
-    <script type="text/javascript" src="/_utils/script/jquery.couch.js"></script>
+    <script type="text/javascript" src="../vendor/jquery-1.6.js"></script>
     <script type="text/javascript" src="../vendor/underscore.js"></script>
     <script type="text/javascript" src="../vendor/backbone.js"></script>
-    <script type="text/javascript" src="../vendor/backbone.localStorage.js"></script>
-    <script type="text/javascript" src="../vendor/backbone-couchdb.js"></script>
     <script type="text/javascript">
         $(function() {
-            Backbone.couch_connector.config.db_name = "toimawb";
-            Backbone.couch_connector.config.ddoc_name = "one";
-
-            window.BlawkModel= Backbone.Model.extend({
-                url: '/one_aa'
-            }); 
-
-            window.BlawkCollection = Backbone.Collection.extend({ 
-                model: BlawkModel,
-                localStorage: new Store('one_aa'),
-                url: "/one_aa"
-            });
-
-            window.Blawks = new BlawkCollection;
-
             window.AppView = Backbone.View.extend({
-                blawkWidthNum: 0,
-                blawkHeightNum: 0,
                 timer: '',
                 color: 'red',
                 colorDiff: 40,
@@ -151,78 +123,22 @@
                     'click #blue': 'blue',
                     'click #black': 'black',
                     'click #white': 'white',
-                    'click #save-button': 'saveToServer',
                     'mouseenter .one': 'mouseEnter',
                     'mousedown .one': 'tintOn',
                     'mouseup .one': 'tintOff'
                 },  
-                onReset: function(coll,resp) {
-                    console.log('onReset');
-                    console.log('coll', coll);
-                    console.log('resp', resp);
-
-                    if (coll.length === 0 && coll.localStorage.records.length === 0) {
-                        console.log('local and remote mawbs empty');
-                        var frames = [];
-                        frames.push([]);
-                        var frame = frames[0];
-                        for (var j=0;j<this.blawkHeightNum;j++) {
-                            for (var i=0;i<this.blawkWidthNum;i++) {
-                                frame.push($('#index'+i+'x'+j).data('color'));
-                            }
-                        }
-                        Blawks.create({frames:frames});
-                    } else if (coll.length === 0) {
-                        console.log('remote mawbs empty, loading local mawbs');
-                        var localModel = coll.localStorage.findAll()[0];
-                        Blawks.create({frames:localModel.frames});
-                    } else if (coll.localStorage.records.length === 0) {
-                        console.log('local mawbs empty, loading remote mawbs');
-                        Blawks.at(0).sync = Backbone.localSync;
-                        try {
-                            Blawks.at(0).save();
-                        } catch(e) {
-                            //alert('Private browsing mode!');
-                        }
-                        delete Blawks.at(0).sync;
-                    }
-
-                    var frames = Blawks.at(0).get('frames');
-                    var frame = frames[frames.length-1];
-                    var index = 0;
-
-                    for (var j=0;j<this.blawkHeightNum;j++) {
-                        for (var i=0;i<this.blawkWidthNum;i++) {
-                            $('#index'+i+'x'+j).css('background',frame[index]);
-                            $('#index'+i+'x'+j).data('color',frame[index]);
-                            index++;
-                        }
-                    }
-                },
-                saveToServer: function(e) {
-                    var frames = Blawks.at(0).get('frames');
-                    frames.push([]);
-                    var frame = frames[frames.length-1];
-                    for (var j=0;j<this.blawkHeightNum;j++) {
-                        for (var i=0;i<this.blawkWidthNum;i++) {
-                            frame.push($('#index'+i+'x'+j).data('color'));
-                        }
-                    }
-
-                    Blawks.at(0).set('frames',frames);
-
-                    Blawks.at(0).save();
-                },
                 initialize: function() {
                     this.red();
 
-                    this.blawkWidthNum = $('.canvas').width() / $('.one').width();
-                    this.blawkHeightNum = $('.canvas').height() / $('.one').height();
+                    var blawkWidthNum = $('.canvas').width() / $('.one').width();
+                    console.log('blawkWidthNum: ' + blawkWidthNum);
+                    var blawkHeightNum = $('.canvas').height() / $('.one').height();
+                    console.log('blawkHeightNum: ' + blawkHeightNum);
 
                     $('.canvas').html('');
 
-                    for (var j=0;j<this.blawkHeightNum;j++) {
-                        for (var i=0;i<this.blawkWidthNum;i++) {
+                    for (var j=0;j<blawkHeightNum;j++) {
+                        for (var i=0;i<blawkWidthNum;i++) {
                             $('.canvas').append('<div class="one"></div>');
                             $('.canvas > div:last-child').css('position','absolute').css('left',i*$('.one').width());
                             $('.canvas > div:last-child').css('top',j*$('.one').width()).attr('id','index'+i+'x'+j);
@@ -231,8 +147,11 @@
                         }
                     }
 
-                    Blawks.on('reset', this.onReset, this);
-                    Blawks.fetch({success: function() { console.log('fetch success'); }});
+                    //setInterval(this.trail,500);
+                },
+                onReset: function(coll,resp) {
+                },
+                saveToServer: function(e) {
                 },
                 tintOn: function(e) {
                     this.tintActive = true;
