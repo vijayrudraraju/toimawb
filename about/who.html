@@ -7,13 +7,14 @@
 
         <meta charset="utf-8">
         <!-- Le styles -->
-        <link href="../vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
+        <link href="http://fonts.googleapis.com/css?family=Sevillana" rel="stylesheet" type="text/css">
         <style type="text/css">
             html {
                 width: 640;
             }
             h1 {
                 font-size: 40px;
+                font-family: 'Sevillana', cursive;
             }
             .inline {
                 display: inline;
@@ -32,47 +33,49 @@
                 position: relative;
                 background: white;
                 width: 600px;
-                height: 600px;
+                height: 800px;
                 margin-top: 12px;
             }
-            #twitter {
-                width: 300px;
-                height: 40;
-                position: relative;
-                background: rgb(105,0,0);
-                left: 0px;
-                padding: 10px;
+            .one {
+                width: 560px;
             }
             #name {
-                width: 300px;
-                height: 40;
+                height: 100px;
                 position: relative;
                 background: rgb(0,105,0);
                 left: 0px;
                 padding: 10px;
             }
+            #twitter {
+                height: 100px;
+                position: relative;
+                background: rgb(105,0,0);
+                left: 0px;
+                top: 20px;
+                padding: 10px;
+            }
             #idmil {
-                width: 300px;
-                height: 120px;
+                height: 150px;
                 position: relative;
                 background: rgb(0,0,105);
                 left: 0px;
+                top: 40px;
                 padding: 10px;
             }
             #millee {
-                width: 300px;
-                height: 220px;
+                height: 150px;
                 position: relative;
                 background: rgb(105,105,0);
                 left: 0px;
+                top: 60px;
                 padding: 10px;
             }
             #paper {
-                width: 300px;
-                height: 40px;
+                height: 100px;
                 position: relative;
                 background: rgb(105,0,105);
                 left: 0px;
+                top: 80px;
                 padding: 10px;
             }
         </style>
@@ -92,9 +95,11 @@
             document.body.addEventListener('touchend', function(e){ 
             },false);
             $('.canvas').delegate('.one', 'touchmove', function(event) {
+                /*
                 var e = event.originalEvent;
                 e.preventDefault(); 
                 window.App.touch($(document.elementFromPoint(e.targetTouches[0].clientX,e.targetTouches[0].clientY)));
+                */
             },false);
 
             window.AppView = Backbone.View.extend({
@@ -117,11 +122,11 @@
                 <h1 class="inline">who/</h1>
             </div>
             <div class="canvas">
-                <div id="name"><h1 class="white">vijay rudraraju</h1></div>
-                <a href="http://www.twitter.com/vijayrudraraju"><div id="twitter"><h1 class="white">@vijayrudraraju</h1></div></a>
-                <a href="http://www.idmil.org/people/vijay_rudraraju"><div id="idmil"><h1 class="white">input devices and music interaction lab</h1></div></a>
-                <a href="http://www.cs.cmu.edu/~mattkam/lab/millee.html"><div id="millee"><h1 class="white">mobile and immersive learning for literacy in emerging economies</h1></div></a>
-                <a href="http://www.cs.cmu.edu/~mattkam/lab/publications/DiGRA2007.pdf"><div id="paper"><h1 class="white">millee paper</h1></div></a>
+                <div id="name" class="one"><h1 class="white">vijay rudraraju</h1></div>
+                <a href="http://www.twitter.com/vijayrudraraju"><div id="twitter" class="one"><h1 class="white">@vijayrudraraju</h1></div></a>
+                <a href="http://www.idmil.org/people/vijay_rudraraju"><div id="idmil" class="one"><h1 class="white">input devices and music interaction lab</h1></div></a>
+                <a href="http://www.cs.cmu.edu/~mattkam/lab/millee.html"><div id="millee" class="one"><h1 class="white">mobile and immersive learning for literacy in emerging economies</h1></div></a>
+                <a href="http://www.cs.cmu.edu/~mattkam/lab/publications/DiGRA2007.pdf"><div id="paper" class="one"><h1 class="white">millee paper</h1></div></a>
             </div>
         </div>
     </body>
