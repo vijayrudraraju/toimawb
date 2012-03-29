@@ -64,11 +64,6 @@
             },false);
             document.body.addEventListener('touchend', function(e){ 
             },false);
-            $('.canvas').delegate('.one', 'touchmove', function(event) {
-                var e = event.originalEvent;
-                e.preventDefault(); 
-                window.App.touch($(document.elementFromPoint(e.targetTouches[0].clientX,e.targetTouches[0].clientY)));
-            },false);
 
             window.AppView = Backbone.View.extend({
                 color: 'red',

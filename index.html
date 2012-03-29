@@ -7,63 +7,33 @@
 
         <meta charset="utf-8">
         <!-- Le styles -->
-        <!--<link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">-->
         <link href="http://fonts.googleapis.com/css?family=Sevillana" rel="stylesheet" type="text/css">
+        <link href="lib/toimawb.css" rel="stylesheet" type="text/css">
         <style type="text/css">
-            html {
-                width: 640;
-            }
-            h1 {
-                font-size: 46px;
-                font-family: 'Sevillana', cursive;
-            }
-            .inline {
-                display: inline;
-            }
-            .white {
-                color: white;
-            }
-            .container {
-                width: 600px;
-                margin-top: 12px;
-                margin-left: 20px;
-                margin-right: 20px;
-                padding: 0px;
-            }
-            .canvas {
-                position: relative;
-                background: white;
-                width: 600px;
-                height: 600px;
-                margin-top: 12px;
-            }
             .one {
                 width: 160px;
                 height: 160px;
+                float: left;
+                padding: 10px;
+                margin-top: 20px;
             }
             #blawks {
-                position: absolute;
                 background: rgb(105,0,0);
-                left: 0px;
-                padding: 10px;
             }
             #about {
-                position: absolute;
                 background: rgb(0,105,0);
-                left: 200px;
-                padding: 10px;
+                margin-right: 30px;
+                margin-left: 30px;
             }
             #replicate {
-                position: absolute;
                 background: rgb(0,0,105);
-                left: 400px;
-                padding: 10px;
             }
         </style>
     </head>
     <!--<script type="text/javascript" src="modules.js"></script>-->
     <script type="text/javascript" src="/_utils/script/json2.js"></script>
-    <script type="text/javascript" src="vendor/jquery-1.6.js"></script>
+    <!--<script type="text/javascript" src="vendor/jquery-1.6.js"></script>-->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script type="text/javascript" src="/_utils/script/jquery.couch.js"></script>
     <script type="text/javascript" src="vendor/underscore.js"></script>
     <script type="text/javascript" src="vendor/backbone.js"></script>
