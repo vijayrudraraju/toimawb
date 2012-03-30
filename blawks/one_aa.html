@@ -7,18 +7,26 @@
         <meta charset="utf-8">
         <!-- Le styles -->
         <style type="text/css">
+            body, div {
+                padding: 0px;
+                margin: 0px;
+                border: 0px;
+            }
             html {
                 width: 640px;
+                padding: 0px;
+                margin: 0px;
+                border: 0px;
             }
             .inline {
                 display: inline;
             }
             .container {
                 width: 600px;
-                margin-top: 8px;
+                margin-top: 12px;
+                margin-bottom: 12px;
                 margin-left: 20px;
                 margin-right: 20px;
-                padding: 0px;
             }
             .canvas {
                 position: relative;
@@ -106,6 +114,8 @@
     <script type="text/javascript" src="../vendor/backbone.js"></script>
     <script type="text/javascript">
         $(function() {
+            window.scrollTo(0,0.9);
+
             window.AppView = Backbone.View.extend({
                 timer: '',
                 color: 'red',
@@ -355,7 +365,7 @@
     </script>
     <body id="body">
         <div id="blawk-app" class="container">
-            <div class="page-header inline">
+            <div class="inline">
                 <a class="inline" href="../"><h1 class="inline">toimawb/</h1></a>
                 <a class="inline" href="blawks.html"><h1 class="inline">blawks/</h1></a>
                 <h1 class="inline">aa/</h1>

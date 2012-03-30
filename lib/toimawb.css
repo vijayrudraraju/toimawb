@@ -4,10 +4,16 @@ body, div {
     border: 0px;
 }
 html {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
     width: 640;
     padding: 0px;
     margin: 0px;
     border: 0px;
+}
+button {
+    font-family: 'Sevillana';
+    font-style: normal;
+    font-weight: 400;
 }
 h1 {
     font-size: 46px;
@@ -16,7 +22,7 @@ h1 {
     font-weight: 400;
 }
 h2 {
-    font-size: 24px;
+    font-size: 36px;
     font-family: 'Sevillana';
     font-style: normal;
     font-weight: 400;

@@ -7,8 +7,16 @@
         <meta charset="utf-8">
         <!-- Le styles -->
         <style type="text/css">
+            body, div {
+                padding: 0px;
+                margin: 0px;
+                border: 0px;
+            }
             html {
                 width: 640px;
+                padding: 0px;
+                margin: 0px;
+                border: 0px;
             }
             .page-header {
                 position: relative;
@@ -24,10 +32,10 @@
             }
             .container {
                 width: 600px;
-                margin-top: 8px;
+                margin-top: 12px;
+                margin-bottom: 12px;
                 margin-left: 20px;
                 margin-right: 20px;
-                padding: 0px;
             }
             .canvas {
                 position: relative;
@@ -118,6 +126,8 @@
     <script type="text/javascript" src="../vendor/backbone-couchdb.js"></script>
     <script type="text/javascript">
         $(function() {
+            window.scrollTo(0,0.9);
+
             Backbone.couch_connector.config.db_name = "toimawb";
             Backbone.couch_connector.config.ddoc_name = "one";
 
