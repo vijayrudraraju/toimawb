@@ -20,12 +20,18 @@ h1 {
     font-family: 'Sevillana';
     font-style: normal;
     font-weight: 400;
+    padding: 0px;
+    margin: 0px;
+    border: 0px;
 }
 h2 {
     font-size: 36px;
     font-family: 'Sevillana';
     font-style: normal;
     font-weight: 400;
+    padding: 0px;
+    margin: 0px;
+    border: 0px;
 }
 .container {
     width: 600px;
@@ -48,6 +54,20 @@ h2 {
 }
 .one {
     width: 160px;
+    height: 160px;
+    float: left;
+    padding: 10px;
+    margin-top: 20px;
+}
+.menu-item {
+    width: 160px;
+    height: 160px;
+    float: left;
+    padding: 10px;
+    margin-top: 20px;
+}
+.list-item {
+    width: 580px;
     height: 160px;
     float: left;
     padding: 10px;
