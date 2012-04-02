@@ -14,6 +14,8 @@ button {
     font-family: 'Sevillana';
     font-style: normal;
     font-weight: 400;
+    padding: 0px;
+    margin: 0px;
 }
 h1 {
     font-size: 46px;
@@ -48,6 +50,10 @@ h2 {
 }
 .inline {
     display: inline;
+}
+.btn {
+    height: 60px;
+    width: 70px;
 }
 .white {
     color: white;
