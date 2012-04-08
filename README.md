@@ -1,3 +1,7 @@
+# toimawb
+
+toimawb is a CouchApp, specifically a Kanso CouchApp meant to be served from a CouchDb instance.
+
 # Kanso
 
 Simple, distributable JavaScript apps using CouchDB
