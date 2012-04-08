@@ -4,71 +4,43 @@
         <title>toimawb-about-who</title>
         <meta name="apple-mobile-web-app-capable" content="yes"/>
         <meta name="viewport" content="width=640,user-scalable=no"/>
-
         <meta charset="utf-8">
         <!-- Le styles -->
-        <link href="http://fonts.googleapis.com/css?family=Sevillana" rel="stylesheet" type="text/css">
+        <!--<link href="http://fonts.googleapis.com/css?family=Sevillana" rel="stylesheet" type="text/css">-->
+        <link href="http://fonts.googleapis.com/css?family=Snippet" rel="stylesheet" type="text/css">
         <link href="../lib/toimawb.css" rel="stylesheet" type="text/css">
         <style type="text/css">
             .canvas {
                 height: 940px;
             }
             #name {
-                height: 120px;
+                height: 60px;
                 background: rgb(105,0,0);
             }
             #twitter {
-                height: 120px;
+                height: 60px;
                 background: rgb(0,105,0);
             }
             #idmil {
-                height: 180px;
+                height: 110px;
                 background: rgb(0,0,105);
             }
             #millee {
-                height: 180px;
+                height: 160px;
                 background: rgb(105,105,0);
             }
             #paper {
-                height: 120px;
+                height: 60px;
                 background: rgb(105,0,105);
             }
         </style>
-    </head>
-    <!--<script type="text/javascript" src="modules.js"></script>-->
-    <script type="text/javascript" src="/_utils/script/json2.js"></script>
-    <script type="text/javascript" src="../vendor/jquery-1.6.js"></script>
-    <script type="text/javascript" src="/_utils/script/jquery.couch.js"></script>
-    <script type="text/javascript" src="../vendor/underscore.js"></script>
-    <script type="text/javascript" src="../vendor/backbone.js"></script>
-    <script type="text/javascript">
-        $(function() {
-            window.scrollTo(0,0.9);
-
-            document.body.addEventListener('touchstart', function(e){ 
-            },false);
-            document.body.addEventListener('touchend', function(e){ 
-            },false);
-            $('.canvas').delegate('.one', 'touchmove', function(event) {
-                /*
-                var e = event.originalEvent;
-                e.preventDefault(); 
-                window.App.touch($(document.elementFromPoint(e.targetTouches[0].clientX,e.targetTouches[0].clientY)));
-                */
-            },false);
-
-            window.AppView = Backbone.View.extend({
-                color: 'red',
-                tintLight: true,
-                tintActive: false,
-                el: $('#blawk-app'),
-                events: {
-                }  
+        <script type="text/javascript" src="/_utils/script/jquery.js"></script>
+        <script type="text/javascript">
+            $(function() {
+                window.scrollTo(0,0.9);
             });
-
-            window.App = new AppView;
-        });
-    </script>
+        </script>
+    </head>
     <body id="body">
         <div id="blawk-app" class="container">
             <div class="inline">

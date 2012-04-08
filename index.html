@@ -4,10 +4,10 @@
         <title>toimawb</title>
         <meta name="apple-mobile-web-app-capable" content="yes"/>
         <meta name="viewport" content="width=640,user-scalable=no"/>
-
         <meta charset="utf-8">
         <!-- Le styles -->
-        <link href="http://fonts.googleapis.com/css?family=Sevillana" rel="stylesheet" type="text/css">
+        <!--<link href="http://fonts.googleapis.com/css?family=Sevillana" rel="stylesheet" type="text/css">-->
+        <link href="http://fonts.googleapis.com/css?family=Snippet" rel="stylesheet" type="text/css">
         <link href="lib/toimawb.css" rel="stylesheet" type="text/css">
         <style type="text/css">
             #blawks {
@@ -15,45 +15,19 @@
             }
             #about {
                 background: rgb(0,105,0);
-                margin-right: 30px;
-                margin-left: 30px;
             }
             #replicate {
                 background: rgb(0,0,105);
             }
+            #guestbook {
+                background: rgb(105,105,0);
+            }
         </style>
     </head>
-    <!--<script type="text/javascript" src="modules.js"></script>-->
-    <script type="text/javascript" src="/_utils/script/json2.js"></script>
-    <!--<script type="text/javascript" src="vendor/jquery-1.6.js"></script>-->
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script type="text/javascript" src="/_utils/script/jquery.couch.js"></script>
-    <script type="text/javascript" src="vendor/underscore.js"></script>
-    <script type="text/javascript" src="vendor/backbone.js"></script>
+    <script type="text/javascript" src="/_utils/script/jquery.js"></script>
     <script type="text/javascript">
         $(function() {
             window.scrollTo(0,0.9);
-
-            document.body.addEventListener('touchstart', function(e){ 
-            },false);
-            document.body.addEventListener('touchend', function(e){ 
-            },false);
-            $('.canvas').delegate('.one', 'touchmove', function(event) {
-                var e = event.originalEvent;
-                e.preventDefault(); 
-                window.App.touch($(document.elementFromPoint(e.targetTouches[0].clientX,e.targetTouches[0].clientY)));
-            },false);
-
-            window.AppView = Backbone.View.extend({
-                color: 'red',
-                tintLight: true,
-                tintActive: false,
-                el: $('#blawk-app'),
-                events: {
-                }  
-            });
-
-            window.App = new AppView;
         });
     </script>
     <body id="body">
@@ -63,8 +37,13 @@
             </div>
             <div class="canvas">
                 <a href="blawks/blawks.html"><div id="blawks" class="menu-item"><h1 class="white">blawks</h1></div></a>
-                <a href="about/about.html"><div id="about" class="menu-item"><h1 class="white">about</h1></div></a>
+                <a href="about/about.html"><div id="about" class="menu-item middle"><h1 class="white">about</h1></div></a>
                 <a href="http://github.com/vijayrudraraju/toimawb"><div id="replicate" class="menu-item"><h1 class="white">replicate</h1></div></a>
+                <a href="guestbook/guestbook.html"><div id="guestbook" class="menu-item"><h1 class="white">guest book</h1></div></a>
+                <div class="menu-item"><h1></h1></div>
+                <div class="menu-item"><h1>last altered 04.08.12</h1></div>
+            </div>
+            <div class="inline">
             </div>
         </div>
     </body>

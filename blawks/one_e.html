@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>toimawb-blawks-e</title>
+        <meta name="apple-mobile-web-app-capable" content="yes"/>
+        <meta name="viewport" content="width=640,user-scalable=no"/>
+        <meta charset="utf-8">
+        <!-- Le styles -->
+        <link href="http://fonts.googleapis.com/css?family=Sevillana" rel="stylesheet" type="text/css">
+        <link href="../lib/toimawb.css" rel="stylesheet" type="text/css">
+        <style type="text/css">
+            .inline {
+                display: inline;
+            }
+            
+            .container {
+                height: 792px;
+            }
+
+            .color-choices {
+                position: relative;
+                background: white;
+                width: 600px;
+                height: 120px;
+                top: 10px;
+            }
+            .color-markers{
+                position: relative;
+                background: white;
+                width: 600px;
+                height: 120px;
+                top: 0px;
+            }
+            .canvas {
+                position: relative;
+                width: 600px;
+                height: 600px;
+                top: 30px;
+            }
+
+            .choice {
+                float: left;
+                border-style: solid;
+                border-color: #000000;
+                border-width: 1px;
+                width: 118px;
+                height: 118px;
+            }
+            .select {
+                float: left;
+                margin: 29px;
+                width: 60px;
+                height: 60px;
+                background: rgb(127,127,127);
+            }
+            .one {
+                width: 150px;
+                height: 150px;
+                padding: 0px;
+                margin: 0px;
+            }
+
+            #red {
+                background: rgb(255,0,0);
+            }
+            #green {
+                background: rgb(0,255,0);
+            }
+            #blue {
+                background: rgb(0,0,255);
+            }
+            #black {
+                background: rgb(0,0,0);
+            }
+            #white {
+                background: rgb(255,255,255);
+            }
+        </style>
+    </head>
+    <script type="text/javascript" src="/_utils/script/json2.js"></script>
+    <script type="text/javascript" src="/_utils/script/jquery.js"></script>
+    <script type="text/javascript" src="/_utils/script/jquery.couch.js"></script>
+    <script type="text/javascript" src="../vendor/underscore.js"></script>
+    <script type="text/javascript" src="../vendor/backbone.js"></script>
+    <script type="text/javascript" src="../vendor/backbone.localStorage.js"></script>
+    <script type="text/javascript" src="../vendor/backbone-couchdb.js"></script>
+    <script type="text/javascript" src="../lib/one_e.js"></script>
+    <body id="body">
+        <div id="blawk-app" class="container">
+
+            <div class="header">
+                <a class="inline" href="../"><h1 class="inline">toimawb/</h1></a>
+                <a class="inline" href="blawks.html"><h1 class="inline">blawks/</h1></a>
+                <h1 class="inline">e/</h1>
+            </div>
+
+            <div class="color-choices">
+                <div id="red" class="choice"></div>
+                <div id="green" class="choice"></div>
+                <div id="blue" class="choice"></div>
+                <div id="black" class="choice"></div>
+                <div id="white" class="choice"></div>
+            </div>
+            <div class="color-markers">
+                <div id="red-select" class="select"></div>
+                <div id="green-select" class="select"></div>
+                <div id="blue-select" class="select"></div>
+                <div id="black-select" class="select"></div>
+                <div id="white-select" class="select"></div>
+            </div>
+
+            <div class="canvas">
+                <canvas class="one"></canvas>
+            </div>
+
+        </div>
+    </body>
+</html>

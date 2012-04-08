@@ -4,22 +4,20 @@
         <title>toimawb-about-how</title>
         <meta name="apple-mobile-web-app-capable" content="yes"/>
         <meta name="viewport" content="width=640,user-scalable=no"/>
-
         <meta charset="utf-8">
         <!-- Le styles -->
-        <link href="http://fonts.googleapis.com/css?family=Sevillana" rel="stylesheet" type="text/css">
+        <!--<link href="http://fonts.googleapis.com/css?family=Sevillana" rel="stylesheet" type="text/css">-->
+        <link href="http://fonts.googleapis.com/css?family=Snippet" rel="stylesheet" type="text/css">
         <link href="../lib/toimawb.css" rel="stylesheet" type="text/css">
         <style type="text/css">
             .canvas {
-                height: 820px;
+                height: 864px;
             }
             #cloudant {
                 background: rgb(105,0,0);
             }
             #github {
                 background: rgb(0,105,0);
-                margin-right: 30px;
-                margin-left: 30px;
             }
             #couchdb{
                 background: rgb(0,0,105);
@@ -29,8 +27,6 @@
             }
             #jquery {
                 background: rgb(105,0,105);
-                margin-right: 30px;
-                margin-left: 30px;
             }
             #backbone {
                 background: rgb(0,105,105);
@@ -40,8 +36,6 @@
             }
             #javascript {
                 background: rgb(205,105,105);
-                margin-right: 30px;
-                margin-left: 30px;
             }
             #html {
                 background: rgb(105,205,105);
@@ -51,43 +45,15 @@
             }
             #godaddy {
                 background: rgb(205,205,105);
-                margin-right: 30px;
-                margin-left: 30px;
             }
         </style>
-    </head>
-    <!--<script type="text/javascript" src="modules.js"></script>-->
-    <script type="text/javascript" src="/_utils/script/json2.js"></script>
-    <script type="text/javascript" src="../vendor/jquery-1.6.js"></script>
-    <script type="text/javascript" src="/_utils/script/jquery.couch.js"></script>
-    <script type="text/javascript" src="../vendor/underscore.js"></script>
-    <script type="text/javascript" src="../vendor/backbone.js"></script>
-    <script type="text/javascript">
-        $(function() {
-            window.scrollTo(0,0.9);
-
-            document.body.addEventListener('touchstart', function(e){ 
-            },false);
-            document.body.addEventListener('touchend', function(e){ 
-            },false);
-            $('.canvas').delegate('.menu-item', 'touchmove', function(event) {
-                var e = event.originalEvent;
-                e.preventDefault(); 
-                window.App.touch($(document.elementFromPoint(e.targetTouches[0].clientX,e.targetTouches[0].clientY)));
-            },false);
-
-            window.AppView = Backbone.View.extend({
-                color: 'red',
-                tintLight: true,
-                tintActive: false,
-                el: $('#blawk-app'),
-                events: {
-                }  
+        <script type="text/javascript" src="/_utils/script/jquery.js"></script>
+        <script type="text/javascript">
+            $(function() {
+                window.scrollTo(0,0.9);
             });
-
-            window.App = new AppView;
-        });
-    </script>
+        </script>
+    </head>
     <body id="body">
         <div id="blawk-app" class="container">
             <div class="inline">
@@ -97,16 +63,19 @@
             </div>
             <div class="canvas">
                 <a class="inline" href="http://www.cloudant.com"><div id="cloudant" class="menu-item"><h1 class="white">cloudant</h1></div></a>
-                <a class="inline" href="http://www.github.com"><div id="github" class="menu-item"><h1 class="white">github</h1></div></a>
+                <a class="inline" href="http://www.github.com"><div id="github" class="menu-item middle"><h1 class="white">github</h1></div></a>
                 <a class="inline" href="http://couchdb.apache.org"><div id="couchdb" class="menu-item"><h1 class="white">couchdb</h1></div></a>
+
                 <a class="inline" href="http://kan.so"><div id="kanso" class="menu-item"><h1 class="white">kanso</h1></div></a>
-                <a class="inline" href="http://www.jquery.com"><div id="jquery" class="menu-item"><h1 class="white">jquery</h1></div></a>
-                <a class="inline" href="http://documentcloud.github.com/backbone/"><div id="backbone" class="menu-item"><h1 class="white">backbone</h1></div></a>
+                <a class="inline" href="http://www.jquery.com"><div id="jquery" class="menu-item middle"><h1 class="white">jquery</h1></div></a>
+                <a class="inline" href="http://documentcloud.github.com/backbone/"><div id="backbone" class="menu-item"><h1 class="white">back bone</h1></div></a>
+
                 <a class="inline" href="http://dev.opera.com/articles/view/html-5-canvas-the-basics/"><div id="canvas" class="menu-item"><h1 class="white">canvas</h1></div></a>
-                <a class="inline" href="http://www.w3schools.com/js/"><div id="javascript" class="menu-item"><h1 class="white">javascript</h1></div></a>
+                <a class="inline" href="http://www.w3schools.com/js/"><div id="javascript" class="menu-item middle"><h1 class="white">java script</h1></div></a>
                 <a class="inline" href="http://www.w3schools.com/html/"><div id="html" class="menu-item"><h1 class="white">html</h1></div></a>
+
             <a class="inline" href="http://www.w3schools.com/css/"><div id="css" class="menu-item"><h1 class="white">css</h1></div></a>
-            <a class="inline" href="http://www.godaddy.com"><div id="godaddy" class="menu-item"><h1 class="white">godaddy</h1></div></a>
+            <a class="inline" href="http://www.godaddy.com"><div id="godaddy" class="menu-item middle"><h1 class="white">godaddy</h1></div></a>
             </div>
         </div>
     </body>

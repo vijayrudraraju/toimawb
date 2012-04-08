@@ -4,10 +4,9 @@
         <title>toimawb-blawks</title>
         <meta name="apple-mobile-web-app-capable" content="yes"/>
         <meta name="viewport" content="width=640,user-scalable=no"/>
-
         <meta charset="utf-8">
         <!-- Le styles -->
-        <link href="http://fonts.googleapis.com/css?family=Sevillana" rel="stylesheet" type="text/css">
+        <link href="http://fonts.googleapis.com/css?family=Snippet" rel="stylesheet" type="text/css">
         <link href="../lib/toimawb.css" rel="stylesheet" type="text/css">
         <style type="text/css">
             #aa {
@@ -15,8 +14,6 @@
             }
             #ab {
                 background: rgb(0,105,0);
-                margin-right: 30px;
-                margin-left: 30px;
             }
             #ba {
                 background: rgb(0,0,105);
@@ -26,8 +23,6 @@
             }
             #bc {
                 background: rgb(105,0,105);
-                margin-right: 30px;
-                margin-left: 30px;
             }
             #bd {
                 background: rgb(0,105,105);
@@ -37,58 +32,33 @@
             }
             #d {
                 background: rgb(205,105,105);
-                margin-right: 30px;
-                margin-left: 30px;
             }
         </style>
-    </head>
-    <!--<script type="text/javascript" src="modules.js"></script>-->
-    <script type="text/javascript" src="/_utils/script/json2.js"></script>
-    <script type="text/javascript" src="../vendor/jquery-1.6.js"></script>
-    <script type="text/javascript" src="/_utils/script/jquery.couch.js"></script>
-    <script type="text/javascript" src="../vendor/underscore.js"></script>
-    <script type="text/javascript" src="../vendor/backbone.js"></script>
-    <script type="text/javascript">
-        $(function() {
-            window.scrollTo(0,0.9);
-
-            document.body.addEventListener('touchstart', function(e){ 
-            },false);
-            document.body.addEventListener('touchend', function(e){ 
-            },false);
-            $('.canvas').delegate('.one', 'touchmove', function(event) {
-                var e = event.originalEvent;
-                e.preventDefault(); 
-                window.App.touch($(document.elementFromPoint(e.targetTouches[0].clientX,e.targetTouches[0].clientY)));
-            },false);
-
-            window.AppView = Backbone.View.extend({
-                color: 'red',
-                tintLight: true,
-                tintActive: false,
-                el: $('#blawk-app'),
-                events: {
-                }  
+        <script type="text/javascript" src="/_utils/script/jquery.js"></script>
+        <script type="text/javascript">
+            $(function() {
+                window.scrollTo(0,0.9);
             });
-
-            window.App = new AppView;
-        });
-    </script>
+        </script>
+    </head>
     <body id="body">
         <div id="blawk-app" class="container">
             <div class="inline">
                 <a class="inline" href="../"><h1 class="inline">toimawb/</h1></a>
                 <h1 class="inline">blawks/</h1>
             </div>
+
             <div class="canvas">
                 <a href="one_aa.html"><div id="aa" class="menu-item"><h1 class="white">aa</h1></div></a>
-                <a href="one_ab.html"><div id="ab" class="menu-item"><h1 class="white">ab</h1></div></a>
+                <a href="one_ab.html"><div id="ab" class="menu-item middle"><h1 class="white">ab</h1></div></a>
                 <a href="one_ba.html"><div id="ba" class="menu-item"><h1 class="white">ba</h1></div></a>
+
                 <a href="one_bb.html"><div id="bb" class="menu-item"><h1 class="white">bb</h1></div></a>
-                <a href="one_bc.html"><div id="bc" class="menu-item"><h1 class="white">bc</h1></div></a>
+                <a href="one_bc.html"><div id="bc" class="menu-item middle"><h1 class="white">bc</h1></div></a>
                 <a href="one_bd.html"><div id="bd" class="menu-item"><h1 class="white">bd</h1></div></a>
+
                 <a href="one_c.html"><div id="c" class="menu-item"><h1 class="white">c</h1></div></a>
-                <a href="one_d.html"><div id="d" class="menu-item"><h1 class="white">d</h1></div></a>
+                <a href="one_d.html"><div id="d" class="menu-item middle"><h1 class="white">d</h1></div></a>
             </div>
         </div>
     </body>
