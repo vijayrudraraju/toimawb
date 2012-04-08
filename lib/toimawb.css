@@ -96,6 +96,7 @@ h2 {
     margin-left: 6px;
 }
 .list-item {
+    background-color: black;
     width: 580px;
     height: 60px;
     float: left;
