@@ -13,12 +13,15 @@
             #debug {
                 background: rgb(0,0,0);
             }
-            #name {
-                background: rgb(105,0,0);
+            #info {
+                background: rgb(85,0,0);
             }
             #post {
-                background: rgb(0,105,0);
+                background: rgb(0,85,0);
                 margin-left: 20px;
+            }
+            #post-highlight {
+                background: rgb(0,145,0);
             }
             .list-item {
                 margin-bottom: 30px;
@@ -91,12 +94,16 @@
                     $('#posts').html('');
 
                     var textHeight = 0;
+                    var totalHeight = 0;
 
                     for (var i=frames.length-1; i>=0; i--) {
-                        $('#posts').append('<div class="list-item"><h2 class="white">'+frames[i][0]+'</h2></div>');
+                        $('#posts').append('<div class="guestbook-item"><h2 class="white">'+frames[i][0]+'</h2></div>');
                         textHeight = $('#posts div:last-child h2').height();
                         $('#posts div:last-child').height(textHeight+4);
+
+                        totalHeight += textHeight+4+20+20;
                     }
+                    $('.canvas').height(totalHeight + 460);
                 },
                 saveToServer: function() {
                     var frames = Blawks.at(0).get('frames');
@@ -130,8 +137,9 @@
                 if ($touchable)
                     return;
                 $el = $(e.target);
-                if ($el.hasClass('button-item') || $el.hasClass('clickable')) {
+                if ($el.hasClass('clickable')) {
                     $('#post').css('background-color','rgb(105,105,105)');
+                    $('#post-highlight').css('background-color','rgb(105,105,105)');
                 }
                 $count++;
                 $('#debug-text').html($count);
@@ -139,11 +147,13 @@
             document.body.addEventListener('mouseup', function(e){ 
                 if ($touchable)
                     return;
-                if ($el.hasClass('button-item') || $el.hasClass('clickable')) {
-                    $('#post').css('background-color','rgb(0,105,0)');
+                if ($el.hasClass('clickable')) {
+                    $('#post').css('background-color','rgb(0,85,0)');
+                    $('#post-highlight').css('background-color','rgb(0,145,0)');
                     window.App.saveToServer();
                 } else {
-                    $('#post').css('background-color','rgb(0,105,0)');
+                    $('#post').css('background-color','rgb(0,85,0)');
+                    $('#post-highlight').css('background-color','rgb(0,145,0)');
                 }
                 $count++;
                 $('#debug-text').html($count);
@@ -151,18 +161,21 @@
             document.body.addEventListener('touchstart', function(e){ 
                 touchable = true;
                 $el = $(document.elementFromPoint(e.targetTouches[0].clientX,e.targetTouches[0].clientY));
-                if ($el.hasClass('button-item') || $el.hasClass('clickable')) {
+                if ($el.hasClass('clickable')) {
                     $('#post').css('background-color','rgb(105,105,105)');
+                    $('#post-highlight').css('background-color','rgb(105,105,105)');
                 }
                 $count++;
                 $('#debug-text').html($count);
             },false);
             document.body.addEventListener('touchend', function(e){ 
-                if ($el.hasClass('button-item') || $el.hasClass('clickable')) {
+                if ($el.hasClass('clickable')) {
                     $('#post').css('background-color','rgb(0,105,0)');
+                    $('#post-highlight').css('background-color','rgb(0,145,0)');
                     window.App.saveToServer();
                 } else {
                     $('#post').css('background-color','rgb(0,105,0)');
+                    $('#post-highlight').css('background-color','rgb(0,145,0)');
                 }
                 $count++;
                 $('#debug-text').html($count);
@@ -176,8 +189,8 @@
                 <h1 class="inline">guestbook/</h1>
             </div>
             <div class="canvas">
-                <div id="name" class="comment-item"><h2 class="white">say hi. write anything you want. please don't make me regret this.</h2></div>
-                <div id="post" class="button-item"><h1 class="white clickable">post</h1></div>
+                <div id="info" class="comment-item"><h2 class="white">say hi. write anything you want. please don't make me regret this.</h2></div>
+                <div id="post" class="button-item clickable"><div id="post-highlight" class="button-highlight clickable"><h1 class="white clickable">post</h1></div></div>
                 <textarea id="input" class="input"></textarea>
                 <div id="posts"></div>
             </div>

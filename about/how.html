@@ -14,37 +14,70 @@
                 height: 864px;
             }
             #cloudant {
-                background: rgb(105,0,0);
+                background: rgb(85,0,0);
+            }
+            #cloudant-highlight {
+                background: rgb(145,0,0);
             }
             #github {
-                background: rgb(0,105,0);
+                background: rgb(0,85,0);
+            }
+            #github-highlight {
+                background: rgb(0,145,0);
             }
             #couchdb{
-                background: rgb(0,0,105);
+                background: rgb(0,0,85);
+            }
+            #couchdb-highlight {
+                background: rgb(0,0,145);
             }
             #kanso {
-                background: rgb(105,105,0);
+                background: rgb(85,85,0);
+            }
+            #kanso-highlight {
+                background: rgb(145,145,0);
             }
             #jquery {
-                background: rgb(105,0,105);
+                background: rgb(85,0,85);
+            }
+            #jquery-highlight {
+                background: rgb(145,0,145);
             }
             #backbone {
-                background: rgb(0,105,105);
+                background: rgb(0,85,85);
+            }
+            #backbone-highlight {
+                background: rgb(0,145,145);
             }
             #canvas {
-                background: rgb(105,105,105);
+                background: rgb(85,85,85);
+            }
+            #canvas-highlight {
+                background: rgb(145,145,145);
             }
             #javascript {
-                background: rgb(205,105,105);
+                background: rgb(185,85,85);
+            }
+            #javascript-highlight {
+                background: rgb(245,145,145);
             }
             #html {
-                background: rgb(105,205,105);
+                background: rgb(85,185,85);
+            }
+            #html-highlight {
+                background: rgb(145,245,145);
             }
             #css {
-                background: rgb(105,105,205);
+                background: rgb(85,85,185);
+            }
+            #css-highlight {
+                background: rgb(145,145,245);
             }
             #godaddy {
-                background: rgb(205,205,105);
+                background: rgb(185,185,85);
+            }
+            #godaddy-highlight {
+                background: rgb(245,245,145);
             }
         </style>
         <script type="text/javascript" src="/_utils/script/jquery.js"></script>
@@ -62,20 +95,20 @@
                 <h1 class="inline">how/</h1>
             </div>
             <div class="canvas">
-                <a class="inline" href="http://www.cloudant.com"><div id="cloudant" class="menu-item"><h1 class="white">cloudant</h1></div></a>
-                <a class="inline" href="http://www.github.com"><div id="github" class="menu-item middle"><h1 class="white">github</h1></div></a>
-                <a class="inline" href="http://couchdb.apache.org"><div id="couchdb" class="menu-item"><h1 class="white">couchdb</h1></div></a>
+                <a class="inline" href="http://www.cloudant.com"><div id="cloudant" class="menu-item"><div id="cloudant-highlight" class="menu-highlight"><h1 class="white">cloud ant</h1></div></div></a>
+                <a class="inline" href="http://www.github.com"><div id="github" class="menu-item middle"><div id="github-highlight" class="menu-highlight"><h1 class="white">github</h1></div></div></a>
+                <a class="inline" href="http://couchdb.apache.org"><div id="couchdb" class="menu-item"><div id="couchdb-highlight" class="menu-highlight"><h1 class="white">couch db</h1></div></div></a>
 
-                <a class="inline" href="http://kan.so"><div id="kanso" class="menu-item"><h1 class="white">kanso</h1></div></a>
-                <a class="inline" href="http://www.jquery.com"><div id="jquery" class="menu-item middle"><h1 class="white">jquery</h1></div></a>
-                <a class="inline" href="http://documentcloud.github.com/backbone/"><div id="backbone" class="menu-item"><h1 class="white">back bone</h1></div></a>
+                <a class="inline" href="http://kan.so"><div id="kanso" class="menu-item"><div id="kanso-highlight" class="menu-highlight"><h1 class="white">kanso</h1></div></div></a>
+                <a class="inline" href="http://www.jquery.com"><div id="jquery" class="menu-item middle"><div id="jquery-highlight" class="menu-highlight"><h1 class="white">jquery</h1></div></div></a>
+                <a class="inline" href="http://documentcloud.github.com/backbone/"><div id="backbone" class="menu-item"><div id="backbone-highlight" class="menu-highlight"><h1 class="white">back bone</h1></div></div></a>
 
-                <a class="inline" href="http://dev.opera.com/articles/view/html-5-canvas-the-basics/"><div id="canvas" class="menu-item"><h1 class="white">canvas</h1></div></a>
-                <a class="inline" href="http://www.w3schools.com/js/"><div id="javascript" class="menu-item middle"><h1 class="white">java script</h1></div></a>
-                <a class="inline" href="http://www.w3schools.com/html/"><div id="html" class="menu-item"><h1 class="white">html</h1></div></a>
+                <a class="inline" href="http://dev.opera.com/articles/view/html-5-canvas-the-basics/"><div id="canvas" class="menu-item"><div id="canvas-highlight" class="menu-highlight"><h1 class="white">canvas</h1></div></div></a>
+                <a class="inline" href="http://www.w3schools.com/js/"><div id="javascript" class="menu-item middle"><div id="javascript-highlight" class="menu-highlight"><h1 class="black">java script</h1></div></div></a>
+                <a class="inline" href="http://www.w3schools.com/html/"><div id="html" class="menu-item"><div id="html-highlight" class="menu-highlight"><h1 class="black">html</h1></div></div></a>
 
-            <a class="inline" href="http://www.w3schools.com/css/"><div id="css" class="menu-item"><h1 class="white">css</h1></div></a>
-            <a class="inline" href="http://www.godaddy.com"><div id="godaddy" class="menu-item middle"><h1 class="white">godaddy</h1></div></a>
+                <a class="inline" href="http://www.w3schools.com/css/"><div id="css" class="menu-item"><div id="css-highlight" class="menu-highlight"><h1 class="black">css</h1></div></div></a>
+                <a class="inline" href="http://www.godaddy.com"><div id="godaddy" class="menu-item middle"><div id="godaddy-highlight" class="menu-highlight"><h1 class="black">go daddy</h1></div></div></a>
             </div>
         </div>
     </body>

@@ -1,37 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>toimawb-blawks-bb</title>
+        <title>toimawb-skratch-bb</title>
         <meta name="apple-mobile-web-app-capable" content="yes"/>
         <meta name="viewport" content="width=640,user-scalable=no"/>
         <meta charset="utf-8">
         <!-- Le styles -->
-        <link href="http://fonts.googleapis.com/css?family=Sevillana" rel="stylesheet" type="text/css">
+        <link href="http://fonts.googleapis.com/css?family=Snippet" rel="stylesheet" type="text/css">
         <link href="../lib/toimawb.css" rel="stylesheet" type="text/css">
         <style type="text/css">
-            .header {
-                position: relative;
-                top: 2px;
-            }
             #new-button {
-                position: absolute;
                 width: 60px;
                 height: 44px;
-                left: 408px;
                 font-size: 20px;
             }
             #dup-button {
-                position: absolute;
                 width: 60px;
                 height: 44px;
-                left: 474px;
                 font-size: 20px;
             }
             #save-button {
-                position: absolute;
                 width: 60px;
                 height: 44px;
-                left: 540px;
                 font-size: 20px;
             }
             .inline {
@@ -42,14 +32,6 @@
                 color: white;
                 top: 6px;
                 left: 32px;
-            }
-            .container {
-                width: 600px;
-                height: 0px;
-                margin-top: 12px;
-                margin-left: 20px;
-                margin-right: 20px;
-                padding: 0px;
             }
             .frame-nav {
                 position: relative;
@@ -79,10 +61,9 @@
                 height: 500px;
                 top: 10px;
             }
-            .levels {
-                display: none;
+            .buttons {
                 position: relative;
-                background: purple;
+                background: white;
                 width: 500px;
                 height: 136px;
                 top: -620px;
@@ -168,7 +149,6 @@
             }
         </style>
     </head>
-    <!--<script type="text/javascript" src="modules.js"></script>-->
     <script type="text/javascript" src="/_utils/script/json2.js"></script>
     <script type="text/javascript" src="/_utils/script/jquery.js"></script>
     <script type="text/javascript" src="/_utils/script/jquery.couch.js"></script>
@@ -696,13 +676,10 @@
     <body id="body">
         <div id="blawk-app" class="container">
 
-            <div class="header">
+            <div class="inline">
                 <a class="inline" href="../"><h1 class="inline">toimawb/</h1></a>
-                <a class="inline" href="blawks.html"><h1 class="inline">blawks/</h1></a>
+                <a class="inline" href="skratch.html"><h1 class="inline">skratch/</h1></a>
                 <h1 class="inline">bb/</h1>
-                <button id="new-button" class="btn inline">new</button>
-                <button id="dup-button" class="btn inline">dup</button>
-                <button id="save-button" class="btn inline">save</button>
             </div>
 
             <div class="color-choices">
@@ -734,7 +711,10 @@
                 <div id="next" class="page-nav"><h1 class="page-num">3</h1></div>
             </div>
 
-            <div class="levels">
+            <div class="buttons">
+                <button id="new-button" class="btn inline">new</button>
+                <button id="dup-button" class="btn inline">dup</button>
+                <button id="save-button" class="btn inline">save</button>
             </div>
 
         </div>

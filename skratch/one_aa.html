@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>toimawb-blawks-aa</title>
+        <title>toimawb-skratch-aa</title>
         <meta name="apple-mobile-web-app-capable" content="yes"/>
         <meta name="viewport" content="width=640"/>
         <meta charset="utf-8">
         <!-- Le styles -->
+        <link href="http://fonts.googleapis.com/css?family=Snippet" rel="stylesheet" type="text/css">
         <style type="text/css">
             body, div {
                 padding: 0px;
@@ -18,13 +19,22 @@
                 margin: 0px;
                 border: 0px;
             }
+            h1 {
+                font-size: 46px;
+                font-family: 'Snippet';
+                font-style: normal;
+                font-weight: 400;
+                padding: 0px;
+                margin: 0px;
+                border: 0px;
+            }
             .inline {
                 display: inline;
             }
             .container {
                 width: 600px;
-                margin-top: 12px;
-                margin-bottom: 12px;
+                margin-top: 20px;
+                margin-bottom: 30px;
                 margin-left: 20px;
                 margin-right: 20px;
             }
@@ -107,7 +117,6 @@
             }
         </style>
     </head>
-    <!--<script type="text/javascript" src="modules.js"></script>-->
     <script type="text/javascript" src="/_utils/script/json2.js"></script>
     <script type="text/javascript" src="../vendor/jquery-1.6.js"></script>
     <script type="text/javascript" src="../vendor/underscore.js"></script>
@@ -341,10 +350,6 @@
 
             window.App = new AppView;
 
-            document.body.addEventListener('touchstart', function(e){ 
-            },false);
-            document.body.addEventListener('touchend', function(e){ 
-            },false);
             $('.canvas').delegate('.one', 'touchmove', function(event) {
                 var e = event.originalEvent;
                 e.preventDefault(); 
@@ -367,7 +372,7 @@
         <div id="blawk-app" class="container">
             <div class="inline">
                 <a class="inline" href="../"><h1 class="inline">toimawb/</h1></a>
-                <a class="inline" href="blawks.html"><h1 class="inline">blawks/</h1></a>
+                <a class="inline" href="skratch.html"><h1 class="inline">skratch/</h1></a>
                 <h1 class="inline">aa/</h1>
             </div>
             <div class="modes">

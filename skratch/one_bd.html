@@ -1,37 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>toimawb-blawks-bc</title>
+        <title>toimawb-skratch-bd</title>
         <meta name="apple-mobile-web-app-capable" content="yes"/>
         <meta name="viewport" content="width=640,user-scalable=no"/>
         <meta charset="utf-8">
         <!-- Le styles -->
-        <link href="http://fonts.googleapis.com/css?family=Sevillana" rel="stylesheet" type="text/css">
+        <link href="http://fonts.googleapis.com/css?family=Snippet" rel="stylesheet" type="text/css">
         <link href="../lib/toimawb.css" rel="stylesheet" type="text/css">
         <style type="text/css">
-            .header {
-                position: relative;
-                top: 2px;
-            }
             #new-button {
-                position: absolute;
                 width: 60px;
                 height: 44px;
-                left: 408px;
                 font-size: 20px;
             }
             #dup-button {
-                position: absolute;
                 width: 60px;
                 height: 44px;
-                left: 474px;
                 font-size: 20px;
             }
             #save-button {
-                position: absolute;
                 width: 60px;
                 height: 44px;
-                left: 540px;
                 font-size: 20px;
             }
             .inline {
@@ -40,15 +30,18 @@
             .page-num{
                 position: relative;
                 color: white;
-                top: 10px;
+                top: 16px;
                 left: 32px;
+            }
+            .container {
+                height: 890px;
             }
             .frame-nav {
                 position: relative;
                 width: 110px;
                 height: 580px;
                 left: 490px;
-                top: -470px;
+                top: -450px;
             }
             .page-nav {
                 position: relative;
@@ -71,12 +64,19 @@
                 height: 480px;
                 top: 10px;
             }
-            .levels {
+            .buttons {
+                position: relative;
+                background: white;
+                width: 480px;
+                height: 136px;
+                top: -555px;
+            }
+            .filmcell {
                 position: relative;
                 background: purple;
                 width: 480px;
                 height: 136px;
-                top: -555px;
+                top: -535px;
             }
             .color-choices {
                 position: relative;
@@ -138,6 +138,14 @@
                 border-color: #ffffff;
                 border-width: 4px;
             }
+            .cell {
+                display: block;
+                background: black;
+                border-style: solid;
+                border-color: #ffffff;
+                border-width: 2px;
+                float: left;
+            }
             .choice {
                 border-style: solid;
                 border-color: #000000;
@@ -157,12 +165,8 @@
                 padding: 0px;
                 margin: 0px;
             }
-            .container {
-                height: 900px;
-            }
         </style>
     </head>
-    <!--<script type="text/javascript" src="modules.js"></script>-->
     <script type="text/javascript" src="/_utils/script/json2.js"></script>
     <script type="text/javascript" src="/_utils/script/jquery.js"></script>
     <script type="text/javascript" src="/_utils/script/jquery.couch.js"></script>
@@ -178,13 +182,13 @@
             Backbone.couch_connector.config.ddoc_name = "one";
 
             window.BlawkModel= Backbone.Model.extend({
-                url: '/one_bc'
+                url: '/one_bd'
             }); 
 
             window.BlawkCollection = Backbone.Collection.extend({ 
                 model: BlawkModel,
-                localStorage: new Store('one_bc'),
-                url: "/one_bc"
+                localStorage: new Store('one_bd'),
+                url: "/one_bd"
             });
 
             window.Blawks = new BlawkCollection;
@@ -337,15 +341,7 @@
                         } else {
                             context = $('.frame')[k].getContext('2d');    
                             $($('.frame')[k]).data('index',null);
-                            /*
-                            for (var j=0;j<this.blawkHeightNum;j++) {
-                                for (var i=0;i<this.blawkWidthNum;i++) {
-                                    context.fillStyle = '#ffffff';
-                                    context.fillRect(i*width,j*height,width,height);
-                                    index++;
-                                }
-                            }
-                            */
+
                             context.fillStyle = '#ffffff';
                             context.fillRect(0,0,$('.frame').width(),$('.frame').height());
                         }
@@ -696,13 +692,10 @@
     <body id="body">
         <div id="blawk-app" class="container">
 
-            <div class="header">
+            <div class="inline">
                 <a class="inline" href="../"><h1 class="inline">toimawb/</h1></a>
-                <a class="inline" href="blawks.html"><h1 class="inline">blawks/</h1></a>
-                <h1 class="inline">bc/</h1>
-                <button id="new-button" class="btn inline">new</button>
-                <button id="dup-button" class="btn inline">dup</button>
-                <button id="save-button" class="btn inline">save</button>
+                <a class="inline" href="skratch.html"><h1 class="inline">skratch/</h1></a>
+                <h1 class="inline">bd/</h1>
             </div>
 
             <div class="color-choices">
@@ -733,7 +726,10 @@
                 <div id="next" class="page-nav"><h1 class="page-num">3</h1></div>
             </div>
 
-            <div class="levels">
+            <div class="buttons">
+                <button id="new-button" class="btn inline">new</button>
+                <button id="dup-button" class="btn inline">dup</button>
+                <button id="save-button" class="btn inline">save</button>
             </div>
 
         </div>

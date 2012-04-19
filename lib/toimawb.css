@@ -76,6 +76,12 @@ h2 {
 .white {
     color: white;
 }
+.gray {
+    color: gray;
+}
+.black {
+    color: black;
+}
 .one {
     width: 160px;
     height: 160px;
@@ -85,17 +91,58 @@ h2 {
 }
 
 .menu-item {
-    width: 176px;
-    height: 176px;
+    width: 174px;
+    height: 174px;
     float: left;
-    padding: 10px;
+    padding-bottom: 18px;
+    padding-top: 4px;
+    padding-right: 8px;
+    padding-left: 14px;
     margin-top: 20px;
 }
+.menu-highlight {
+    width: 164px;
+    height: 164px;
+    padding: 5px;
+}
+.button-item {
+    width: 158px;
+    height: 158px;
+    float: left;
+    padding-bottom: 18px;
+    padding-top: 4px;
+    padding-right: 8px;
+    padding-left: 14px;
+    margin-top: 20px;
+}
+.button-highlight {
+    width: 148px;
+    height: 148px;
+    padding: 5px;
+}
+
 .middle {
     margin-right: 6px;
     margin-left: 6px;
 }
+
 .list-item {
+    width: 568px;
+    height: 68px;
+    float: left;
+    padding-bottom: 18px;
+    padding-top: 4px;
+    padding-right: 8px;
+    padding-left: 14px;
+    margin-top: 20px;
+}
+.list-highlight {
+    width: 558px;
+    height: 58px;
+    padding: 5px;
+}
+
+.guestbook-item {
     background-color: black;
     width: 580px;
     height: 60px;
@@ -103,15 +150,9 @@ h2 {
     padding: 10px;
     margin-top: 20px;
 }
+
 .comment-item {
     width: 380px;
-    height: 160px;
-    float: left;
-    padding: 10px;
-    margin-top: 20px;
-}
-.button-item {
-    width: 160px;
     height: 160px;
     float: left;
     padding: 10px;

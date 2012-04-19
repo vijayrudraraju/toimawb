@@ -1,37 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>toimawb-blawks-c</title>
+        <title>toimawb-skratch-c</title>
         <meta name="apple-mobile-web-app-capable" content="yes"/>
         <meta name="viewport" content="width=640,user-scalable=no"/>
         <meta charset="utf-8">
         <!-- Le styles -->
-        <link href="http://fonts.googleapis.com/css?family=Sevillana" rel="stylesheet" type="text/css">
+        <link href="http://fonts.googleapis.com/css?family=Snippet" rel="stylesheet" type="text/css">
         <link href="../lib/toimawb.css" rel="stylesheet" type="text/css">
         <style type="text/css">
-            .header {
-                position: relative;
-                top: 2px;
-            }
             #new-button {
-                position: absolute;
                 width: 60px;
                 height: 44px;
-                left: 400px;
                 font-size: 20px;
             }
             #dup-button {
-                position: absolute;
                 width: 60px;
                 height: 44px;
-                left: 470px;
                 font-size: 20px;
             }
             #save-button {
-                position: absolute;
                 width: 60px;
                 height: 44px;
-                left: 540px;
                 font-size: 20px;
             }
             .inline {
@@ -42,14 +32,6 @@
                 color: white;
                 top: 16px;
                 left: 32px;
-            }
-            .container {
-                width: 600px;
-                height: 0px;
-                margin-top: 12px;
-                margin-left: 20px;
-                margin-right: 20px;
-                padding: 0px;
             }
             .frame-nav {
                 position: relative;
@@ -92,6 +74,14 @@
                 width: 480px;
                 height: 74px;
                 top: -540px;
+            }
+            .buttons {
+                position: relative;
+                background: white;
+                width: 480px;
+                height: 74px;
+                top: -540px;
+                padding: 20px;
             }
             /*
             .filmcell {
@@ -871,13 +861,10 @@
     <body id="body">
         <div id="blawk-app" class="container">
 
-            <div class="header">
+            <div class="inline">
                 <a class="inline" href="../"><h1 class="inline">toimawb/</h1></a>
-                <a class="inline" href="blawks.html"><h1 class="inline">blawks/</h1></a>
+                <a class="inline" href="skratch.html"><h1 class="inline">skratch/</h1></a>
                 <h1 class="inline">c/</h1>
-                <button id="new-button" class="btn inline">new</button>
-                <button id="dup-button" class="btn inline">dup</button>
-                <button id="save-button" class="btn inline">save</button>
             </div>
 
             <div class="color-choices">
@@ -924,6 +911,12 @@
                 <canvas id="cell-remove" width="70" height="70" class="cell-action"></canvas>
                 <canvas id="cell-play" width="70" height="70" class="cell-action"></canvas>
                 <canvas id="cell-stop" width="70" height="70" class="cell-action"></canvas>
+            </div>
+
+            <div class="buttons">
+                <button id="new-button" class="btn inline">new</button>
+                <button id="dup-button" class="btn inline">dup</button>
+                <button id="save-button" class="btn inline">save</button>
             </div>
 
         </div>
