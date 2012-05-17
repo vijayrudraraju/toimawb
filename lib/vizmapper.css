@@ -1,0 +1,345 @@
+html {
+	position:static;
+	background:rgb(220,220,220);
+}
+body {
+	position:static;
+	background:rgb(105,0,0);
+}
+canvas {
+	position:absolute;
+}
+p {
+	font-size:16px;
+	font-family:monospace;
+}
+span {
+	padding:2px;
+}
+
+
+
+.viewColor {
+	background:rgb(187,187,187);
+}
+.editColor {
+	background:rgb(187,187,227);
+}
+
+.inactive {
+	background:black;
+	color:white;
+}
+.active {
+	background:white;
+	color:black;
+}
+
+.aboutClosed {
+	left:1200px;
+	width:60px;
+	height:40px;
+	padding:10px;
+	background:rgb(30,30,255);
+	color:white;
+}
+.aboutOpen {
+	left:860px;
+	width:400px;
+	height:400px;
+	padding:10px;
+	font-size:10px;
+	background:gray;	
+	color:black;
+}
+#aboutAlterText {
+	font-size:20px;
+}
+#aboutText {
+	left:860px;
+	width:400px;
+	height:400px;
+	display:none;
+}
+#aboutSwitch {
+	z-index:4;
+	position:absolute;
+	font-size:20px;
+	font-family:monospace;
+}
+
+
+
+.helpClosed {
+	top:60px;
+	left:1200px;
+	width:60px;
+	height:40px;
+	padding:10px;
+	background:rgb(255,30,30);
+	color:white;
+}
+.helpOpen {
+	top:0px;
+	left:860px;
+	width:400px;
+	height:400px;
+	padding:10px;
+	font-size:10px;
+	background:gray;	
+	color:black;
+}
+#helpAlterText{
+	font-size:20px;
+}
+#helpText {
+	left:860px;
+	width:400px;
+	height:400px;
+	display:none;
+}
+#helpSwitch {
+	z-index:4;
+	position:absolute;
+	font-size:20px;
+	font-family:monospace;
+}
+.hoverHelp {
+	background:white;
+	color:black;
+}
+.normalHelp {
+	background:black;
+	color:white;
+}
+
+
+.topicHelp {
+	top:0px;
+	left:760px;
+	width:500px;
+	height:400px;
+	padding:10px;
+	font-size:10px;
+	background:gray;	
+	color:black;
+}
+.bigTopicHelp {
+	top:0px;
+	left:460px;
+	width:800px;
+	height:500px;
+	padding:10px;
+	font-size:10px;
+	background:gray;	
+	color:black;
+}
+#viewHelp {
+	z-index:4;
+	position:absolute;
+	font-size:20px;
+	font-family:monospace;
+	display:none;
+}
+#signalHelp {
+	z-index:4;
+	position:absolute;
+	font-size:20px;
+	font-family:monospace;
+	display:none;
+}
+#mappingHelp {
+	z-index:4;
+	position:absolute;
+	font-size:20px;
+	font-family:monospace;
+	display:none;
+}
+#filteringHelp {
+	z-index:4;
+	position:absolute;
+	font-size:20px;
+	font-family:monospace;
+	display:none;
+}
+
+
+
+#viewTab {
+	z-index:3;
+	position:absolute;
+	left:0px;
+	width:100px;
+	height:40px;
+	padding:10px;
+	font-size:20px;
+	font-family:monospace;
+}
+#editTab {
+	z-index:3;
+	position:absolute;
+	left:120px;
+	width:100px;
+	height:40px;
+	padding:10px;
+	font-size:20px;
+	font-family:monospace;
+}
+#addTab {
+	z-index:3;
+	position:absolute;
+	left:240px;
+	width:100px;
+	height:40px;
+	padding:10px;
+	font-size:20px;
+	font-family:monospace;
+}
+
+
+
+#filterInput {
+	z-index:2;
+	color:rgba(0,0,0,255);
+	position:absolute;
+	left:530px;
+	top:14px;
+	height:30px;
+	width:650px;
+	font-size:20px;
+	font-family:monospace;
+	background:transparent;
+	border:0px;
+}
+#filterInputLabel {
+	z-index:2;
+	position:absolute;
+	left:375px;
+	top:22px;
+	font-size:18px;
+}
+#filterInputBackground {
+    z-index:1;
+    color:rgba(0,0,0,0);
+    position:absolute;
+    left:530px;
+    top:11px;
+    height:30px;
+    width:650px;
+    font-size:20px;
+    font-family:monospace;
+    background:white;
+    border:0px;
+    padding:0px;
+    padding-top:8px;
+    padding-left:2px;
+}
+
+
+
+#addMappingForm {
+	background:rgb(187,187,227);
+	position:absolute;
+	width:350px;
+	height:600px;
+	top:100px;
+	left:10px;
+	padding:10px;
+    line-height:180%;
+	display:none;
+}
+#exprInput {
+	position:absolute;
+	top:320px;
+	left:10px;
+}
+#mappingSourceMinInput {
+	position:absolute;
+	top:408px;
+	left:45px;
+}
+#mappingSourceMaxInput {
+	position:absolute;
+	top:408px;
+	left:230px;
+}
+#mappingDestMinInput {
+	position:absolute;
+	top:492px;
+	left:45px;
+}
+#mappingDestMaxInput {
+	position:absolute;
+	top:492px;
+	left:230px;
+}
+.mappingTemplate {
+	font-size:16px;
+	font-family:monospace;
+}
+#updateConnection {
+	position:absolute;
+	text-align:center;
+	padding-top:10px;
+	padding-bottom:10px;
+	height:25px;
+	width:100px;
+	left:20px;
+	bottom:10px;
+	background:black;
+	color:white;
+}
+#removeConnection {
+	position:absolute;
+	text-align:center;
+	padding-top:10px;
+	padding-bottom:10px;
+	height:25px;
+	width:100px;
+	right:20px;
+	bottom:10px;
+	background:red;
+	color:white;
+}
+
+
+
+#removeConnectionForm {
+	background:white;
+	position:absolute;
+	width:600px;
+	height:200px;
+	top:300px;
+	left:340px;
+	padding:10px;
+	display:none;
+}
+#okRemoveConnection {
+	position:absolute;
+	text-align:center;
+	padding-top:10px;
+	height:25px;
+	width:100px;
+	left:20px;
+	bottom:10px;
+	background:black;
+	color:white;
+}
+#cancelRemoveConnection {
+	position:absolute;
+	text-align:center;
+	padding-top:10px;
+	height:25px;
+	width:100px;
+	right:20px;
+	bottom:10px;
+	background:red;
+	color:white;
+}
+
+
+
+#globalCanvas{
+	left:0px;
+	top:0px;
+}
