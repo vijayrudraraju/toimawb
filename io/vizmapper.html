@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="graphColor">
+<html lang="en">
 <head>
 
 <title>webmapper</title>
@@ -37,8 +37,17 @@
 	<div id="addTab" class="inactive">add</div>
 
 
-    <div id="addNodeForm">
-
+    <div id="add-node-form">
+        <select id="node-type-menu" class="viz-select">
+            <option value="0">Source</option>
+            <option value="1">Destination</option>
+        </select>
+        <br/>
+        <br/>
+		<input id="node-name-input" class="viz-input"/>
+        <br/>
+        <br/>
+        <button type="button" id="create-node-button" class="viz-button">create node</button>
     </div>
 
 
@@ -121,6 +130,7 @@
 		<p><i>an example output signal might be a microphone signal that outputs a floating point signal and is named "/microphone/amplitude"</i></p>
 		<p><i>an example input signal might be a speaker signal that accepts a connection from a floating point output signal and is named "/speaker/left/treble"</i></p>
 	</div>
+
 	<div id="mappingHelp" class="topicHelp">
 		<p><b>mappings</b></p>
 		<br/><br/>
@@ -128,6 +138,7 @@
 		<br/>
 		<p>a mapping (and thus a connection) is created by first clicking on the output signal that one wants to act as the source of data and then clicking on the input signal that one wants to act as the destination of data after it is transformed by the mapping.</p> 
 	</div>
+
 	<div id="filteringHelp" class="topicHelp">
 		<p><b>text filtering</b></p>
 		<br/><br/>
@@ -139,5 +150,6 @@
         <br/>
 		<p>for example, the string "/ear/blob2 /eye /monitor" will filter the set of all signals through each of the 3 expressions and then display the results of each filter together.</p>
 	</div>
+
 </body>
 </html>
