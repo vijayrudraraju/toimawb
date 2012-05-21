@@ -59,13 +59,13 @@ span {
 
 
 .viewColor {
-	background:lightGreen;
+	background:rgb(204,238,204); /* 144 238 144 */
 }
 .editColor {
-	background:lightBlue;
+	background:rgb(203,246,245); /* 173 216 230 */
 }
 .addColor {
-	background:lightYellow;
+	background:lightYellow; /* 255 255 224 */
 }
 
 
