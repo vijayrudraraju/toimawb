@@ -70,8 +70,8 @@ span {
 
 
 .inactive {
-	background:black;
-	color:white;
+	background:transparent;
+	color:black;
     border: 2px outset gray;
 }
 .inactive:hover {
@@ -80,21 +80,22 @@ span {
     border: 2px outset gray;
 }
 .active {
-	background:white;
-	color:black;
+	background:black;
+	color:white;
     border: 2px inset gray;
 }
 
-.aboutClosed {
+.about-closed {
 	left:1200px;
 	width:56px;
 	height:36px;
 	padding:10px;
-	background:rgb(30,30,255);
-    border: 2px outset gray;
-	color:white;
+	/*background:rgb(30,30,255);*/
+    background:transparent;
+    border: 2px outset blue;
+	color:black;
 }
-.aboutClosed:hover {
+.about-closed:hover {
 	left:1200px;
 	width:56px;
 	height:36px;
@@ -103,7 +104,7 @@ span {
     border: 2px outset gray;
 	color:white;
 }
-.aboutClosed:active {
+.about-closed:active {
 	left:1200px;
 	width:56px;
 	height:36px;
@@ -121,8 +122,8 @@ span {
 	background:gray;	
 	color:black;
 }
-#aboutAlterText {
-	font-size:20px;
+#about-closed-text {
+	font-size:18px;
 }
 #aboutText {
 	left:860px;
@@ -130,7 +131,7 @@ span {
 	height:400px;
 	display:none;
 }
-#aboutSwitch {
+#about-switch {
 	z-index:4;
 	position:absolute;
 	font-size:20px;
@@ -139,17 +140,18 @@ span {
 
 
 
-.helpClosed {
+.help-closed {
 	top:60px;
 	left:1200px;
 	width:56px;
 	height:36px;
 	padding:10px;
-	background:rgb(255,30,30);
-    border: 2px outset gray;
-	color:white;
+	/*background:rgb(255,30,30);*/
+    background:transparent;
+    border: 2px outset red;
+	color:black;
 }
-.helpClosed:hover {
+.help-closed:hover {
 	top:60px;
 	left:1200px;
 	width:56px;
@@ -159,7 +161,7 @@ span {
     border: 2px outset gray;
 	color:white;
 }
-.helpClosed:active {
+.help-closed:active {
 	top:60px;
 	left:1200px;
 	width:56px;
@@ -179,8 +181,8 @@ span {
 	background:gray;	
 	color:black;
 }
-#helpAlterText{
-	font-size:20px;
+#help-closed-text{
+	font-size:18px;
 }
 #helpText {
 	left:860px;
@@ -188,7 +190,7 @@ span {
 	height:400px;
 	display:none;
 }
-#helpSwitch {
+#help-switch {
 	z-index:4;
 	position:absolute;
 	font-size:20px;
@@ -255,36 +257,37 @@ span {
 
 
 
-#viewTab {
+#view-tab {
 	z-index:3;
 	position:absolute;
 	left:0px;
 	width:96px;
 	height:36px;
 	padding:10px;
-	font-size:20px;
+	font-size:18px;
 	font-family:monospace;
     border: 2px outset gray;
 }
-#editTab {
+#edit-tab {
+    display:none;
 	z-index:3;
 	position:absolute;
 	left:120px;
 	width:96px;
 	height:36px;
 	padding:10px;
-	font-size:20px;
+	font-size:18px;
 	font-family:monospace;
     border: 2px outset gray;
 }
-#addTab {
+#add-tab {
 	z-index:3;
 	position:absolute;
 	left:240px;
 	width:96px;
 	height:36px;
 	padding:10px;
-	font-size:20px;
+	font-size:18px;
 	font-family:monospace;
     border: 2px outset gray;
 }
@@ -304,11 +307,11 @@ span {
 	background:transparent;
 	border:0px;
 }
-#filterInputLabel {
+#filter-input-label {
 	z-index:2;
 	position:absolute;
-	left:375px;
-	top:22px;
+	left:405px;
+	top:20px;
 	font-size:18px;
 }
 #filterInputBackground {
@@ -341,6 +344,37 @@ span {
     line-height:180%;
 	display:none;
 }
+#add-source-form {
+    z-index:10;
+	background:rgb(187,187,227);
+	position:absolute;
+	width:350px;
+	height:600px;
+	top:100px;
+	left:0px;
+	padding:10px;
+    line-height:180%;
+	display:none;
+}
+#add-sink-form {
+    z-index:10;
+	background:rgb(187,187,227);
+	position:absolute;
+	width:350px;
+	height:600px;
+	top:100px;
+	left:910px;
+	padding:10px;
+    line-height:180%;
+	display:none;
+}
+#create-source-button {
+    background:rgb(40,200,100);
+}
+#create-sink-button {
+    background:rgb(200,200,100);
+}
+
 
 #node-type-menu {
     clear: both;
@@ -440,7 +474,7 @@ span {
 
 
 
-#globalCanvas{
+#global-canvas{
 	left:0px;
 	top:0px;
 }
