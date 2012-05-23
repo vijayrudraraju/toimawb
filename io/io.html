@@ -31,8 +31,8 @@
 	<input id="filterInput" value=""/>
     <pre id="filterInputBackground"></pre>
 
-	<div id="view-tab" class="active">view</div>
-	<div id="edit-tab" class="inactive">edit</div>
+	<div id="view-tab" class="active">create</div>
+	<div id="edit-tab" class="inactive">watch</div>
 	<div id="add-tab" class="inactive">add</div>
 
 
@@ -73,6 +73,36 @@
         <br/>
         <button type="button" id="create-sink-button" class="viz-button">create sink</button>
     </div>
+
+
+
+
+
+    <div id="edit-source-form">
+		<p>modify source node @</p>
+        <br/>
+		<p id="edit-source-path">none</p>
+        <br/>
+        <br/>
+		<input id="edit-source-name-input" class="viz-input"/>
+        <br/>
+        <br/>
+        <button type="button" id="edit-source-button" class="viz-button">modify source</button>
+    </div>
+    <div id="edit-sink-form">
+		<p>modify sink node @</p>
+        <br/>
+		<p id="edit-sink-path">none</p>
+        <br/>
+        <br/>
+		<input id="edit-sink-name-input" class="viz-input"/>
+        <br/>
+        <br/>
+        <button type="button" id="edit-sink-button" class="viz-button">modify sink</button>
+    </div>
+
+
+
 
 
 	<div id="addMappingForm">

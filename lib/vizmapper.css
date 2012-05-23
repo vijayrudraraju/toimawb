@@ -269,7 +269,7 @@ span {
     border: 2px outset gray;
 }
 #edit-tab {
-    display:none;
+    display:default;
 	z-index:3;
 	position:absolute;
 	left:120px;
@@ -281,6 +281,7 @@ span {
     border: 2px outset gray;
 }
 #add-tab {
+    display:none;
 	z-index:3;
 	position:absolute;
 	left:240px;
@@ -295,6 +296,7 @@ span {
 
 
 #filterInput {
+    display:none;
 	z-index:2;
 	color:rgba(0,0,0,255);
 	position:absolute;
@@ -308,6 +310,7 @@ span {
 	border:0px;
 }
 #filter-input-label {
+    display:none;
 	z-index:2;
 	position:absolute;
 	left:405px;
@@ -315,6 +318,7 @@ span {
 	font-size:18px;
 }
 #filterInputBackground {
+    display:none;
     z-index:1;
     color:rgba(0,0,0,0);
     position:absolute;
@@ -346,7 +350,7 @@ span {
 }
 #add-source-form {
     z-index:10;
-	background:rgb(187,187,227);
+	background:rgba(150,230,150,240);
 	position:absolute;
 	width:350px;
 	height:600px;
@@ -358,7 +362,7 @@ span {
 }
 #add-sink-form {
     z-index:10;
-	background:rgb(187,187,227);
+	background:rgba(230,230,150,240);
 	position:absolute;
 	width:350px;
 	height:600px;
@@ -374,6 +378,38 @@ span {
 #create-sink-button {
     background:rgb(200,200,100);
 }
+
+
+
+
+
+#edit-source-form {
+    z-index:10;
+	background:rgba(0,230,0,240);
+	position:absolute;
+	width:350px;
+	height:600px;
+	top:100px;
+	left:0px;
+	padding:10px;
+    line-height:180%;
+	display:none;
+}
+#edit-sink-form {
+    z-index:10;
+	background:rgba(230,230,0,240);
+	position:absolute;
+	width:350px;
+	height:600px;
+	top:100px;
+	left:910px;
+	padding:10px;
+    line-height:180%;
+	display:none;
+}
+
+
+
 
 
 #node-type-menu {
