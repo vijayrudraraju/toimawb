@@ -31,43 +31,25 @@
 	<input id="filterInput" value=""/>
     <pre id="filterInputBackground"></pre>
 
-	<div id="view-tab" class="active">create</div>
-	<div id="edit-tab" class="inactive">watch</div>
+	<div id="create-tab" class="active">create</div>
+	<div id="watch-tab" class="inactive">watch</div>
 	<div id="add-tab" class="inactive">add</div>
 
 
 
 
 
-    <div id="add-node-form">
-        <select id="node-type-menu" class="viz-select">
-            <option value="0">Source</option>
-            <option value="1">Destination</option>
-        </select>
-        <br/>
-        <br/>
-		<input id="node-name-input" class="viz-input"/>
-        <br/>
-        <br/>
-        <button type="button" id="create-node-button" class="viz-button">create node</button>
-    </div>
     <div id="add-source-form">
-		<p>create source node @</p>
-        <br/>
+		<p>create oscillation source @</p>
 		<p id="source-path">none</p>
-        <br/>
-        <br/>
 		<input id="source-name-input" class="viz-input"/>
         <br/>
         <br/>
         <button type="button" id="create-source-button" class="viz-button">create source</button>
     </div>
     <div id="add-sink-form">
-		<p>create sink node @</p>
-        <br/>
+		<p>create display sink @</p>
 		<p id="sink-path">none</p>
-        <br/>
-        <br/>
 		<input id="sink-name-input" class="viz-input"/>
         <br/>
         <br/>
@@ -80,11 +62,15 @@
 
     <div id="edit-source-form">
 		<p>modify source node @</p>
-        <br/>
 		<p id="edit-source-path">none</p>
-        <br/>
-        <br/>
 		<input id="edit-source-name-input" class="viz-input"/>
+        <br/>
+        <br/>
+        <div id="edit-source-rate">
+            <p>rate</p>
+            <input type="range" id="edit-source-rate-range" min="0" max="1" step="0.1" class="viz-range"/>
+            <span id="edit-source-rate-range-value">0.5</span>
+        </div>
         <br/>
         <br/>
         <button type="button" id="edit-source-button" class="viz-button">modify source</button>
@@ -93,11 +79,29 @@
     </div>
     <div id="edit-sink-form">
 		<p>modify sink node @</p>
-        <br/>
 		<p id="edit-sink-path">none</p>
+        <input id="edit-sink-name-input" class="viz-input"/>
         <br/>
         <br/>
-		<input id="edit-sink-name-input" class="viz-input"/>
+        <div id="edit-sink-display">
+            <p>shape</p>
+            <select id="edit-sink-shape-type">
+                <option value="0">square</option>
+                <option value="1">circle</option>
+            </select>
+            <p>x1</p>
+            <input type="range" id="edit-sink-minx-range" min="0" max="1280" step="1" class="viz-range"/>
+            <span id="edit-sink-minx-range-value">640</span>
+            <p>x2</p>
+            <input type="range" id="edit-sink-maxx-range" min="0" max="1280" step="1" class="viz-range"/>
+            <span id="edit-sink-maxx-range-value">640</span>
+            <p>y1</p>
+            <input type="range" id="edit-sink-miny-range" min="0" max="800" step="1" class="viz-range"/>
+            <span id="edit-sink-miny-range-value">400</span>
+            <p>y2</p>
+            <input type="range" id="edit-sink-maxy-range" min="0" max="800" step="1" class="viz-range"/>
+            <span id="edit-sink-maxy-range-value">400</span>
+        </div>
         <br/>
         <br/>
         <button type="button" id="edit-sink-button" class="viz-button">modify sink</button>
@@ -108,40 +112,17 @@
 
 
 
-	<div id="addMappingForm">
-		<p>connection from</p>
+	<div id="edit-connection-form">
+		<p>modify connection between</p>
 		<br/>
-		<p>source (x) =</p>
-		<p id="selectedSource">none</p>
+		<p>source</p>
+		<p id="selected-source">none</p>
 		<p>to</p>
-		<p>destination (y) =</p>
-		<p id="selectedDestination">none</p>
+		<p>sink</p>
+		<p id="selected-sink">none</p>
 		<br/>
-        <p>mode</p>
-        <select id="modeMenu">
-            <option value="0">None</option>
-            <option value="1">Bypass</option>
-            <option value="2">Line</option>
-            <option value="3">Expression</option>
-            <option value="4">Calibrate</option>
-        </select>
-        <br/>
-		<p>expression</p>
-		<br/>
-        <br/>
-        <p class="mappingTemplate">source range</p>
-        <pre class="mappingTemplate">min               max</pre>
-        <br/>
-        <p class="mappingTemplate">dest range</p>
-        <pre class="mappingTemplate">min               max</pre>
-        <br/>
-		<input id="exprInput"/>
-		<input id="mappingSourceMinInput"/>
-		<input id="mappingSourceMaxInput"/>
-		<input id="mappingDestMinInput"/>
-		<input id="mappingDestMaxInput"/>
-		<div id="updateConnection">UPDATE</div>
-		<div id="removeConnection">REMOVE</div>
+		<button type="button" id="connection-button" class="viz-button">connect</button>
+		<button type="button" id="delete-connection-button" class="viz-button">destroy connection</button>
 	</div>
 
 	<div id="removeConnectionForm">
@@ -152,7 +133,7 @@
 
 	<div id="about-switch" class="about-closed">
 		<p id="about-closed-text">about</p>
-		<p id="aboutText"><b>about</b><br/><br/><b><i>vizmapper</i></b> is one of several graphical user interfaces for the <a href="http://www.idmil.org/software/libmapper">libmapper</a> system.<br/><br/><b><i>vizmapper</i></b> emphasizes the use of visualization techniques from research literature to reduce the complexity of managing connections between networked devices with a large aggregate number of inputs and outputs.<br/><br/>work on <b><i>vizmapper</i></b> began as the primary component of a master's thesis project by Vijay Rudraraju as a member of the Input Devices and Music Interaction Lab (IDMIL) at McGill University.<br/><br/><br/><br/><br/><br/><br/>click to close</p>	
+		<p id="aboutText"><b>about</b><br/><br/><b><i>io</i></b> is a tool for creating basic periodic animations that emphasizes the use of visualization techniques from research literature to reduce the complexity of managing connections between sources of periodic oscillation an various properties of displayed shapes<br/><br/>work on <b><i>io</i></b> began as the primary component of a master's thesis project by Vijay Rudraraju as a member of the Input Devices and Music Interaction Lab (IDMIL) at McGill University.<br/><br/><br/><br/><br/><br/><br/>click to close</p>	
 	</div>
 
 	<div id="help-switch" class="help-closed">

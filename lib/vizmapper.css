@@ -14,6 +14,8 @@ p {
 }
 span {
 	padding:2px;
+	font-size:16px;
+	font-family:monospace;
 }
 
 
@@ -119,7 +121,7 @@ span {
 	height:400px;
 	padding:10px;
 	font-size:10px;
-	background:gray;	
+	background:rgba(130,130,205,180);	
 	color:black;
 }
 #about-closed-text {
@@ -178,7 +180,7 @@ span {
 	height:400px;
 	padding:10px;
 	font-size:10px;
-	background:gray;	
+	background:rgba(205,30,30,220);	
 	color:black;
 }
 #help-closed-text{
@@ -191,6 +193,7 @@ span {
 	display:none;
 }
 #help-switch {
+    display:none;
 	z-index:4;
 	position:absolute;
 	font-size:20px;
@@ -257,7 +260,7 @@ span {
 
 
 
-#view-tab {
+#create-tab {
 	z-index:3;
 	position:absolute;
 	left:0px;
@@ -268,7 +271,7 @@ span {
 	font-family:monospace;
     border: 2px outset gray;
 }
-#edit-tab {
+#watch-tab {
     display:default;
 	z-index:3;
 	position:absolute;
@@ -337,14 +340,14 @@ span {
 
 
 
-#addMappingForm, #add-node-form {
-	background:rgb(187,187,227);
+#edit-connection-form {
+	background:rgb(255,150,150);
 	position:absolute;
-	width:350px;
+	width:400px;
 	height:600px;
-	top:100px;
-	left:10px;
-	padding:10px;
+	top:66px;
+	left:440px;
+	padding:20px;
     line-height:180%;
 	display:none;
 }
@@ -356,7 +359,7 @@ span {
 	height:600px;
 	top:100px;
 	left:0px;
-	padding:10px;
+	padding:20px;
     line-height:180%;
 	display:none;
 }
@@ -368,7 +371,7 @@ span {
 	height:600px;
 	top:100px;
 	left:910px;
-	padding:10px;
+	padding:20px;
     line-height:180%;
 	display:none;
 }
@@ -385,27 +388,33 @@ span {
 
 #edit-source-form {
     z-index:10;
-	background:rgba(0,230,0,240);
+	background:rgba(50,230,50,240);
 	position:absolute;
 	width:350px;
 	height:600px;
 	top:100px;
 	left:0px;
-	padding:10px;
+	padding:20px;
     line-height:180%;
 	display:none;
 }
 #edit-sink-form {
     z-index:10;
-	background:rgba(230,230,0,240);
+	background:rgba(230,230,50,240);
 	position:absolute;
 	width:350px;
 	height:600px;
 	top:100px;
 	left:910px;
-	padding:10px;
+	padding:20px;
     line-height:180%;
 	display:none;
+}
+#delete-source-button {
+    background:rgb(200,100,100);
+}
+#delete-sink-button {
+    background:rgb(200,100,100);
 }
 
 
