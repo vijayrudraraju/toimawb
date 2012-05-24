@@ -86,8 +86,8 @@
         <div id="edit-sink-display">
             <p>shape</p>
             <select id="edit-sink-shape-type">
-                <option value="0">square</option>
-                <option value="1">circle</option>
+                <option value="0">circle</option>
+                <option value="1">square</option>
             </select>
             <p>x1</p>
             <input type="range" id="edit-sink-minx-range" min="0" max="1280" step="1" class="viz-range"/>
@@ -133,60 +133,12 @@
 
 	<div id="about-switch" class="about-closed">
 		<p id="about-closed-text">about</p>
-		<p id="aboutText"><b>about</b><br/><br/><b><i>io</i></b> is a tool for creating basic periodic animations that emphasizes the use of visualization techniques from research literature to reduce the complexity of managing connections between sources of periodic oscillation an various properties of displayed shapes<br/><br/>work on <b><i>io</i></b> began as the primary component of a master's thesis project by Vijay Rudraraju as a member of the Input Devices and Music Interaction Lab (IDMIL) at McGill University.<br/><br/><br/><br/><br/><br/><br/>click to close</p>	
+        <p id="aboutText"><b>about</b><br/><br/><b><i>io</i></b> is a tool for creating basic periodic animations<br/><br/>the interface for the tool emphasizes the use of visualization techniques from research literature to reduce the complexity of managing connections between generators of periodic oscillation (sources) and various properties of displayed shapes (sinks)<br/><br/>work on <b><i>io</i></b> began as the primary component of a master's thesis project by Vijay Rudraraju as a member of the Input Devices and Music Interaction Lab (IDMIL) at McGill University.<br/><br/><br/><br/><br/><br/><br/>click to close</p>	
 	</div>
 
 	<div id="help-switch" class="help-closed">
 		<p id="help-closed-text">help</p>
 		<p id="helpText"><b>help</b><br/><br/>usage of <b><i>vizmapper</i></b> centers around a few key concepts that may be new to you.<br/><br/><span id="viewHelpTrigger" class="normalHelp">views</span><br/><br/><span id="signalHelpTrigger" class="normalHelp">signals</span><br/><br/><span id="mappingHelpTrigger" class="normalHelp">mappings</span></br/><br/><span id="filteringHelpTrigger" class="normalHelp">text filtering</span><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>click to close</p>
-	</div>
-
-	<div id="viewHelp" class="bigTopicHelp">
-		<p><b>modes</b></p>
-		<br/><br/>
-		<p>the interface provides 2 modes: a view mode and edit mode.</p>
-		<br/>
-        <p>the <b>view</b> mode displays <b>output signals</b> as filled green circles and <b>input signals</b> as filled yellow circles.</p>
-		<br/>
-        <p><b>clusters</b> of output signals are displayed as unfilled green circles and clusters of input signals are unfilled yellow circles.</p>
-        <br/>
-		<p><b>signals</b> are clustered according to their hierarchical namespace. mousing over a signal highlights the cluster or signal name depending on the current branch of the network hierarchy that is displayed. clicking on a cluster causes the view to descend one level in the hierarchy.</p>
-        <p><b>connections</b> in the graph view are represented by black lines.</p>
-		<br/>
-        <p>the <b>edit</b> mode focuses the display on the signals (not clusters) on the current branch and allows the user to make connections between outputs and inputs by selected an output as the source of a connection by clicking on an output signal. clicking on an input signals selects the input as a destination of a connection. clicking the black <b>update</b> button requests the conneciton to be made.</p>
-        <p>clicking on a connection highlights the connection red and displays the functional transformation operating on the connection. modifying the transformation and clicking <b>update</b> modifies the conneciton. clicking <b>remove</b> breaks the connection between the two signals.</p>
-		<br/>
-	</div>
-
-	<div id="signalHelp" class="topicHelp">
-		<p><b>signals</b></p>
-		<br/><br/>
-		<p>signals represent the available sources and destinations of real-time data present in the network.</p>
-		<br/>
-		<p>libmapper uses the <b>OpenSoundControl</b> protocol to represent signals on the network using hierarchical namespaces.</p>
-		<br/>
-		<p><i>an example output signal might be a microphone signal that outputs a floating point signal and is named "/microphone/amplitude"</i></p>
-		<p><i>an example input signal might be a speaker signal that accepts a connection from a floating point output signal and is named "/speaker/left/treble"</i></p>
-	</div>
-
-	<div id="mappingHelp" class="topicHelp">
-		<p><b>mappings</b></p>
-		<br/><br/>
-		<p>a mapping is a mathematical expression that defines the transformation that is applied to an output signal by libmapper before it is fed into the input signal that it is connected to.</p>
-		<br/>
-		<p>a mapping (and thus a connection) is created by first clicking on the output signal that one wants to act as the source of data and then clicking on the input signal that one wants to act as the destination of data after it is transformed by the mapping.</p> 
-	</div>
-
-	<div id="filteringHelp" class="topicHelp">
-		<p><b>text filtering</b></p>
-		<br/><br/>
-		<p>at anytime the signal view can be filtered by signal name by typing in the text input box at the top center of the interface.</p>
-		<br/>
-		<p>for example, the string "ear" will keep those signals that have the string "ear" somewhere within their namespace.</p>
-		<br/>
-		<p>one can group the matches of multiple filters together by sepearating multiple filter expressions with a space (" "). this acts functionally as a logical OR.</p>
-        <br/>
-		<p>for example, the string "/ear/blob2 /eye /monitor" will filter the set of all signals through each of the 3 expressions and then display the results of each filter together.</p>
 	</div>
 
 </body>
