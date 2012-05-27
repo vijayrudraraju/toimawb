@@ -298,7 +298,7 @@ span {
 
 
 
-#filterInput {
+#filter-input {
     display:none;
 	z-index:2;
 	color:rgba(0,0,0,255);
