@@ -1,14 +1,17 @@
 html {
 	background:black;
-    height: 800px;
+    height: 680px;
 }
 body {
 	background:red;
 }
 canvas {
 	position:absolute;
+    --webkit-user-select: none;
+    --moz-user-select: none;
+    --khtml-user-select: none;
 }
-p {
+p, label {
 	font-size:16px;
 	font-family:monospace;
 }
@@ -345,7 +348,7 @@ span {
 	position:absolute;
 	width:400px;
 	height:600px;
-	top:66px;
+	top:0px;
 	left:420px;
 	padding:20px;
     line-height:180%;
@@ -357,7 +360,7 @@ span {
 	position:absolute;
 	width:350px;
 	height:600px;
-	top:100px;
+	top:0px;
 	left:0px;
 	padding:20px;
     line-height:180%;
@@ -369,7 +372,7 @@ span {
 	position:absolute;
 	width:350px;
 	height:600px;
-	top:100px;
+	top:0px;
 	left:910px;
 	padding:20px;
     line-height:180%;
@@ -390,30 +393,27 @@ span {
     z-index:10;
 	background:rgba(50,230,50,240);
 	position:absolute;
-	width:350px;
-	height:600px;
-	top:100px;
+	width:600px;
+	height:560px;
+	top:0px;
 	left:0px;
 	padding:20px;
-    line-height:180%;
+    line-height:200%;
 	display:none;
 }
 #edit-sink-form {
     z-index:10;
 	background:rgba(230,230,50,240);
 	position:absolute;
-	width:350px;
-	height:600px;
-	top:100px;
-	left:910px;
+	width:600px;
+	height:560px;
+	top:0px;
+	left:640px;
 	padding:20px;
-    line-height:180%;
+    line-height:200%;
 	display:none;
 }
-#delete-source-button {
-    background:rgb(200,100,100);
-}
-#delete-sink-button {
+.red {
     background:rgb(200,100,100);
 }
 

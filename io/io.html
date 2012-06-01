@@ -65,47 +65,66 @@
 		<p id="edit-source-path">none</p>
 		<input id="edit-source-name-input" class="viz-input"/>
         <br/>
-        <br/>
         <div id="edit-source-rate">
-            <p>rate</p>
+            <label for="edit-source-rate-range">rate</label>
             <input type="range" id="edit-source-rate-range" min="0" max="1" step="0.1" class="viz-range"/>
             <span id="edit-source-rate-range-value">0.5</span>
         </div>
         <br/>
-        <br/>
         <button type="button" id="edit-source-button" class="viz-button">modify source</button>
         <br/>
-        <button type="button" id="delete-source-button" class="viz-button">destroy source</button>
+        <button type="button" id="delete-source-button" class="viz-button red">destroy source</button>
+        <br/>
+        <br/>
+		<label for="edit-source-connections">connections</label>
+        <select id="edit-source-connections">
+        </select>
+        <br/>
+        <button type="button" id="delete-source-connection-button" class="viz-button red">destroy connection</button>
+        <br/>
+        <br/>
+        <button type="button" id="source-connection-button" class="viz-button">create connection</button>
     </div>
     <div id="edit-sink-form">
 		<p>modify sink node @</p>
 		<p id="edit-sink-path">none</p>
         <input id="edit-sink-name-input" class="viz-input"/>
         <br/>
-        <br/>
         <div id="edit-sink-display">
-            <p>shape</p>
+            <label for="edit-sink-shape-type">shape</label>
             <select id="edit-sink-shape-type">
                 <option value="0">circle</option>
                 <option value="1">square</option>
             </select>
-            <p>x1</p>
+            <br/>
+            <label for="edit-sink-minx-range">x1</label>
             <input type="range" id="edit-sink-minx-range" min="0" max="1280" step="1" class="viz-range"/>
             <span id="edit-sink-minx-range-value">640</span>
-            <p>x2</p>
+            <br/>
+            <label for="edit-sink-maxx-range">x2</label>
             <input type="range" id="edit-sink-maxx-range" min="0" max="1280" step="1" class="viz-range"/>
             <span id="edit-sink-maxx-range-value">640</span>
-            <p>y1</p>
+            <br/>
+            <label for="edit-sink-miny-range">y1</label>
             <input type="range" id="edit-sink-miny-range" min="0" max="800" step="1" class="viz-range"/>
             <span id="edit-sink-miny-range-value">400</span>
-            <p>y2</p>
+            <br/>
+            <label for="edit-sink-maxy-range">y2</label>
             <input type="range" id="edit-sink-maxy-range" min="0" max="800" step="1" class="viz-range"/>
             <span id="edit-sink-maxy-range-value">400</span>
         </div>
         <br/>
-        <br/>
         <button type="button" id="edit-sink-button" class="viz-button">modify sink</button>
-        <button type="button" id="delete-sink-button" class="viz-button">destroy sink</button>
+        <button type="button" id="delete-sink-button" class="viz-button red">destroy sink</button>
+        <br/>
+        <br/>
+		<label for="edit-sink-connections">connections</label>
+        <select id="edit-sink-connections">
+        </select>
+        <button type="button" id="delete-sink-connection-button" class="viz-button red">destroy connection</button>
+        <br/>
+        <br/>
+        <button type="button" id="sink-connection-button" class="viz-button">create connection</button>
     </div>
 
 
