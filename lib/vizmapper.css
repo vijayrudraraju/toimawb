@@ -359,7 +359,7 @@ span {
 	background:rgba(150,230,150,240);
 	position:absolute;
 	width:350px;
-	height:600px;
+	height:300px;
 	top:0px;
 	left:0px;
 	padding:20px;
@@ -371,7 +371,7 @@ span {
 	background:rgba(230,230,150,240);
 	position:absolute;
 	width:350px;
-	height:600px;
+	height:300px;
 	top:0px;
 	left:910px;
 	padding:20px;
@@ -394,7 +394,7 @@ span {
 	background:rgba(50,230,50,240);
 	position:absolute;
 	width:600px;
-	height:560px;
+	height:680px;
 	top:0px;
 	left:0px;
 	padding:20px;
@@ -406,7 +406,7 @@ span {
 	background:rgba(230,230,50,240);
 	position:absolute;
 	width:600px;
-	height:560px;
+	height:680px;
 	top:0px;
 	left:640px;
 	padding:20px;
