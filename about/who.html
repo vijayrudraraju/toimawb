@@ -64,6 +64,13 @@
         <script type="text/javascript">
             $(function() {
                 window.scrollTo(0,0.9);
+                var totalHeight = 0;
+                for (var i=0;i<$('.canvas * .list-item').length;i++)
+                {
+                    totalHeight += $($('.canvas * .list-item')[i]).outerHeight(true);
+                }
+                console.log(totalHeight);
+                $('.canvas').css('height',totalHeight+'px');
             });
         </script>
     </head>

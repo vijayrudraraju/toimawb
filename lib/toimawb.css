@@ -136,6 +136,16 @@ h2 {
     padding-left: 14px;
     margin-top: 20px;
 }
+.desc-item {
+    width: 568px;
+    height: 160px;
+    float: left;
+    padding-bottom: 18px;
+    padding-top: 4px;
+    padding-right: 8px;
+    padding-left: 14px;
+    margin-top: 20px;
+}
 .list-highlight {
     width: 558px;
     height: 58px;
