@@ -286,18 +286,6 @@ span {
 	font-family:monospace;
     border: 2px outset gray;
 }
-#add-tab {
-    display:none;
-	z-index:3;
-	position:absolute;
-	left:240px;
-	width:96px;
-	height:36px;
-	padding:10px;
-	font-size:18px;
-	font-family:monospace;
-    border: 2px outset gray;
-}
 
 
 
