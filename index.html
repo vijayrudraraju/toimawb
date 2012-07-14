@@ -48,7 +48,8 @@
         </style>
     </head>
     <script type="text/javascript" src="/_utils/script/jquery.js"></script>
-    <script src="vendor/processing-1.3.6.min.js" type="text/javascript"></script>
+    <!--<script src="vendor/processing-1.3.6.min.js" type="text/javascript"></script>-->
+    <script src="vendor/kinetic-core-toimawb.js" type="text/javascript"></script>
     <script type="text/javascript">
         var pixels = {};
 
@@ -59,10 +60,128 @@
             var TOIMAWB = 
             (function() {
                 var o = {
-                    _logoWidth: 196,
-                    _logoHeight: 196,
-                    activeCanvas: {}
+                    _width: 196,
+                    _height: 196
                 };
+
+                var stage = new Kinetic.Stage({
+                    container: "logo-container",
+                    width: o._width,
+                    height: o._height
+                });
+
+                var layer = new Kinetic.Layer();
+
+                var rect = new Kinetic.Rect({
+                    x: 10,
+                    y: 10,
+                    width: 100,
+                    height: 50,
+                    fill: 'rgb(127,0,127)',
+                    stroke: "black",
+                    strokeWidth: 4
+                });
+
+                var circleFace = (function() {
+                    var x = o._width/2;
+                    var y = o._height/2;
+                    var width = o._width/2;
+                    var height = o._height/2;
+
+                    var obj = {};
+
+                    obj.face = {
+                        x: x,
+                        y: y,
+                        radius: {
+                            x: width,
+                            y: height 
+                        },
+                        fill: 'rgb(127,0,127)',
+                    };
+
+                    obj.eye1 = {
+                        x: x-45,
+                        y: x-34,
+                        radius: {
+                            x: 18,
+                            y: 18 
+                        },
+                        fill: 'black'
+                    }
+                    obj.eye2 = {
+                        x: x+45,
+                        y: x-34,
+                        radius: {
+                            x: 18,
+                            y: 18 
+                        },
+                        fill: 'black'
+                    }
+                    obj.eye3 = {
+                        x: x,
+                        y: x-59,
+                        radius: {
+                            x: 18,
+                            y: 18 
+                        },
+                        fill: 'black'
+                    }
+
+                    obj.eyeMask1 = {
+                        x: x-45,
+                        y: y-22,
+                        radius: {
+                            x: 16,
+                            y: 16
+                        },
+                        fill: 'rgb(127,0,127)'
+                    };
+                    obj.eyeMask2 = {
+                        x: x+45,
+                        y: y-22,
+                        radius: {
+                            x: 16,
+                            y: 16
+                        },
+                        fill: 'rgb(127,0,127)'
+                    };
+                    obj.eyeMask3 = {
+                        x: x,
+                        y: y-70,
+                        radius: {
+                            x: 16,
+                            y: 16
+                        },
+                        fill: 'rgb(127,0,127)'
+                    };
+
+                    obj.mouth = {
+                        x: x,
+                        y: y,
+                        radius: {
+                            x: width-10,
+                            y: height-10
+                        },
+                        endAng: 0,
+                        startAng: Math.PI,
+                        fill: 'black'
+                    };
+
+                    return obj;
+                }());
+
+                console.log(circleFace);
+
+                layer.add(new Kinetic.Ellipse(circleFace.face));
+                layer.add(new Kinetic.Ellipse(circleFace.eye1));
+                layer.add(new Kinetic.Ellipse(circleFace.eye2));
+                layer.add(new Kinetic.Ellipse(circleFace.eye3));
+                layer.add(new Kinetic.Ellipse(circleFace.eyeMask1));
+                layer.add(new Kinetic.Ellipse(circleFace.eyeMask2));
+                layer.add(new Kinetic.Ellipse(circleFace.eyeMask3));
+                layer.add(new Kinetic.Arc(circleFace.mouth));
+                stage.add(layer);
 
                 o.clear = function(p)
                 {
@@ -366,6 +485,7 @@
                     );
                 };
 
+                /*
                 var logoProcessingObj = function(p)
                 {
                     var faceFlag = 0;
@@ -418,6 +538,7 @@
                     };
                 };
                 o.activeCanvas = new Processing($('#logo-canvas')[0],logoProcessingObj);
+                */
 
                 return o;
             })();
@@ -427,7 +548,8 @@
     </script>
     <body id="body">
         <div id="blawk-app" class="container">
-            <canvas id="logo-canvas"></canvas>
+            <div id="logo-container"></div>
+            <!--<canvas id="logo-canvas"></canvas>-->
             <!--<div class="inline">
                 <h1 class="inline">toimawb/</h1>
             </div>-->
