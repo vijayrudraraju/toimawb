@@ -269,6 +269,34 @@ Kinetic.Type = {
 
             return arr;
         }
+    },
+
+    /*
+    * vijay
+    */
+    _getRGB: function(arg) {
+        // if arg is an object return the object
+        if(this._isObject(arg)) {
+            return arg;
+        } else if (arg.slice && arg.slice(0,3) === 'rgb') {
+            var r = parseInt(arg.slice(4));
+            var rLength = String(r).length;
+            var g = parseInt(arg.slice(4+rLength+1));
+            var gLength = String(g).length;
+            var b = parseInt(arg.slice(4+rLength+gLength+1+1));
+            return {
+                r: r,
+                g: g,
+                b: b
+            };
+        }
+
+        // default
+        return {
+            r: 0,
+            g: 0,
+            b: 0,
+        };
     }
 };
 
@@ -662,6 +690,13 @@ Kinetic.Node = Kinetic.Class.extend({
                     else {
                         // handle special keys
                         switch (key) {
+                            // vijay
+                            case 'fill':
+                                var color = type._getRGB(val);
+                                that._setAttr(obj[key], 'r', color.r);
+                                that._setAttr(obj[key], 'g', color.g);
+                                that._setAttr(obj[key], 'b', color.b);
+                                break;
                             case 'rotationDeg':
                                 that._setAttr(obj, 'rotation', c[key] * Math.PI / 180);
                                 // override key for change event
@@ -1366,7 +1401,8 @@ Kinetic.Node._addGetter = function(constructor, attr) {
     };
 };
 // add getters setters
-Kinetic.Node.addGettersSetters(Kinetic.Node, ['x', 'y', 'scale', 'detectionType', 'rotation', 'alpha', 'name', 'id', 'offset', 'draggable', 'dragConstraint', 'dragBounds', 'listening']);
+//vijay
+Kinetic.Node.addGettersSetters(Kinetic.Node, ['x', 'y', 'scale', 'detectionType', 'rotation', 'r', 'g', 'b', 'alpha', 'name', 'id', 'offset', 'draggable', 'dragConstraint', 'dragBounds', 'listening']);
 Kinetic.Node.addSetters(Kinetic.Node, ['rotationDeg']);
 
 /**
@@ -3125,8 +3161,15 @@ Kinetic.Shape = Kinetic.Node.extend({
             var e = fill.end;
             var f = null;
 
+            // color object vijay
+            var type = Kinetic.Type;
+            if (type._isObject(fill)) {
+                f = 'rgb('+Math.floor(fill.r)+','+Math.floor(fill.g)+','+Math.floor(fill.b)+')';
+                context.fillStyle = f;
+                context.fill();
+            }
             // color fill
-            if( typeof fill == 'string') {
+            else if( typeof fill == 'string') {
                 f = this.attrs.fill;
                 context.fillStyle = f;
                 context.fill();
