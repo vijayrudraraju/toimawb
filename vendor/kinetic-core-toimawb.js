@@ -691,12 +691,14 @@ Kinetic.Node = Kinetic.Class.extend({
                         // handle special keys
                         switch (key) {
                             // vijay
+                            /*
                             case 'fill':
                                 var color = type._getRGB(val);
                                 that._setAttr(obj[key], 'r', color.r);
                                 that._setAttr(obj[key], 'g', color.g);
                                 that._setAttr(obj[key], 'b', color.b);
                                 break;
+                                */
                             case 'rotationDeg':
                                 that._setAttr(obj, 'rotation', c[key] * Math.PI / 180);
                                 // override key for change event
@@ -1402,7 +1404,7 @@ Kinetic.Node._addGetter = function(constructor, attr) {
 };
 // add getters setters
 //vijay
-Kinetic.Node.addGettersSetters(Kinetic.Node, ['x', 'y', 'scale', 'detectionType', 'rotation', 'r', 'g', 'b', 'alpha', 'name', 'id', 'offset', 'draggable', 'dragConstraint', 'dragBounds', 'listening']);
+Kinetic.Node.addGettersSetters(Kinetic.Node, ['x', 'y', 'scale', 'detectionType', 'rotation', 'r', 'g', 'b', 'topLeft', 'topRight', 'bottomRight', 'bottomLeft', 'alpha', 'name', 'id', 'offset', 'draggable', 'dragConstraint', 'dragBounds', 'listening']);
 Kinetic.Node.addSetters(Kinetic.Node, ['rotationDeg']);
 
 /**
@@ -3559,15 +3561,36 @@ Kinetic.Rect = Kinetic.Shape.extend({
                 // simple rect - don't bother doing all that complicated maths stuff.
                 context.rect(0, 0, this.attrs.width, this.attrs.height);
             }
+            else if (Object.prototype.toString.call(this.attrs.cornerRadius) === '[object Object]') {
+                //vijay
+                // arcTo would be nicer, but browser support is patchy (Opera)
+                context.moveTo(this.attrs.cornerRadius.topLeft, 0);
+
+                context.lineTo(this.attrs.width - this.attrs.cornerRadius.topRight, 0);
+                context.arc(this.attrs.width - this.attrs.cornerRadius.topRight, this.attrs.cornerRadius.topRight, this.attrs.cornerRadius.topRight, Math.PI * 3 / 2, 0, false);
+
+                context.lineTo(this.attrs.width, this.attrs.height - this.attrs.cornerRadius.bottomRight);
+                context.arc(this.attrs.width - this.attrs.cornerRadius.bottomRight, this.attrs.height - this.attrs.cornerRadius.bottomRight, this.attrs.cornerRadius.bottomRight, 0, Math.PI / 2, false);
+
+                context.lineTo(this.attrs.cornerRadius.bottomLeft, this.attrs.height);
+                context.arc(this.attrs.cornerRadius.bottomLeft, this.attrs.height - this.attrs.cornerRadius.bottomLeft, this.attrs.cornerRadius.bottomLeft, Math.PI / 2, Math.PI, false);
+
+                context.lineTo(0, this.attrs.cornerRadius.topLeft);
+                context.arc(this.attrs.cornerRadius.topLeft, this.attrs.cornerRadius.topLeft, this.attrs.cornerRadius.topLeft, Math.PI, Math.PI * 3 / 2, false);
+            }
             else {
                 // arcTo would be nicer, but browser support is patchy (Opera)
                 context.moveTo(this.attrs.cornerRadius, 0);
+
                 context.lineTo(this.attrs.width - this.attrs.cornerRadius, 0);
                 context.arc(this.attrs.width - this.attrs.cornerRadius, this.attrs.cornerRadius, this.attrs.cornerRadius, Math.PI * 3 / 2, 0, false);
+
                 context.lineTo(this.attrs.width, this.attrs.height - this.attrs.cornerRadius);
                 context.arc(this.attrs.width - this.attrs.cornerRadius, this.attrs.height - this.attrs.cornerRadius, this.attrs.cornerRadius, 0, Math.PI / 2, false);
+
                 context.lineTo(this.attrs.cornerRadius, this.attrs.height);
                 context.arc(this.attrs.cornerRadius, this.attrs.height - this.attrs.cornerRadius, this.attrs.cornerRadius, Math.PI / 2, Math.PI, false);
+                
                 context.lineTo(0, this.attrs.cornerRadius);
                 context.arc(this.attrs.cornerRadius, this.attrs.cornerRadius, this.attrs.cornerRadius, Math.PI, Math.PI * 3 / 2, false);
             }
