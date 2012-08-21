@@ -60,6 +60,7 @@ h2 {
     margin: 0px;
     border: 0px;
 }
+
 .container {
     width: 600px;
     margin-top: 20px;
@@ -67,12 +68,19 @@ h2 {
     margin-left: 20px;
     margin-right: 20px;
 }
+.logos {
+    position: relative;
+    background: white;
+    width: 600px;
+    height: 196px;
+}
 .canvas {
     position: relative;
     background: white;
     width: 600px;
     height: 734px;
 }
+
 .inline {
     display: inline;
 }
@@ -97,6 +105,11 @@ h2 {
     margin-top: 20px;
 }
 
+.logo-item {
+    width: 196px;
+    height: 196px;
+    float: left;
+}
 .menu-item {
     width: 174px;
     height: 174px;
