@@ -63,7 +63,6 @@ h2 {
 
 .container, .frame {
     width: 600px;
-    margin-top: 20px;
     margin-bottom: 30px;
     margin-left: 20px;
     margin-right: 20px;
@@ -109,6 +108,7 @@ h2 {
     width: 196px;
     height: 196px;
     float: left;
+    margin-top: 20px;
 }
 .menu-item, .object {
     width: 174px;
