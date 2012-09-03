@@ -61,7 +61,7 @@ h2 {
     border: 0px;
 }
 
-.container {
+.container, .frame {
     width: 600px;
     margin-top: 20px;
     margin-bottom: 30px;
@@ -74,7 +74,7 @@ h2 {
     width: 600px;
     height: 196px;
 }
-.canvas {
+.canvas, .content, .image {
     position: relative;
     background: white;
     width: 600px;
@@ -105,12 +105,12 @@ h2 {
     margin-top: 20px;
 }
 
-.logo-item {
+.logo-item, .canvas-object {
     width: 196px;
     height: 196px;
     float: left;
 }
-.menu-item {
+.menu-item, .object {
     width: 174px;
     height: 174px;
     float: left;
@@ -120,7 +120,7 @@ h2 {
     padding-left: 14px;
     margin-top: 20px;
 }
-.menu-highlight {
+.menu-highlight, .sub-object {
     width: 164px;
     height: 164px;
     padding: 5px;

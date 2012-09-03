@@ -1403,8 +1403,8 @@ Kinetic.Node._addGetter = function(constructor, attr) {
     };
 };
 // add getters setters
-//vijay
-Kinetic.Node.addGettersSetters(Kinetic.Node, ['x', 'y', 'scale', 'detectionType', 'rotation', 'r', 'g', 'b', 'topLeft', 'topRight', 'bottomRight', 'bottomLeft', 'alpha', 'name', 'id', 'offset', 'draggable', 'dragConstraint', 'dragBounds', 'listening']);
+//vijay~
+Kinetic.Node.addGettersSetters(Kinetic.Node, ['x', 'y', 'scale', 'detectionType', 'rotation', 'r', 'g', 'b', 'alpha', 'name', 'id', 'offset', 'draggable', 'dragConstraint', 'dragBounds', 'listening']);
 Kinetic.Node.addSetters(Kinetic.Node, ['rotationDeg']);
 
 /**
@@ -3625,6 +3625,7 @@ Kinetic.Rect = Kinetic.Shape.extend({
 });
 
 // add getters setters
+// vijay
 Kinetic.Node.addGettersSetters(Kinetic.Rect, ['width', 'height', 'cornerRadius']);
 
 /**

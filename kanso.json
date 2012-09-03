@@ -2,7 +2,7 @@
     "name": "one",
     "version": "0.0.5",
     "description": "one",
-    "attachments": ["index.html","gears","io","blawks","about","guestbook","skratch","vendor","lib"],
+    "attachments": ["index.html","about","guest-book","sketch-pad","vendor","lib"],
     "modules": "lib",
     "load": "lib/app",
     "dependencies": {

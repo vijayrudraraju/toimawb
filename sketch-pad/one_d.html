@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>toimawb-skratch-d</title>
+        <meta name="apple-mobile-web-app-capable" content="yes"/>
+        <meta name="viewport" content="width=640,user-scalable=no"/>
+        <meta charset="utf-8">
+        <!-- Le styles -->
+        <link href="http://fonts.googleapis.com/css?family=Snippet" rel="stylesheet" type="text/css">
+        <link href="../lib/toimawb.css" rel="stylesheet" type="text/css">
+        <style type="text/css">
+            #new-button {
+                position: absolute;
+                left: 370px;
+                font-size: 20px;
+            }
+            #dup-button {
+                position: absolute;
+                left: 450px;
+                font-size: 20px;
+            }
+            #save-button {
+                position: absolute;
+                left: 530px;
+                font-size: 20px;
+            }
+            .inline {
+                display: inline;
+            }
+            .page-num{
+                position: relative;
+                color: white;
+                top: 16px;
+                left: 32px;
+            }
+
+            .frame-nav {
+                display: none;
+                position: relative;
+                width: 110px;
+                height: 580px;
+                left: 490px;
+                top: -450px;
+            }
+
+            .page-nav {
+                position: relative;
+                width: 100px;
+                height: 70px;
+                background: purple;
+                border-style: solid;
+                border-color: purple;
+                border-width: 5px;
+            }
+            .frames {
+                position: relative;
+                background: white;
+                width: 110px;
+                height: 440px;
+            }
+            .canvas {
+                position: relative;
+                width: 600px;
+                height: 600px;
+                top: 30px;
+            }
+
+            .filmstrip {
+                display: none;
+                position: relative;
+                background: purple;
+                width: 480px;
+                height: 60px;
+                top: -535px;
+            }
+            .film-actions {
+                display: none;
+                position: relative;
+                background: white;
+                width: 480px;
+                height: 74px;
+                top: -520px;
+            }
+            
+            .color-choices {
+                position: relative;
+                background: white;
+                width: 600px;
+                height: 100px;
+                top: 20px;
+            }
+            #red {
+                position: absolute;
+                background: rgb(255,0,0);
+                left: 0px;
+            }
+            #green {
+                position: absolute;
+                background: rgb(0,255,0);
+                left: 122px;
+            }
+            #blue {
+                position: absolute;
+                background: rgb(0,0,255);
+                left: 244px;
+            }
+            #black {
+                position: absolute;
+                background: rgb(0,0,0);
+                left: 366px;
+            }
+            #white {
+                position: absolute;
+                background: rgb(255,255,255);
+                left: 488px;
+            }
+            #red-select {
+                position: absolute;
+                left: 26px;
+            }
+            #green-select {
+                position: absolute;
+                left: 148px;
+            }
+            #blue-select {
+                position: absolute;
+                left: 270px;
+            }
+            #black-select {
+                position: absolute;
+                left: 392px;
+            }
+            #white-select {
+                position: absolute;
+                left: 514px;
+            }
+            .frame {
+                display: block;
+                background: black;
+                margin-bottom: 0px;
+                border-style: solid;
+                border-color: #ffffff;
+                border-width: 4px;
+            }
+            .cell {
+                display: block;
+                background: black;
+                border-style: solid;
+                border-color: #ffffff;
+                border-width: 2px;
+                float: left;
+            }
+            .cell-action {
+                display: block;
+                background: black;
+                border-style: solid;
+                border-color: #ffffff;
+                border-width: 2px;
+                float: left;
+                margin-left: 37px;
+            }
+            .choice {
+                border-style: solid;
+                border-color: #000000;
+                border-width: 1px;
+                width: 110px;
+                height: 98px;
+            }
+            .select {
+                top: 20px;
+                width: 60px;
+                height: 60px;
+                background: rgb(127,127,127);
+            }
+            .one {
+                width: 150px;
+                height: 150px;
+                padding: 0px;
+                margin: 0px;
+            }
+            .container {
+                height: 800px;
+            }
+        </style>
+    </head>
+    <script type="text/javascript" src="/_utils/script/json2.js"></script>
+    <script type="text/javascript" src="/_utils/script/jquery.js"></script>
+    <script type="text/javascript" src="/_utils/script/jquery.couch.js"></script>
+    <script type="text/javascript" src="../vendor/underscore.js"></script>
+    <script type="text/javascript" src="../vendor/backbone.js"></script>
+    <script type="text/javascript" src="../vendor/backbone.localStorage.js"></script>
+    <script type="text/javascript" src="../vendor/backbone-couchdb.js"></script>
+    <script type="text/javascript" src="../lib/toimawb.js"></script>
+    <body id="body">
+        <div id="blawk-app" class="container">
+
+            <div class="inline">
+                <a class="inline" href="../"><h1 class="inline">toimawb/</h1></a>
+                <a class="inline" href="skratch.html"><h1 class="inline">skratch/</h1></a>
+                <h1 class="inline">d/</h1>
+                <button id="new-button" class="btn inline">new</button>
+                <button id="dup-button" class="btn inline">dup</button>
+                <button id="save-button" class="btn inline">save</button>
+            </div>
+
+            <div class="color-choices">
+                <div id="red" class="choice"></div>
+                <div id="green" class="choice"></div>
+                <div id="blue" class="choice"></div>
+                <div id="black" class="choice"></div>
+                <div id="white" class="choice"></div>
+                <div id="red-select" class="select"></div>
+                <div id="green-select" class="select"></div>
+                <div id="blue-select" class="select"></div>
+                <div id="black-select" class="select"></div>
+                <div id="white-select" class="select"></div>
+            </div>
+
+            <div class="canvas">
+                <canvas class="one"></canvas>
+            </div>
+
+            <div class="frame-nav">
+                <div id="prev" class="page-nav"><h1 class="page-num">1</h1></div>
+                <div class="frames">
+                    <canvas id="canvas-1" width="102" height="102" class="frame"></canvas>
+                    <canvas id="canvas-2" width="102" height="102" class="frame"></canvas>
+                    <canvas id="canvas-3" width="102" height="102" class="frame"></canvas>
+                    <canvas id="canvas-4" width="102" height="102" class="frame"></canvas>
+                </div>
+                <div id="next" class="page-nav"><h1 class="page-num">3</h1></div>
+            </div>
+
+            <div class="filmstrip">
+                <canvas id="cell-1" width="56" height="56" class="cell"></canvas>
+                <canvas id="cell-2" width="56" height="56" class="cell"></canvas>
+                <canvas id="cell-3" width="56" height="56" class="cell"></canvas>
+                <canvas id="cell-4" width="56" height="56" class="cell"></canvas>
+                <canvas id="cell-5" width="56" height="56" class="cell"></canvas>
+                <canvas id="cell-6" width="56" height="56" class="cell"></canvas>
+                <canvas id="cell-7" width="56" height="56" class="cell"></canvas>
+                <canvas id="cell-8" width="56" height="56" class="cell"></canvas>
+            </div>
+
+            <div class="film-actions">
+                <canvas id="cell-add" width="70" height="70" class="cell-action"></canvas>
+                <canvas id="cell-remove" width="70" height="70" class="cell-action"></canvas>
+                <canvas id="cell-play" width="70" height="70" class="cell-action"></canvas>
+                <canvas id="cell-stop" width="70" height="70" class="cell-action"></canvas>
+            </div>
+
+        </div>
+    </body>
+</html>
