@@ -41,9 +41,8 @@ textarea {
     resize: none;
 }
 h1 {
-    font-size: 46px;
-    font-family: 'Sevillana';
-    font-family: 'Snippet';
+    font-size: 60px;
+    font-family: sans-serif;
     font-style: normal;
     font-weight: 400;
     padding: 0px;
@@ -52,8 +51,7 @@ h1 {
 }
 h2 {
     font-size: 30px;
-    font-family: 'Sevillana';
-    font-family: 'Snippet';
+    font-family: sans-serif;
     font-style: normal;
     font-weight: 400;
     padding: 0px;
@@ -71,8 +69,6 @@ h2 {
     height: 196px;
 }
 */
-body {
-}
 /*
 .left, .right {
     position: relative;
@@ -89,7 +85,18 @@ body {
 }
     */
 .container, .frame {
-    width: 660px;
+    width: 580px;
+    height: 875px;
+
+    margin-top: 30px;
+    margin-bottom: 30px;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+.state {
+    width: 580px;
+    min-height: 30px;
+    background: black;
 
     margin-top: 30px;
     margin-bottom: 30px;
@@ -99,8 +106,8 @@ body {
 .canvas, .content, .image {
     position: relative;
 
-    width: 600px;
-    height: 600px;
+    width: 580px;
+    height: 100%;
 }
 .sticky {
     position: fixed;
@@ -134,32 +141,57 @@ body {
     background: blue;
 }
 .logo-item, .canvas-object {
+    /*
     width: 196px;
     height: 196px;
+    */
+    width: 285px;
+    height: 285px;
 
     float: left;
 
     /*margin-top: 20px;*/
 }
-.menu-item, .object {
+.menu-item, .object, .two-object {
+    /*
     width: 174px;
     height: 174px;
+    */
+    width: 265px;
+    height: 265px;
 
     float: left;
 
+    /*
     padding-bottom: 18px;
     padding-top: 4px;
     padding-right: 8px;
     padding-left: 14px;
+    */
+    padding: 10px;
+    margin-bottom: 10px;
 
     /*margin-top: 20px;*/
 }
+.sub-object, .three-sub-object {
+    width: 70px;
+    height: 70px;
+
+    float: left;
+
+    padding: 5px;
+    margin: 3px;
+    border: 1px solid;
+    border-color: white;
+}
+/*
 .menu-highlight, .sub-object {
     width: 164px;
     height: 164px;
 
     padding: 5px;
 }
+    */
 .middle {
     margin-right: 6px;
     margin-left: 6px;
@@ -167,6 +199,11 @@ body {
 .vert-middle {
     margin-top: 6px;
     margin-bottom: 6px;
+}
+.left {
+    margin-right: 10px;
+}
+.right {
 }
 
 

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>toimawb-guestbook</title>
+        <meta name="apple-mobile-web-app-capable" content="yes"/>
+        <meta name="viewport" content="width=640,user-scalable=no"/>
+
+        <meta charset="utf-8">
+        <!-- Le styles -->
+        <link href="http://fonts.googleapis.com/css?family=Snippet" rel="stylesheet" type="text/css">
+        <link href="../lib/toimawb.css" rel="stylesheet" type="text/css">
+        <style type="text/css">
+            #debug {
+                background: rgb(0,0,0);
+            }
+            #info {
+                background: rgb(85,0,0);
+            }
+            #post {
+                background: rgb(0,85,0);
+                margin-left: 20px;
+            }
+            #post-highlight {
+                background: rgb(0,145,0);
+            }
+            .list-item {
+                margin-bottom: 30px;
+            }
+        </style>
+    </head>
+    <script type="text/javascript" src="/_utils/script/json2.js"></script>
+    <script type="text/javascript" src="/_utils/script/jquery.js"></script>
+    <script type="text/javascript" src="/_utils/script/jquery.couch.js"></script>
+    <script type="text/javascript" src="../vendor/underscore.js"></script>
+    <script type="text/javascript" src="../vendor/backbone.js"></script>
+    <script type="text/javascript" src="../vendor/backbone.localStorage.js"></script>
+    <script type="text/javascript" src="../vendor/backbone-couchdb.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            window.scrollTo(0,0.9);
+
+            Backbone.couch_connector.config.db_name = "toimawb";
+            Backbone.couch_connector.config.ddoc_name = "one";
+
+            window.BlawkModel= Backbone.Model.extend({
+                url: '/guestbook'
+            }); 
+
+            window.BlawkCollection = Backbone.Collection.extend({ 
+                model: BlawkModel,
+                localStorage: new Store('guestbook'),
+                url: "/guestbook"
+            });
+
+            window.Blawks = new BlawkCollection;
+
+            window.AppView = Backbone.View.extend({
+                color: 'red',
+                tintLight: true,
+                tintActive: false,
+                el: $('#blawk-app'),
+                events: {
+                },  
+                onReset: function(coll,resp) {
+                    console.log('onReset');
+                    console.log('coll', coll);
+                    console.log('coll', coll.localStorage);
+                    console.log('resp', resp);
+
+                    if (coll.length === 0 && coll.localStorage.records.length === 0) {
+                        console.log('local and remote mawbs empty');
+                        var frames = [];
+                        frames.push([]);
+                        var frame = frames[0];
+                        frame.push('first! vijay');
+                        Blawks.create({frames:frames});
+                    } else if (coll.length === 0) {
+                        console.log('remote mawbs empty, loading local mawbs');
+                        var localModel = coll.localStorage.findAll()[0];
+                        Blawks.create({frames:localModel.frames});
+                    } else if (coll.localStorage.records.length === 0) {
+                        console.log('local mawbs empty, loading remote mawbs');
+                        Blawks.at(0).sync = Backbone.localSync;
+                        try {
+                            Blawks.at(0).save();
+                        } catch(e) {
+                            //alert('Private browsing mode!');
+                        }
+                        delete Blawks.at(0).sync;
+                    }
+
+                    var frames = Blawks.at(0).get('frames');
+                    console.log(frames);
+                    $('#posts').html('');
+
+                    var textHeight = 0;
+                    var totalHeight = 0;
+
+                    for (var i=frames.length-1; i>=0; i--) {
+                        $('#posts').append('<div class="guestbook-item"><h2 class="white">'+frames[i][0]+'</h2></div>');
+                        textHeight = $('#posts div:last-child h2').height();
+                        $('#posts div:last-child').height(textHeight+4);
+
+                        totalHeight += textHeight+4+20+20;
+                    }
+                    $('.canvas').height(totalHeight + 460);
+                },
+                saveToServer: function() {
+                    var frames = Blawks.at(0).get('frames');
+
+                    if ($('#input').val() !== '') {
+                        frames.push([]);
+                        var frame = frames[frames.length-1];
+                        frame.push($('#input').val());
+                    }
+
+                    Blawks.at(0).set('frames',frames);
+
+                    Blawks.at(0).save({},{success: function() { 
+                        console.log('save success'); 
+                        Blawks.fetch({success: function() { console.log('fetch success');}});
+                    }});
+                },
+                initialize: function() {
+                    Blawks.on('reset', this.onReset, this);
+                    Blawks.fetch({success: function() { console.log('fetch success');}});
+                }
+            });
+
+            window.App = new AppView;
+
+            var $el = 0;
+            var $count = 0;
+            var $touchable = false;
+
+            document.body.addEventListener('mousedown', function(e){ 
+                if ($touchable)
+                    return;
+                $el = $(e.target);
+                if ($el.hasClass('clickable')) {
+                    $('#post').css('background-color','rgb(105,105,105)');
+                    $('#post-highlight').css('background-color','rgb(105,105,105)');
+                }
+                $count++;
+                $('#debug-text').html($count);
+            });
+            document.body.addEventListener('mouseup', function(e){ 
+                if ($touchable)
+                    return;
+                if ($el.hasClass('clickable')) {
+                    $('#post').css('background-color','rgb(0,85,0)');
+                    $('#post-highlight').css('background-color','rgb(0,145,0)');
+                    window.App.saveToServer();
+                } else {
+                    $('#post').css('background-color','rgb(0,85,0)');
+                    $('#post-highlight').css('background-color','rgb(0,145,0)');
+                }
+                $count++;
+                $('#debug-text').html($count);
+            });
+            document.body.addEventListener('touchstart', function(e){ 
+                touchable = true;
+                $el = $(document.elementFromPoint(e.targetTouches[0].clientX,e.targetTouches[0].clientY));
+                if ($el.hasClass('clickable')) {
+                    $('#post').css('background-color','rgb(105,105,105)');
+                    $('#post-highlight').css('background-color','rgb(105,105,105)');
+                }
+                $count++;
+                $('#debug-text').html($count);
+            },false);
+            document.body.addEventListener('touchend', function(e){ 
+                if ($el.hasClass('clickable')) {
+                    $('#post').css('background-color','rgb(0,105,0)');
+                    $('#post-highlight').css('background-color','rgb(0,145,0)');
+                    window.App.saveToServer();
+                } else {
+                    $('#post').css('background-color','rgb(0,105,0)');
+                    $('#post-highlight').css('background-color','rgb(0,145,0)');
+                }
+                $count++;
+                $('#debug-text').html($count);
+            },false);
+        });
+    </script>
+    <body id="body">
+        <div id="blawk-app" class="container">
+            <div class="inline">
+                <a class="inline" href="../"><h1 class="inline">toimawb/</h1></a>
+                <h1 class="inline">guestbook/</h1>
+            </div>
+            <div class="canvas">
+                <div id="info" class="comment-item"><h2 class="white">say hi. write something. then press the 'post' button.</h2></div>
+                <div id="post" class="button-item clickable"><div id="post-highlight" class="button-highlight clickable"><h1 class="white clickable">post</h1></div></div>
+                <textarea id="input" class="input"></textarea>
+                <div id="posts"></div>
+            </div>
+        </div>
+    </body>
+</html>
