@@ -85,6 +85,9 @@ h2 {
     right: 0px;
 }
     */
+    
+
+
 .body {
     min-width: 320px;
     min-height: 480px;
@@ -93,9 +96,11 @@ h2 {
 }
 .frame {
     float: left;
-    width: 270px;
-    height: 270px;
+    width: 260px;
+    height: 260px;
     background: red;
+
+    padding: 5px;
     /*
     margin-top: 30px;
     margin-bottom: 30px;
@@ -122,6 +127,16 @@ h2 {
     margin-right: 30px;
     */
 }
+.object {
+    float: right;
+    width: 120px;    
+    height: 120px;    
+    background: green;
+    padding: 5px;
+}
+
+
+
 .canvas, .content, .image {
     position: relative;
 
@@ -168,27 +183,6 @@ h2 {
     height: 285px;
 
     float: left;
-
-    /*margin-top: 20px;*/
-}
-.menu-item, .object, .two-object {
-    /*
-    width: 174px;
-    height: 174px;
-    */
-    width: 265px;
-    height: 265px;
-
-    float: left;
-
-    /*
-    padding-bottom: 18px;
-    padding-top: 4px;
-    padding-right: 8px;
-    padding-left: 14px;
-    */
-    padding: 10px;
-    margin-bottom: 10px;
 
     /*margin-top: 20px;*/
 }
