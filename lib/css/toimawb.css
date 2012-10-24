@@ -5,11 +5,11 @@ body, div {
 }
 html {
     -webkit-tap-highlight-color: rgba(0,0,0,0);
-    width: 640;
     padding: 0px;
     margin: 0px;
     border: 0px;
 }
+/*
 canvas {
     outline: none;
     -wekit-tap-highlight-color: rgba(0,0,0,0);
@@ -17,6 +17,7 @@ canvas {
     -moz-user-select: none;
     -khtml-user-select: none;
 }
+    */
 body {
     height: 100%;
     width: 100%;
@@ -84,24 +85,42 @@ h2 {
     right: 0px;
 }
     */
-.container, .frame {
-    width: 580px;
-    height: 875px;
-
+.body {
+    min-width: 320px;
+    min-height: 480px;
+    width: 100%;
+    height: 480px;
+}
+.frame {
+    float: left;
+    width: 270px;
+    height: 270px;
+    background: red;
+    /*
     margin-top: 30px;
     margin-bottom: 30px;
     margin-left: 30px;
     margin-right: 30px;
+    */
+}
+.stack {
+    float: left;
+    width: 50px;
+    height: 100%;
+    background: blue;
 }
 .state {
-    width: 580px;
-    min-height: 30px;
+    float: right;
+    width: 100%;
+    height: 50px;
     background: black;
 
+    /*
     margin-top: 30px;
     margin-bottom: 30px;
     margin-left: 30px;
     margin-right: 30px;
+    */
 }
 .canvas, .content, .image {
     position: relative;
