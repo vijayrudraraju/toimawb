@@ -1,3 +1,4 @@
+/* global elements */
 body, div {
     padding: 0px;
     margin: 0px;
@@ -9,22 +10,8 @@ html {
     margin: 0px;
     border: 0px;
 }
-/*
-canvas {
-    outline: none;
-    -wekit-tap-highlight-color: rgba(0,0,0,0);
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -khtml-user-select: none;
-}
-    */
-body {
-    height: 100%;
-    width: 100%;
-}
 button {
-    /*font-family: 'Sevillana';*/
-    font-family: 'Snippet';
+    font-family: sans-serif;
     font-style: normal;
     font-weight: 400;
     padding: 0px;
@@ -32,7 +19,7 @@ button {
 }
 textarea {
     font-size: 35px;
-    font-family: 'Snippet';
+    font-family: sans-serif;
     font-style: normal;
     font-weight: 400;
     width: 578px;
@@ -59,40 +46,14 @@ h2 {
     margin: 0px;
     border: 0px;
 }
-
-
-
-/*
-.logos {
-    position: relative;
-    background: white;
-    width: 600px;
-    height: 196px;
-}
-*/
-/*
-.left, .right {
-    position: relative;
-    top: 0px;
-    bottom: 0px;
-    width: 30px;
-    background: yellow;
-}
-.left {
-    left: 0px;
-}
-.right {
-    right: 0px;
-}
-    */
     
 
 
+/* top-level elements*/
 .body {
+    float: left;
     min-width: 320px;
     min-height: 480px;
-    width: 100%;
-    height: 480px;
 }
 .home {
     float: left;
@@ -102,10 +63,10 @@ h2 {
 }
 .stack {
     float: left;
-    width: 40px;
-    height: 100%;
+    width: 320px;
+    height: 160px;
     background: blue;
-    clear:left;
+    clear:both;
 }
 .sequence {
     float: left;
@@ -114,10 +75,17 @@ h2 {
     background: black;
 }
 .frame {
+    position: relative;
+    clear: both;
     float: left;
-    width: 280px;
-    height: 280px;
-    background: red;
+    width: 320px;
+    height: 320px;
+}
+.console {
+    float: left;
+    width: 318px;
+    height: 318px;
+    border: 1px solid black;
 }
 .object {
     width: 130px;    
@@ -125,197 +93,38 @@ h2 {
     background: green;
     padding: 5px;
 }
-#app-obj1 {
-    float: left;
-    background: Cyan;
+
+
+
+/* frame elements */
+.marker {
+    position:absolute;
+    border-radius:53px;
+    -moz-border-radius:53px;
+    -webkit-border-radius:53px;
+    background: gray;
+    border: 1px solid gray;
 }
-#app-obj2 {
-    float: left;
-    background: BlueViolet;
+.frame-obj {
+    padding: 10px;
 }
-#app-obj3 {
-    float: left;
-    background: DarkCyan;
+.paragraph {
+    position:absolute;
+    background: purple;
+    border: 1px solid purple;
+    font-size: 18px;
 }
-#app-obj4 {
-    float: right;
-    background: DarkRed;
-}
-
-
-
-.canvas, .content, .image {
-    position: relative;
-
-    width: 580px;
-    height: 100%;
-}
-.sticky {
-    position: fixed;
-}
-.open {
-    width: 96px;
-    height: 400px;
-
-    right: 0px;
-    top: 0px;
-
-    padding: 2px;
-}
-.closed {
-    width: 30px;
-    height: 30px;
-
-    right: 0px;
-    top: 0px;
-
+.word {
+    position:absolute;
     background: blue;
+    border: 1px solid black;
+    text-align: center;
+    font-size: 22px;
 }
-
-
-.sticky-object {
-    width: 88px;
-    height: 88px;
-
-    padding: 2px;
-    margin: 2px;
-    background: blue;
-}
-.logo-item, .canvas-object {
-    /*
-    width: 196px;
-    height: 196px;
-    */
-    width: 285px;
-    height: 285px;
-
-    float: left;
-
-    /*margin-top: 20px;*/
-}
-.sub-object, .three-sub-object {
-    width: 70px;
-    height: 70px;
-
-    float: left;
-
-    padding: 5px;
-    margin: 3px;
-    border: 1px solid;
-    border-color: white;
-}
-/*
-.menu-highlight, .sub-object {
-    width: 164px;
-    height: 164px;
-
-    padding: 5px;
-}
-    */
-.middle {
-    margin-right: 6px;
-    margin-left: 6px;
-}
-.vert-middle {
-    margin-top: 6px;
-    margin-bottom: 6px;
-}
-.left {
-    margin-right: 10px;
-}
-.right {
-}
-
-
-
-.inline {
-    display: inline;
-}
-.btn {
-    height: 60px;
-    width: 70px;
-}
-.white {
-    color: white;
-}
-.gray {
-    color: gray;
-}
-.black {
-    color: black;
-}
-.one {
-    width: 160px;
-    height: 160px;
-    float: left;
-    padding: 10px;
-    margin-top: 20px;
-}
-
-
-
-.button-item {
-    width: 158px;
-    height: 158px;
-    float: left;
-    padding-bottom: 18px;
-    padding-top: 4px;
-    padding-right: 8px;
-    padding-left: 14px;
-    margin-top: 20px;
-}
-.button-highlight {
-    width: 148px;
-    height: 148px;
-    padding: 5px;
-}
-
-.list-item {
-    width: 568px;
-    height: 68px;
-    float: left;
-    padding-bottom: 18px;
-    padding-top: 4px;
-    padding-right: 8px;
-    padding-left: 14px;
-    margin-top: 20px;
-}
-.desc-item {
-    width: 568px;
-    height: 160px;
-    float: left;
-    padding-bottom: 18px;
-    padding-top: 4px;
-    padding-right: 8px;
-    padding-left: 14px;
-    margin-top: 20px;
-}
-.list-highlight {
-    width: 558px;
-    height: 58px;
-    padding: 5px;
-}
-
-.guestbook-item {
-    background-color: black;
-    width: 580px;
-    height: 60px;
-    float: left;
-    padding: 10px;
-    margin-top: 20px;
-}
-
-.comment-item {
-    width: 380px;
-    height: 160px;
-    float: left;
-    padding: 10px;
-    margin-top: 20px;
-}
-.paragraph-item {
-    width: 580px;
-    height: 694px;
-    float: left;
-    padding: 10px;
-    margin-top: 20px;
+.letter {
+    position:absolute;
+    background: green;
+    border: 1px solid black;
+    text-align: center;
+    font-size: 26px;
 }
