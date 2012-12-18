@@ -46,6 +46,9 @@ h2 {
     margin: 0px;
     border: 0px;
 }
+p {
+    word-wrap:break-word;
+}
     
 
 
