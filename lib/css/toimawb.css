@@ -66,10 +66,11 @@ p {
 }
 .stack {
     float: left;
-    width: 320px;
+    width: 300px;
     height: 160px;
     background: blue;
     clear:both;
+    padding: 10px;
 }
 .sequence {
     float: left;
