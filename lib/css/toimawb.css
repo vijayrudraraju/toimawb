@@ -1,6 +1,6 @@
 /* global elements */
 body, div{padding:0px;margin:0px;border:0px}
-html{-webkit-tap-highlight-color:rgba(0,0,0,0);padding:0px;margin:0px;border:0px}
+html{-webkit-tap-highlight-color:rgba(0,0,0,0);padding:0px;margin:0px;border:0px;width:240px}
 button{font-family:sans-serif;font-style:normal;font-weight:400;padding:0px;margin:0px}
 textarea{font-size:35px;font-family:sans-serif;font-style:normal;font-weight:400;width:578px;height:214px;margin-top:20px;padding:10px;resize:none}
 h1{font-size:60px;font-family:sans-serif;font-style:normal;font-weight:400;padding:0px;margin:0px;border:0px}
@@ -22,8 +22,10 @@ p{word-wrap:break-word;margin:0}
 
 
 /* frame elements */
-.marker{position:absolute;border-radius:53px;-moz-border-radius:53px;-webkit-border-radius:53px;background:white;border:1px solid black}
-.active{background:black}
+.marker{position:absolute;border-radius:53px;-moz-border-radius:53px;-webkit-border-radius:53px;background:white;border:1px dashed black}
+.option.one{background:black;border:1px solid white}
+.option.two{background:blue;border:1px solid white}
+.option.three{background:green;border:1px solid white}
 .frame-obj{padding:10px}
 
 
@@ -37,3 +39,5 @@ p{word-wrap:break-word;margin:0}
 
 /* marking classes */
 .red{color:red}
+.blue{background:blue}
+.green{background:green}
