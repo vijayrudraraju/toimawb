@@ -23,6 +23,7 @@ p{word-wrap:break-word;margin:0}
 
 /* frame elements */
 .marker{position:absolute;border-radius:53px;-moz-border-radius:53px;-webkit-border-radius:53px;background:white;border:1px solid black}
+.active{background:black}
 .frame-obj{padding:10px}
 
 
@@ -31,3 +32,8 @@ p{word-wrap:break-word;margin:0}
 .letter{position:absolute;background:LightGreen;border:1px solid LightGreen;text-align:center;font-size:36px}
 .word{position:absolute;background:LightBlue;border:1px solid LightBlue;text-align:center;font-size:18px}
 .paragraph{position:absolute;background:LightPink;border:1px solid LightPink;font-size:14px}
+
+
+
+/* marking classes */
+.red{color:red}
